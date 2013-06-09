@@ -20,6 +20,12 @@ if test -f requirements.txt; then
   pip install -r requirements.txt
 fi
 
+if test "$EXTRA_INSTALL" != ""; then
+  for i in $EXTRA_INSTALL ; do
+    pip install $i
+  done
+fi
+
 ${py_exe} setup.py install
 
 if test -d test; then

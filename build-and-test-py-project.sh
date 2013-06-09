@@ -16,6 +16,9 @@ fi
 curl -k https://bitbucket.org/pypa/setuptools/raw/0.7.2/ez_setup.py | python -
 curl -k https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python -
 
+# Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
+export PATH=$PATH:`pwd`/.env/local/bin
+
 if test -f requirements.txt; then
   pip install -r requirements.txt
 fi

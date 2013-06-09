@@ -1,8 +1,9 @@
-# requires: py_exe
+py_exe=python${py_version}
 
 echo "MAKE-VENV VERSION 1"
 
 rm -Rf .env
+rm -Rf build
 
 VIRTUALENV="${py_exe} -m venv"
 ${VIRTUALENV} -h > /dev/null || VIRTUALENV="virtualenv --no-setuptools -p ${py_exe}"

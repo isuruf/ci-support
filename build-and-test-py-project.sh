@@ -20,6 +20,8 @@ if test -f requirements.txt; then
   pip install -r requirements.txt
 fi
 
+pip install pytest
+
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
     pip install $i

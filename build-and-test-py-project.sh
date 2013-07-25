@@ -14,10 +14,14 @@ else
   ${VIRTUALENV} --system-site-packages .env
 fi
 curl -k https://bitbucket.org/pypa/setuptools/raw/0.7.2/ez_setup.py | python -
-# pip 1.3 is the last release with Python 2.5 support
-# curl -k https://raw.github.com/pypa/pip/1.3.1/contrib/get-pip.py | python -
-hash -r
-easy_install 'pip==1.3.1'
+if test "$py_version" == "2.5"; then
+  # pip 1.3 is the last release with Python 2.5 support
+  hash -r
+  which easy_install
+  easy_install 'pip==1.3.1'
+else
+  curl -k https://raw.github.com/pypa/pip/1.4/contrib/get-pip.py | python -
+fi
 
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH

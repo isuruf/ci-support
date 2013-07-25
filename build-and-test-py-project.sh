@@ -14,7 +14,7 @@ else
   ${VIRTUALENV} --system-site-packages .env
 fi
 curl -k https://bitbucket.org/pypa/setuptools/raw/0.7.2/ez_setup.py | python -
-if test "$py_version" == "2.5"; then
+if test "$py_version" = "2.5"; then
   # pip 1.3 is the last release with Python 2.5 support
   hash -r
   which easy_install

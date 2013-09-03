@@ -4,8 +4,14 @@ rm -Rf .env
 rm -Rf build
 find -name '*.pyc' -delete
 
+rm -Rf env
+
+VENV_VERSION="virtualenv-1.9.1"
+rm -Rf "$VENV_VERSION"
+curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -
+
 VIRTUALENV="${py_exe} -m venv"
-${VIRTUALENV} -h > /dev/null || VIRTUALENV="virtualenv --no-setuptools -p ${py_exe}"
+${VIRTUALENV} -h > /dev/null || VIRTUALENV="$VENV_VERSION/virtualenv.py --no-setuptools -p ${py_exe}"
 
 if [ -d ".env" ]; then
   echo "**> virtualenv exists"

@@ -32,17 +32,17 @@ fi
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH
 
-if test -f requirements.txt; then
-  pip install -r requirements.txt
-fi
-
-pip install pytest
-
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
     pip install $i
   done
 fi
+
+if test -f requirements.txt; then
+  pip install -r requirements.txt
+fi
+
+pip install pytest
 
 ${py_exe} setup.py install
 

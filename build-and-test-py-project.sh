@@ -17,7 +17,7 @@ if [ -d ".env" ]; then
   echo "**> virtualenv exists"
 else
   echo "**> creating virtualenv"
-  ${VIRTUALENV} --system-site-packages .env
+  ${VIRTUALENV} .env
 fi
 curl -k https://bitbucket.org/pypa/setuptools/raw/0.7.2/ez_setup.py | python -
 if test "$py_version" = "2.5"; then

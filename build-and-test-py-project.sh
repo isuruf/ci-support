@@ -28,7 +28,9 @@ if test "$py_version" = "2.5"; then
   easy_install 'pip==1.3.1'
   PIP="pip --insecure"
 else
-  curl -k https://raw.github.com/pypa/pip/1.4/contrib/get-pip.py | python -
+  #curl -k https://raw.github.com/pypa/pip/1.4/contrib/get-pip.py | python -
+  curl http://git.tiker.net/pip/blob_plain/77f959a3ce9cc506efbf3a17290d387d0a6624f5:/contrib/get-pip.py | python -
+
   PIP="pip"
 fi
 

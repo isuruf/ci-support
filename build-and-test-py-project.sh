@@ -6,6 +6,8 @@ find -name '*.pyc' -delete
 
 rm -Rf env
 
+git submodule update --init --recursive
+
 VENV_VERSION="virtualenv-1.9.1"
 rm -Rf "$VENV_VERSION"
 curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -

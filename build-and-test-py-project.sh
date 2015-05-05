@@ -12,6 +12,8 @@ VENV_VERSION="virtualenv-1.9.1"
 rm -Rf "$VENV_VERSION"
 curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -
 
+source .env/bin/activate
+
 VIRTUALENV="${py_exe} -m venv"
 ${VIRTUALENV} -h > /dev/null || VIRTUALENV="$VENV_VERSION/virtualenv.py --no-setuptools -p ${py_exe}"
 

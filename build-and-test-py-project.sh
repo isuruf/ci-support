@@ -12,8 +12,6 @@ VENV_VERSION="virtualenv-1.9.1"
 rm -Rf "$VENV_VERSION"
 curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -
 
-source .env/bin/activate
-
 VIRTUALENV="${py_exe} -m venv"
 ${VIRTUALENV} -h > /dev/null || VIRTUALENV="$VENV_VERSION/virtualenv.py --no-setuptools -p ${py_exe}"
 
@@ -23,6 +21,8 @@ else
   echo "**> creating virtualenv"
   ${VIRTUALENV} .env
 fi
+
+source .env/bin/activate
 
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
 curl -k https://ssl.tiker.net/software/ez_setup.py | python -

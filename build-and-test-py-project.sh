@@ -22,7 +22,7 @@ else
   ${VIRTUALENV} .env
 fi
 
-source .env/bin/activate
+. .env/bin/activate
 
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
 curl -k https://ssl.tiker.net/software/ez_setup.py | python -

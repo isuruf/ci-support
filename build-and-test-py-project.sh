@@ -58,9 +58,18 @@ $PIP install pytest
 
 ${py_exe} setup.py install
 
-if test -d test; then
-  cd test
+TESTABLES=""
+if [ -d test ]; then
+  TESTABLES="$TESTABLES test"
+fi
 
+rst_files=(doc/*.rst)
+
+if [ -e "${rst_files[0]}" ]; then
+  TESTABLES="$TESTABLES $rst_files"
+fi
+
+if ! test -z "$TESTABLES"; then
   if test "$cl_dev" != ""; then
     cl_dev_real=`echo ${cl_dev} | tr '_+' ': '`
   fi
@@ -70,5 +79,5 @@ if test -d test; then
   fi
 
   ulimit -c unlimited
-  PYOPENCL_TEST=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml
+  PYOPENCL_TEST=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
 fi

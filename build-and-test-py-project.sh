@@ -60,24 +60,26 @@ ${py_exe} setup.py install
 
 TESTABLES=""
 if [ -d test ]; then
-  TESTABLES="$TESTABLES test"
-fi
+  cd test
 
-rst_files=(doc/*.rst)
+  TESTABLES="$TESTABLES ."
 
-if [ -e "${rst_files[0]}" ]; then
-  TESTABLES="$TESTABLES $rst_files"
-fi
+  rst_files=(../doc/*.rst)
 
-if ! test -z "$TESTABLES"; then
-  if test "$cl_dev" != ""; then
-    cl_dev_real=`echo ${cl_dev} | tr '_+' ': '`
+  if [ -e "${rst_files[0]}" ]; then
+    TESTABLES="$TESTABLES $rst_files"
   fi
 
-  if test -f /tmp/enable-amd-compute; then
-    . /tmp/enable-amd-compute
-  fi
+  if ! test -z "$TESTABLES"; then
+    if test "$cl_dev" != ""; then
+      cl_dev_real=`echo ${cl_dev} | tr '_+' ': '`
+    fi
 
-  ulimit -c unlimited
-  PYOPENCL_TEST=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
+    if test -f /tmp/enable-amd-compute; then
+      . /tmp/enable-amd-compute
+    fi
+
+    ulimit -c unlimited
+    PYOPENCL_TEST=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
+  fi
 fi

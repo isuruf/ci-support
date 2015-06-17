@@ -64,10 +64,12 @@ if [ -d test ]; then
 
   TESTABLES="$TESTABLES ."
 
-  rst_files=(../doc/*.rst)
+  if ! [ -z "$NO_DOCTESTS" ]; then
+    rst_files=(../doc/*.rst)
 
-  if [ -e "${rst_files[0]}" ]; then
-    TESTABLES="$TESTABLES $rst_files"
+    if [ -e "${rst_files[0]}" ]; then
+      TESTABLES="$TESTABLES $rst_files"
+    fi
   fi
 
   if ! test -z "$TESTABLES"; then

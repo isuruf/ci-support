@@ -87,6 +87,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    PYOPENCL_TEST=${cl_dev_real} PYOPENCL_CTX=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
+    PYOPENCL_TEST=${cl_dev_real} PYOPENCL_CTX=${cl_dev_real} ${py_exe} -m pytest $TESTABLES
+    # --junitxml=pytest.xml
   fi
 fi

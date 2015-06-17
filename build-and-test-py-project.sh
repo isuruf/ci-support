@@ -1,5 +1,7 @@
 py_exe=python${py_version}
 
+echo "Current directory: $(pwd)"
+
 rm -Rf .env
 rm -Rf build
 find -name '*.pyc' -delete
@@ -81,6 +83,7 @@ if [ -d test ]; then
       . /tmp/enable-amd-compute
     fi
 
+    echo "TESTABLES: $TESTABLES"
     ulimit -c unlimited
     PYOPENCL_TEST=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
   fi

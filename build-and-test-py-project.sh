@@ -70,7 +70,7 @@ if [ -d test ]; then
     rst_files=(../doc/*.rst)
 
     if [ -e "${rst_files[0]}" ]; then
-      TESTABLES="$TESTABLES $rst_files"
+      TESTABLES="$TESTABLES ${rst_files[*]}"
     fi
   fi
 
@@ -85,6 +85,8 @@ if [ -d test ]; then
 
     echo "TESTABLES: $TESTABLES"
     ulimit -c unlimited
-    PYOPENCL_TEST=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
+
+    # Need to set both _TEST and _CTX because doctests do not use _TEST.
+    PYOPENCL_TEST=${cl_dev_real} PYOPENCL_CTX=${cl_dev_real} ${py_exe} -m pytest --junitxml=pytest.xml $TESTABLES
   fi
 fi

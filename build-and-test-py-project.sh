@@ -47,7 +47,7 @@ PIP="${PY_EXE} $(which pip)"
 
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
-    if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == "pypy*" ]]; then
+    if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
       $PIP install git+https://bitbucket.org/pypy/numpy.git
     else
       $PIP install $i

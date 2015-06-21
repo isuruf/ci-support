@@ -38,8 +38,7 @@ fi
 #curl -k https://ssl.tiker.net/software/ez_setup.py | python -
 curl -k https://bootstrap.pypa.io/ez_setup.py | python -
 
-#curl http://git.tiker.net/pip/blob_plain/77f959a3ce9cc506efbf3a17290d387d0a6624f5:/contrib/get-pip.py | python -
-curl -k https://raw.github.com/pypa/pip/7.0.3/contrib/get-pip.py | python -
+curl -k https://gitlab.tiker.net/inducer/pip/raw/7.0.3/contrib/get-pip.py | python -
 
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH

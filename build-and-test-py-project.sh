@@ -10,7 +10,7 @@ rm -Rf env
 
 git submodule update --init --recursive
 
-VENV_VERSION="virtualenv-1.9.1"
+VENV_VERSION="virtualenv-13.0.3"
 rm -Rf "$VENV_VERSION"
 curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -
 
@@ -28,18 +28,10 @@ fi
 
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
 curl -k https://ssl.tiker.net/software/ez_setup.py | python -
-if test "$py_version" = "2.5"; then
-  # pip 1.3 is the last release with Python 2.5 support
-  hash -r
-  which easy_install
-  easy_install 'pip==1.3.1'
-  PIP_FLAGS="--insecure"
-else
-  #curl -k https://raw.github.com/pypa/pip/1.4/contrib/get-pip.py | python -
-  curl http://git.tiker.net/pip/blob_plain/77f959a3ce9cc506efbf3a17290d387d0a6624f5:/contrib/get-pip.py | python -
+#curl -k https://raw.github.com/pypa/pip/1.4/contrib/get-pip.py | python -
+curl http://git.tiker.net/pip/blob_plain/77f959a3ce9cc506efbf3a17290d387d0a6624f5:/contrib/get-pip.py | python -
 
-  PIP_FLAGS=""
-fi
+PIP_FLAGS=""
 
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH

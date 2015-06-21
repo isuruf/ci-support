@@ -1,10 +1,12 @@
-if [ "$py_exe" == "" ]; then
-  py_exe=python${py_version}
+#! /bin/bash
+
+if [ "$PY_EXE" == "" ]; then
+  PY_EXE=python${py_version}
 fi
 
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
-echo "Python executable: ${py_exe}"
+echo "Python executable: ${PY_EXE}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
 echo "-----------------------------------------------"
 
@@ -20,8 +22,8 @@ VENV_VERSION="virtualenv-13.0.3"
 rm -Rf "$VENV_VERSION"
 curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -
 
-VIRTUALENV="${py_exe} -m venv"
-${VIRTUALENV} -h > /dev/null || VIRTUALENV="$VENV_VERSION/virtualenv.py --no-setuptools -p ${py_exe}"
+VIRTUALENV="${PY_EXE} -m venv"
+${VIRTUALENV} -h > /dev/null || VIRTUALENV="$VENV_VERSION/virtualenv.py --no-setuptools -p ${PY_EXE}"
 
 if [ -d ".env" ]; then
   echo "**> virtualenv exists"
@@ -42,11 +44,11 @@ curl -k https://raw.github.com/pypa/pip/7.0.3/contrib/get-pip.py | python -
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH
 
-PIP="${py_exe} $(which pip)"
+PIP="${PY_EXE} $(which pip)"
 
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
-    if [ "$i" = "numpy" ] && [[ "$py_exe" == "pypy*" ]]; then
+    if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == "pypy*" ]]; then
       $PIP install git+https://bitbucket.org/pypy/numpy.git
     else
       $PIP install $i
@@ -60,7 +62,7 @@ fi
 
 $PIP install pytest
 
-${py_exe} setup.py install
+${PY_EXE} setup.py install
 
 TESTABLES=""
 if [ -d test ]; then
@@ -69,10 +71,10 @@ if [ -d test ]; then
   TESTABLES="$TESTABLES ."
 
   if [ -z "$NO_DOCTESTS" ]; then
-    rst_files=(../doc/*.rst)
+    RST_FILES=(../doc/*.rst)
 
-    if [ -e "${rst_files[0]}" ]; then
-      TESTABLES="$TESTABLES ${rst_files[*]}"
+    if [ -e "${RST_FILES[0]}" ]; then
+      TESTABLES="$TESTABLES ${RST_FILES[*]}"
     fi
   fi
 
@@ -85,7 +87,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${py_exe} -m pytest --tb=native $TESTABLES
+    ${PY_EXE} -m pytest --tb=native $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:
     # add --tb=native

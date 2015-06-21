@@ -75,10 +75,6 @@ if [ -d test ]; then
   fi
 
   if ! test -z "$TESTABLES"; then
-    if test "$cl_dev" != ""; then
-      cl_dev_real=`echo ${cl_dev} | tr '_+' ': '`
-    fi
-
     if test -f /tmp/enable-amd-compute; then
       . /tmp/enable-amd-compute
     fi
@@ -87,7 +83,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    PYOPENCL_TEST=${cl_dev_real} PYOPENCL_CTX=${cl_dev_real} ${py_exe} -m pytest --tb=native $TESTABLES
+    ${py_exe} -m pytest --tb=native $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:
     # add --tb=native

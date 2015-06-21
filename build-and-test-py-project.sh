@@ -1,6 +1,12 @@
-py_exe=python${py_version}
+if [ "$py_exe" == "" ]; then
+  py_exe=python${py_version}
+fi
 
+echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
+echo "Python executable: ${py_exe}"
+echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
+echo "-----------------------------------------------"
 
 rm -Rf .env
 rm -Rf build
@@ -27,20 +33,24 @@ fi
 . .env/bin/activate
 
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
-curl -k https://ssl.tiker.net/software/ez_setup.py | python -
-#curl -k https://raw.github.com/pypa/pip/1.4/contrib/get-pip.py | python -
-curl http://git.tiker.net/pip/blob_plain/77f959a3ce9cc506efbf3a17290d387d0a6624f5:/contrib/get-pip.py | python -
+#curl -k https://ssl.tiker.net/software/ez_setup.py | python -
+curl -k https://bootstrap.pypa.io/ez_setup.py | python -
 
-PIP_FLAGS=""
+#curl http://git.tiker.net/pip/blob_plain/77f959a3ce9cc506efbf3a17290d387d0a6624f5:/contrib/get-pip.py | python -
+curl -k https://raw.github.com/pypa/pip/7.0.3/contrib/get-pip.py | python -
 
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH
 
-PIP="${py_exe} $(which pip) $PIP_FLAGS"
+PIP="${py_exe} $(which pip)"
 
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
-    $PIP install $i
+    if [ "$i" = "numpy" ] && [[ "$py_exe" == "pypy*" ]]; then
+      $PIP install git+https://bitbucket.org/pypy/numpy.git
+    else
+      $PIP install $i
+    fi
   done
 fi
 

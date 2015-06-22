@@ -86,7 +86,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest --tb=native $TESTABLES
+    ${PY_EXE} -m pytest --tb=native  -rxs $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:
     # add --tb=native

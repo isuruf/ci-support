@@ -10,11 +10,16 @@ echo "Python executable: ${PY_EXE}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
 echo "-----------------------------------------------"
 
+# {{{ clean up
+
 rm -Rf .env
 rm -Rf build
 find -name '*.pyc' -delete
 
 rm -Rf env
+git clean -fdx
+
+# }}}
 
 git submodule update --init --recursive
 

@@ -14,7 +14,7 @@ echo "-----------------------------------------------"
 
 rm -Rf .env
 rm -Rf build
-find -name '*.pyc' -delete
+find . -name '*.pyc' -delete
 
 rm -Rf env
 git clean -fdx -e siteconf.py

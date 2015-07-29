@@ -29,6 +29,8 @@ fi
 
 git submodule update --init --recursive
 
+# {{{ virtualenv
+
 VENV_VERSION="virtualenv-13.0.3"
 rm -Rf "$VENV_VERSION"
 curl -k https://pypi.python.org/packages/source/v/virtualenv/$VENV_VERSION.tar.gz | tar xfz -
@@ -45,9 +47,19 @@ fi
 
 . .env/bin/activate
 
+# }}}
+
+# {{{ setuptools
+
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
 #curl -k https://ssl.tiker.net/software/ez_setup.py | python -
-curl -k https://bootstrap.pypa.io/ez_setup.py | python -
+#curl -k https://bootstrap.pypa.io/ez_setup.py | python -
+
+SETUPTOOLS_VERSION="setuptools-17.1.1"
+curl -k https://pypi.python.org/packages/source/s/setuptools/$SETUPTOOLS_VERSION.tar.gz | tar xfz -
+$PY_EXE $SETUPTOOLS_VERSION/setup.py install
+
+# }}}
 
 curl -k https://gitlab.tiker.net/inducer/pip/raw/7.0.3/contrib/get-pip.py | python -
 

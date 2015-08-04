@@ -17,7 +17,7 @@ rm -Rf build
 find . -name '*.pyc' -delete
 
 rm -Rf env
-git clean -fdx -e siteconf.py
+git clean -fdx -e siteconf.py -e boost-numeric-bindings
 
 if test `find "siteconf.py" -mmin +1`; then
   echo "siteconf.py older than a minute, assumed stale, deleted"

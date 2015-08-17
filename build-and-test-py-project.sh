@@ -78,8 +78,12 @@ if test "$EXTRA_INSTALL" != ""; then
   done
 fi
 
-if test -f requirements.txt; then
-  $PIP install -r requirements.txt
+if test "$REQUIREMENTS_TXT" == ""; then
+  REQUIREMENTS_TXT="requirements.txt"
+fi
+
+if test -f $REQUIREMENTS_TXT; then
+  $PIP install -r $REQUIREMENTS_TXT
 fi
 
 $PIP install pytest

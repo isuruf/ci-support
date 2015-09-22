@@ -94,7 +94,9 @@ TESTABLES=""
 if [ -d test ]; then
   cd test
 
-  TESTABLES="$TESTABLES ."
+  if ! [ -f .not-actually-ci-tests ]; then
+    TESTABLES="$TESTABLES ."
+  fi
 
   if [ -z "$NO_DOCTESTS" ]; then
     RST_FILES=(../doc/*.rst)

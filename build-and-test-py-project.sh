@@ -73,6 +73,8 @@ if test "$EXTRA_INSTALL" != ""; then
     if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
       # That commit is *just* before they started checking pypy versions...
       $PIP install git+https://bitbucket.org/pypy/numpy.git@823b091
+    elif [ "$i" = "numpy" ] && [[ "${PY_EXE}" == python2.6* ]]; then
+      $PIP install 'numpy==1.10.4
     else
       $PIP install $i
     fi

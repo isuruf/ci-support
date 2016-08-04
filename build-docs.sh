@@ -62,6 +62,7 @@ Host doc-upload
    IdentityFile doc_upload_key
    IdentitiesOnly yes
    Hostname tiker.net
+   StrictHostKeyChecking false
 END
 
 make html

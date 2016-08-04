@@ -52,6 +52,8 @@ fi
 
 $PY_EXE -m pip install sphinx
 
+hash -r # make sure sphinx is found
+
 cd doc
 
 cat > doc_upload_ssh_config <<END
@@ -65,5 +67,5 @@ END
 make html
 
 echo "${DOC_UPLOAD_KEY}" > doc_upload_key
-./upload-docs.sh || { rm doc_upload_key; exit 1 }
+./upload-docs.sh || { rm doc_upload_key; exit 1; }
 rm doc_upload_key

@@ -67,5 +67,5 @@ END
 make html
 
 echo "${DOC_UPLOAD_KEY}" > doc_upload_key
-./upload-docs.sh || { rm doc_upload_key; exit 1; }
+RSYNC_RSH="ssh -F doc_upload_ssh_config" ./upload-docs.sh || { rm doc_upload_key; exit 1; }
 rm doc_upload_key

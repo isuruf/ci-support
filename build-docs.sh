@@ -38,7 +38,7 @@ ${PY_EXE} -m ensurepip
 
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
-    $PIP install $i
+    $PY_EXE -m pip install $i
   done
 fi
 
@@ -47,10 +47,10 @@ if test "$REQUIREMENTS_TXT" == ""; then
 fi
 
 if test -f $REQUIREMENTS_TXT; then
-  $PIP install -r $REQUIREMENTS_TXT
+  $PY_EXE -m pip install -r $REQUIREMENTS_TXT
 fi
 
-$PIP install sphinx
+$PY_EXE -m pip install sphinx
 
 cd doc
 

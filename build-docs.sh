@@ -52,7 +52,7 @@ fi
 
 $PY_EXE -m pip install sphinx
 
-hash -r # make sure sphinx is found
+${PY_EXE} setup.py install
 
 cd doc
 

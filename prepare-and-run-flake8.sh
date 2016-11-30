@@ -36,20 +36,6 @@ ${PY_EXE} -m ensurepip
 
 # }}}
 
-if test "$EXTRA_INSTALL" != ""; then
-  for i in $EXTRA_INSTALL ; do
-    $PY_EXE -m pip install $i
-  done
-fi
-
-if test "$REQUIREMENTS_TXT" == ""; then
-  REQUIREMENTS_TXT="requirements.txt"
-fi
-
-if test -f $REQUIREMENTS_TXT; then
-  $PY_EXE -m pip install -r $REQUIREMENTS_TXT
-fi
-
 $PY_EXE -m pip install flake8 pep8-naming
 
 python -m flake8 "$@"

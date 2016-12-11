@@ -50,7 +50,7 @@ if test -f $REQUIREMENTS_TXT; then
   $PY_EXE -m pip install -r $REQUIREMENTS_TXT
 fi
 
-$PY_EXE -m pip install 'sphinx<1.5'
+$PY_EXE -m pip install sphinx
 
 ${PY_EXE} setup.py install
 

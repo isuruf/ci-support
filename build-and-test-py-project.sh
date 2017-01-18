@@ -53,16 +53,20 @@ fi
 
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
 #curl -k https://ssl.tiker.net/software/ez_setup.py | python -
-curl -k https://bootstrap.pypa.io/ez_setup.py | python -
+#curl -k https://bootstrap.pypa.io/ez_setup.py | python -
 
-# SETUPTOOLS_VERSION="setuptools-33.1.1"
-# curl -k -O https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/$SETUPTOOLS_VERSION.zip
-# unzip $SETUPTOOLS_VERSION
-# (cd $SETUPTOOLS_VERSION; $PY_EXE setup.py install)
+SETUPTOOLS_VERSION="setuptools-33.1.1"
+curl -k -O https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/$SETUPTOOLS_VERSION.zip
+unzip $SETUPTOOLS_VERSION
+(cd $SETUPTOOLS_VERSION; $PY_EXE setup.py install)
 
 # }}}
 
-curl -k https://gitlab.tiker.net/inducer/pip/raw/7.0.3/contrib/get-pip.py | python -
+if [[ "${PY_EXE}" == python3.[56789] ]]; then
+  $PY_EXE -m ensurepip
+else
+  curl -k https://gitlab.tiker.net/inducer/pip/raw/7.0.3/contrib/get-pip.py | python -
+fi
 
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.
 export PATH=`pwd`/.env/local/bin:$PATH

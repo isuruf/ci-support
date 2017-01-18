@@ -56,7 +56,8 @@ fi
 #curl -k https://bootstrap.pypa.io/ez_setup.py | python -
 
 SETUPTOOLS_VERSION="setuptools-33.1.1"
-curl -k https://pypi.python.org/packages/source/s/setuptools/$SETUPTOOLS_VERSION.tar.gz | tar xfz -
+curl -k -O https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/$SETUPTOOLS_VERSION.zip
+unzip $SETUPTOOLS_VERSION
 $PY_EXE $SETUPTOOLS_VERSION/setup.py install
 
 # }}}

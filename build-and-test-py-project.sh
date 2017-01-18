@@ -53,12 +53,12 @@ fi
 
 #curl -k https://bitbucket.org/pypa/setuptools/raw/bootstrap-py24/ez_setup.py | python -
 #curl -k https://ssl.tiker.net/software/ez_setup.py | python -
-#curl -k https://bootstrap.pypa.io/ez_setup.py | python -
+curl -k https://bootstrap.pypa.io/ez_setup.py | python -
 
-SETUPTOOLS_VERSION="setuptools-33.1.1"
-curl -k -O https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/$SETUPTOOLS_VERSION.zip
-unzip $SETUPTOOLS_VERSION
-$PY_EXE $SETUPTOOLS_VERSION/setup.py install
+# SETUPTOOLS_VERSION="setuptools-33.1.1"
+# curl -k -O https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/$SETUPTOOLS_VERSION.zip
+# unzip $SETUPTOOLS_VERSION
+# (cd $SETUPTOOLS_VERSION; $PY_EXE setup.py install)
 
 # }}}
 

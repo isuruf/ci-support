@@ -50,6 +50,6 @@ if test -f $REQUIREMENTS_TXT; then
   $PY_EXE -m pip install -r $REQUIREMENTS_TXT
 fi
 
-$PY_EXE -m pip install mypy-lang typed-ast
+$PY_EXE -m pip install mypy
 
 ./run-mypy.sh

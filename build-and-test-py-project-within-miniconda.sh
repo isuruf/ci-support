@@ -30,7 +30,7 @@ bash "$MINICONDA_INSTALL_SH" -b -p "$MINICONDA_INSTALL_DIR"
 
 PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --file "$CONDA_ENVIRONMENT" --name testing
 
-source $MINICONDA_INSTALL_DIR/bin/activate testing
+source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 
 conda install --yes pytest
 

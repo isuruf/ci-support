@@ -93,7 +93,7 @@ if test -f $REQUIREMENTS_TXT; then
   $PIP install -r $REQUIREMENTS_TXT
 fi
 
-$PIP install pytest
+$PIP install pytest pytest-warnings
 
 ${PY_EXE} setup.py install
 
@@ -122,7 +122,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest -rw --tb=native  -rxs $TESTABLES
+    ${PY_EXE} -m pytest -rw --tb=native  -rxsw $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:
     # add --tb=native

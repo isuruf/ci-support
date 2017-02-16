@@ -34,6 +34,8 @@ source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 
 conda install --quiet --yes pytest
 
+conda list
+
 # }}}
 
 PY_EXE=python

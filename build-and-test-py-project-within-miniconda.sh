@@ -3,6 +3,7 @@
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Conda environment file: ${CONDA_ENVIRONMENT}"
+echo "Extra pip requirements: ${REQUIREMENTS_TXT}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
 echo "-----------------------------------------------"
 
@@ -31,6 +32,11 @@ bash "$MINICONDA_INSTALL_SH" -b -p "$MINICONDA_INSTALL_DIR"
 PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --quiet --file "$CONDA_ENVIRONMENT" --name testing
 
 source "$MINICONDA_INSTALL_DIR/bin/activate" testing
+
+if test -f "$REQUIREMENTS_TXT"; then
+  conda install --quiet --yes pip
+  pip install -r "$REQUIREMENTS_TXT"
+fi
 
 conda install --quiet --yes pytest
 

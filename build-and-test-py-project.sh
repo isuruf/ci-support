@@ -90,7 +90,7 @@ if test "$REQUIREMENTS_TXT" == ""; then
 fi
 
 if test -f $REQUIREMENTS_TXT; then
-  $PIP install -r $REQUIREMENTS_TXT
+  $PIP install --upgrade -r $REQUIREMENTS_TXT
 fi
 
 $PIP install pytest pytest-warnings

@@ -35,7 +35,7 @@ source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 
 if test -f "$REQUIREMENTS_TXT"; then
   conda install --quiet --yes pip
-  pip install -r "$REQUIREMENTS_TXT"
+  pip install --upgrade -r "$REQUIREMENTS_TXT"
 fi
 
 conda install --quiet --yes pytest

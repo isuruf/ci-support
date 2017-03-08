@@ -50,6 +50,7 @@ if test -f $REQUIREMENTS_TXT; then
   $PY_EXE -m pip install -r $REQUIREMENTS_TXT
 fi
 
-$PY_EXE -m pip install mypy
+# Pinned version pending https://github.com/python/mypy/issues/2978
+$PY_EXE -m pip install mypy==0.470
 
 ./run-mypy.sh

@@ -51,6 +51,6 @@ if test -f $REQUIREMENTS_TXT; then
 fi
 
 # Pinned version pending https://github.com/python/mypy/issues/2978
-$PY_EXE -m pip install mypy==0.470
+$PY_EXE -m pip install mypy==0.471 typed-ast==0.6.3
 
 ./run-mypy.sh

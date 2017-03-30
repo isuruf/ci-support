@@ -27,7 +27,9 @@ fi
 
 # }}}
 
-git submodule update --init --recursive
+if [[ "$NO_SUBMODULES" = "" ]]; then
+  git submodule update --init --recursive
+fi
 
 # {{{ virtualenv
 

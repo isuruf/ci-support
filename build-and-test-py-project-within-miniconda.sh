@@ -29,7 +29,7 @@ bash "$MINICONDA_INSTALL_SH" -b -p "$MINICONDA_INSTALL_DIR"
 
 # {{{ set up testing environment
 
-PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update conda --yes --debug --verbose
+PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update conda --yes --quiet
 
 PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update --all --yes --quiet
 

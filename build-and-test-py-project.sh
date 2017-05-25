@@ -87,6 +87,9 @@ if test "$EXTRA_INSTALL" != ""; then
   done
 fi
 
+# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
+$PIP install pytest==3.0.4 pytest-warnings==0.2.0
+
 if test "$REQUIREMENTS_TXT" == ""; then
   REQUIREMENTS_TXT="requirements.txt"
 fi
@@ -94,9 +97,6 @@ fi
 if test -f $REQUIREMENTS_TXT; then
   $PIP install -r $REQUIREMENTS_TXT
 fi
-
-# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
-$PIP install pytest==3.0.4 pytest-warnings==0.2.0
 
 ${PY_EXE} setup.py install
 

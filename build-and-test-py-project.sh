@@ -95,7 +95,8 @@ if test -f $REQUIREMENTS_TXT; then
   $PIP install -r $REQUIREMENTS_TXT
 fi
 
-$PIP install pytest pytest-warnings
+# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
+$PIP install pytest==3.0.4 pytest-warnings
 
 ${PY_EXE} setup.py install
 

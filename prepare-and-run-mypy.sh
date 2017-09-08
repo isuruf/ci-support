@@ -2,7 +2,19 @@
 
 set -e
 
-PY_EXE=python3.5
+PY_EXE="$1"
+
+if test "$PY_EXE" = ""; then
+  PY_EXE="python3.6"
+fi
+shift
+
+
+VERSIONS="$@"
+if test "$VERSIONS" = ""; then
+  # Pinned version pending https://github.com/python/mypy/issues/2978
+  VERSIONS="mypy==0.471 typed-ast==0.6.3"
+fi
 
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
@@ -50,7 +62,6 @@ if test -f $REQUIREMENTS_TXT; then
   $PY_EXE -m pip install -r $REQUIREMENTS_TXT
 fi
 
-# Pinned version pending https://github.com/python/mypy/issues/2978
-$PY_EXE -m pip install mypy==0.471 typed-ast==0.6.3
+$PY_EXE -m pip install $VERSIONS
 
 ./run-mypy.sh

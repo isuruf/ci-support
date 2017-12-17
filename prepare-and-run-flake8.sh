@@ -1,6 +1,7 @@
 #! /bin/bash
 
 set -e
+set -x
 
 PY_EXE=python3.5
 

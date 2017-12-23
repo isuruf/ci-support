@@ -1,10 +1,15 @@
 #! /bin/bash
 
+export XDG_CACHE_HOME="$HOME/.cache-$$"
+rm -Rf $XDG_CACHE_HOME
+mkdir -p $XDG_CACHE_HOME
+
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Conda environment file: ${CONDA_ENVIRONMENT}"
 echo "Extra pip requirements: ${REQUIREMENTS_TXT}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
+echo "XDG_CACHE_HOME: ${XDG_CACHE_HOME}"
 echo "-----------------------------------------------"
 
 if [ "$(uname)" = "Darwin" ]; then
@@ -86,3 +91,5 @@ if [ -d test ]; then
     # omit --junitxml=pytest.xml
   fi
 fi
+
+rm -Rf $XDG_CACHE_HOME

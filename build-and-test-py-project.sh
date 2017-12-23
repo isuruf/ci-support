@@ -4,15 +4,10 @@ if [ "$PY_EXE" == "" ]; then
   PY_EXE=python${py_version}
 fi
 
-export XDG_CACHE_HOME="$HOME/.cache-$$"
-rm -Rf $XDG_CACHE_HOME
-mkdir -p $XDG_CACHE_HOME
-
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Python executable: ${PY_EXE}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
-echo "XDG_CACHE_HOME: ${XDG_CACHE_HOME}"
 echo "-----------------------------------------------"
 
 # {{{ clean up
@@ -139,5 +134,3 @@ if [ -d test ]; then
     # omit --junitxml=pytest.xml
   fi
 fi
-
-rm -Rf $XDG_CACHE_HOME

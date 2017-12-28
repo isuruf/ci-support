@@ -87,8 +87,8 @@ if test "$EXTRA_INSTALL" != ""; then
   done
 fi
 
-# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
-$PIP install pytest==3.0.4 pytest-warnings==0.2.0
+# Used to be pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
+$PIP install pytest==3.2.0
 
 if test "$REQUIREMENTS_TXT" == ""; then
   REQUIREMENTS_TXT="requirements.txt"
@@ -125,7 +125,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  -rxsw $TESTABLES
+    ${PY_EXE} -m pytest --durations=10 --tb=native  -rxsw $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:
     # add --tb=native

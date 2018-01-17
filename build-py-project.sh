@@ -72,6 +72,10 @@ PIP="${PY_EXE} $(which pip)"
 
 $PIP install setuptools
 
+# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
+# Install before a newer version gets pulled in as a dependency
+$PIP install pytest==3.0.4 pytest-warnings==0.2.0
+
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
     if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
@@ -93,7 +97,3 @@ if test -f $REQUIREMENTS_TXT; then
 fi
 
 $PIP install .
-
-# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
-$PIP install pytest==3.0.4 pytest-warnings==0.2.0
-

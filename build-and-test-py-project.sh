@@ -9,9 +9,6 @@ fi
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project.sh
 source build-py-project.sh
 
-# Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434
-$PIP install pytest==3.0.4 pytest-warnings==0.2.0
-
 TESTABLES=""
 if [ -d test ]; then
   cd test

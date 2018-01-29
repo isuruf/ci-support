@@ -4,6 +4,7 @@ echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Conda environment file: ${CONDA_ENVIRONMENT}"
 echo "Extra pip requirements: ${REQUIREMENTS_TXT}"
+echo "Extra pytest options: ${PYTEST_ADDOPTS}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
 echo "-----------------------------------------------"
 

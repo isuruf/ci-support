@@ -6,6 +6,9 @@ echo "Conda environment file: ${CONDA_ENVIRONMENT}"
 echo "Extra pip requirements: ${REQUIREMENTS_TXT}"
 echo "Extra pytest options: ${PYTEST_ADDOPTS}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
+echo "git revision: $(git rev-parse --short HEAD)"
+echo "git status:"
+git status -s
 echo "-----------------------------------------------"
 
 if [ "$(uname)" = "Darwin" ]; then

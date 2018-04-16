@@ -64,9 +64,9 @@ fi
 if [[ "${PY_EXE}" == python3.[56789] ]]; then
   $PY_EXE -m ensurepip
 elif [[ "${PY_EXE}" == python2.6 ]]; then
-  https://bootstrap.pypa.io/2.6/get-pip.py | python -
+  curl https://bootstrap.pypa.io/2.6/get-pip.py | python -
 else
-  curl -k https://bootstrap.pypa.io/get-pip.py | python -
+  curl https://bootstrap.pypa.io/get-pip.py | python -
 fi
 
 # Not sure why the hell pip ends up there, but in Py3.3, it sometimes does.

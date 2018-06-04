@@ -2,6 +2,7 @@ echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Python executable: ${PY_EXE}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
+echo "PYTEST_ADDOPTS: ${PYTEST_ADDOPTS}"
 echo "git revision: $(git rev-parse --short HEAD)"
 echo "git status:"
 git status -s

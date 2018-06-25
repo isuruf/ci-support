@@ -26,10 +26,6 @@ if [ -d test ]; then
   fi
 
   if ! test -z "$TESTABLES"; then
-    if test -f /tmp/enable-amd-compute; then
-      . /tmp/enable-amd-compute
-    fi
-
     echo "TESTABLES: $TESTABLES"
     ulimit -c unlimited
 

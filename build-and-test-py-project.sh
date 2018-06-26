@@ -30,6 +30,6 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $PYTEST_ARGS $TESTABLES
+    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $TESTABLES
   fi
 fi

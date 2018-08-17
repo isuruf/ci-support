@@ -29,7 +29,9 @@ if [ -d test ]; then
     echo "TESTABLES: $TESTABLES"
     ulimit -c unlimited
 
-    # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $TESTABLES
+    # PY_EXTRA_FLAGS can be used to pass -m mpi4py.run
+    # https://mpi4py.readthedocs.io/en/stable/mpi4py.run.html
+
+    ${PY_EXE} ${PY_EXTRA_FLAGS} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $TESTABLES
   fi
 fi

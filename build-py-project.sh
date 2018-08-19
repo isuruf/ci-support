@@ -1,3 +1,4 @@
+
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Python executable: ${PY_EXE}"
@@ -7,6 +8,9 @@ echo "git revision: $(git rev-parse --short HEAD)"
 echo "git status:"
 git status -s
 echo "-----------------------------------------------"
+
+# https://gitlab.tiker.net/mattwala/pytential/issues/4 ?
+export LANG=en_US.utf-8
 
 # {{{ clean up
 

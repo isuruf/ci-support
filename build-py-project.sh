@@ -89,7 +89,7 @@ if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
     if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
       $PIP install git+https://bitbucket.org/pypy/numpy.git
-    elif [ "$i" = "pybind11" ] && [[ "${PY_EXE}" == pypy* ]]; then
+    elif [ "$i" = *pybind11* ] && [[ "${PY_EXE}" == pypy* ]]; then
       # Work around https://github.com/pybind/pybind11/issues/1491
       L=$(readlink .env/include)
       rm .env/include

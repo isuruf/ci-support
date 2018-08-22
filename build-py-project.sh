@@ -79,6 +79,7 @@ export PATH=`pwd`/.env/local/bin:$PATH
 
 PIP="${PY_EXE} $(which pip)"
 
+$PIP install --upgrade pip
 $PIP install setuptools
 
 # Pinned to 3.0.4 because of https://github.com/pytest-dev/pytest/issues/2434

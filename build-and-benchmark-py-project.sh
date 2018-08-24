@@ -24,7 +24,6 @@ if [[ ! -z "$CI" ]]; then
 fi
 
 asv machine --yes
-asv setup --verbose
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
 

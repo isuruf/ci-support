@@ -1,6 +1,6 @@
 #! /bin/bash
 
-curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
+curl -L -O -k https://gitlab.tiker.net/isuruf/ci-support/raw/bench/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 
 conda install --quiet --yes pytest

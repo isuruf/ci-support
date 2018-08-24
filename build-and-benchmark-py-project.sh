@@ -15,11 +15,12 @@ fi
 mkdir -p ~/.$PROJECT/asv
 
 if [[ ! -z "$CI" ]]; then
+  mkdir -p .asv/env
   if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
-    ln -s ~/.$PROJECT/asv .asv
+    ln -s ~/.$PROJECT/asv/results .asv/results
   else
     # Copy, so that the original folder is not changed.
-    cp -r ~/.$PROJECT/asv .asv
+    cp -r ~/.$PROJECT/asv/results .asv/results
   fi
 fi
 

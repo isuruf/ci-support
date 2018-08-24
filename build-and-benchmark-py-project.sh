@@ -7,7 +7,7 @@ conda list
 
 PY_EXE=python
 
-if [[ ! -z "$PROJECT" ]]; then
+if [[ -z "$PROJECT" ]]; then
     echo "PROJECT env var not set"
     exit 1
 fi

@@ -34,6 +34,9 @@ ${PY_EXE} -m venv .env
 
 ${PY_EXE} -m ensurepip
 
+# Avoid UnicodeDecodeError: https://github.com/pypa/pip/issues/4825
+pip install --upgrade pip
+
 # }}}
 
 if test "$EXTRA_INSTALL" != ""; then

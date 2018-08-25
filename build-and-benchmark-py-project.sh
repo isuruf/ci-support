@@ -5,8 +5,6 @@ pip install asv
 
 conda list
 
-PY_EXE=python
-
 if [[ -z "$PROJECT" ]]; then
     echo "PROJECT env var not set"
     exit 1

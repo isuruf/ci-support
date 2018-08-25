@@ -10,8 +10,8 @@ if [[ -z "$PROJECT" ]]; then
     exit 1
 fi
 
-if [[ -z "$PYOPENCL_CTX" ]]; then
-    echo "PYOPENCL_CTX env var not set"
+if [[ -z "$PYOPENCL_TEST" ]]; then
+    echo "PYOPENCL_TEST env var not set"
     exit 1
 fi
 

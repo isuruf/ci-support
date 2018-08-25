@@ -5,10 +5,13 @@ pip install asv
 
 conda list
 
-PY_EXE=python
-
 if [[ -z "$PROJECT" ]]; then
     echo "PROJECT env var not set"
+    exit 1
+fi
+
+if [[ -z "$PYOPENCL_TEST" ]]; then
+    echo "PYOPENCL_TEST env var not set"
     exit 1
 fi
 
@@ -27,8 +30,6 @@ fi
 asv machine --yes
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
-
-export PYOPENCL_CTX=port
 
 asv run $master_commit...$master_commit~ --skip-existing --verbose
 asv run $test_commit...$test_commit~ --skip-existing --verbose

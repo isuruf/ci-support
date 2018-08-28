@@ -27,7 +27,10 @@ if [[ ! -z "$CI" ]]; then
   fi
 fi
 
-asv machine --yes
+if [[ ! -f ~/.asv-machine.json ]]; then
+  asv machine --yes
+fi
+
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
 

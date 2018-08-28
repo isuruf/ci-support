@@ -15,7 +15,7 @@ if [[ -z "$PYOPENCL_TEST" ]]; then
     exit 1
 fi
 
-mkdir -p ~/.$PROJECT/asv
+mkdir -p ~/.$PROJECT/asv/results
 
 if [[ ! -z "$CI" ]]; then
   mkdir -p .asv/env

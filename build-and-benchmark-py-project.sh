@@ -25,6 +25,7 @@ if [[ ! -z "$CI" ]]; then
     # Copy, so that the original folder is not changed.
     cp -r ~/.$PROJECT/asv/results .asv/results
   fi
+  rm -rf .asv/env
 fi
 
 if [[ ! -f ~/.asv-machine.json ]]; then

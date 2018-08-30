@@ -1,7 +1,8 @@
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 
-pip install asv
+# Use a stable release once https://github.com/airspeed-velocity/asv/pull/721 is released
+pip install git+https://github.com/airspeed-velocity/asv#egg=asv
 
 conda list
 

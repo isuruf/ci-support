@@ -6,11 +6,13 @@ set -x
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 
-conda install --quiet --yes pytest
+PY_EXE=python
+
+# Using pip instead of conda here avoids ridiculous uninstall chains
+# like these:https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
+${PY_EXE} -mpip install pytest
 
 conda list
-
-PY_EXE=python
 
 TESTABLES=""
 if [ -d test ]; then

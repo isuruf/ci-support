@@ -1,5 +1,8 @@
 #! /bin/bash
 
+set -e
+set -x
+
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"
 echo "Conda environment file: ${CONDA_ENVIRONMENT}"

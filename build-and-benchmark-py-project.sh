@@ -1,34 +1,40 @@
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 
-pip install asv
+# Use a stable release once https://github.com/airspeed-velocity/asv/pull/721 is released
+pip install git+https://github.com/airspeed-velocity/asv#egg=asv
 
 conda list
 
-PY_EXE=python
-
-if [[ ! -z "$PROJECT" ]]; then
+if [[ -z "$PROJECT" ]]; then
     echo "PROJECT env var not set"
     exit 1
 fi
 
-mkdir -p ~/.$PROJECT/asv
-
-if [[ ! -z "$CI" ]]; then
-  if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
-    ln -s ~/.$PROJECT/asv .asv
-  else
-    # Copy, so that the original folder is not changed.
-    cp -r ~/.$PROJECT/asv .asv
-  fi
+if [[ -z "$PYOPENCL_TEST" ]]; then
+    echo "PYOPENCL_TEST env var not set"
+    exit 1
 fi
 
-asv machine --yes
-asv setup --verbose
+mkdir -p ~/.$PROJECT/asv/results
+
+if [[ ! -z "$CI" ]]; then
+  mkdir -p .asv/env
+  if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
+    ln -s ~/.$PROJECT/asv/results .asv/results
+  else
+    # Copy, so that the original folder is not changed.
+    cp -r ~/.$PROJECT/asv/results .asv/results
+  fi
+  rm -rf .asv/env
+fi
+
+if [[ ! -f ~/.asv-machine.json ]]; then
+  asv machine --yes
+fi
+
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
-
-export PYOPENCL_CTX=port
 
 asv run $master_commit...$master_commit~ --skip-existing --verbose
 asv run $test_commit...$test_commit~ --skip-existing --verbose

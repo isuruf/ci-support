@@ -1,5 +1,8 @@
 #! /bin/bash
 
+set -e
+set -x
+
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 

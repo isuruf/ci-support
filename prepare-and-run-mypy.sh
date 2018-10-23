@@ -58,6 +58,9 @@ if test "$REQUIREMENTS_TXT" == ""; then
   REQUIREMENTS_TXT="requirements.txt"
 fi
 
+# https://github.com/pypa/pip/issues/5345#issuecomment-386443351
+export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
+
 if test -f $REQUIREMENTS_TXT; then
   $PY_EXE -m pip install -r $REQUIREMENTS_TXT
 fi

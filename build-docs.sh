@@ -34,6 +34,9 @@ ${PY_EXE} -m venv .env
 
 ${PY_EXE} -m ensurepip
 
+# https://github.com/pypa/pip/issues/5345#issuecomment-386443351
+export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
+
 # Avoid UnicodeDecodeError: https://github.com/pypa/pip/issues/4825
 pip install --upgrade pip
 

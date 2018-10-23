@@ -57,6 +57,9 @@ PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --quiet --file "$CONDA_
 
 source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 
+# https://github.com/pypa/pip/issues/5345#issuecomment-386443351
+export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
+
 if test -f "$REQUIREMENTS_TXT"; then
   conda install --quiet --yes pip
   pip install -r "$REQUIREMENTS_TXT"

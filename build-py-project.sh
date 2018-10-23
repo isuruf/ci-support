@@ -75,6 +75,9 @@ export PATH=`pwd`/.env/local/bin:$PATH
 
 PIP="${PY_EXE} $(which pip)"
 
+# https://github.com/pypa/pip/issues/5345#issuecomment-386443351
+export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
+
 $PIP install --upgrade pip
 $PIP install setuptools
 

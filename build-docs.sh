@@ -67,7 +67,7 @@ Host doc-upload
    User doc
    IdentityFile doc_upload_key
    IdentitiesOnly yes
-   Hostname tiker.net
+   Hostname marten.tiker.net
    StrictHostKeyChecking false
 END
 

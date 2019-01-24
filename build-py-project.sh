@@ -112,4 +112,4 @@ if test -f $REQUIREMENTS_TXT; then
   $PIP install -r $REQUIREMENTS_TXT
 fi
 
-$PIP install .
+$PIP install --editable .

@@ -3,6 +3,7 @@ echo "Current directory: $(pwd)"
 echo "Python executable: ${PY_EXE}"
 echo "PYOPENCL_TEST: ${PYOPENCL_TEST}"
 echo "PYTEST_ADDOPTS: ${PYTEST_ADDOPTS}"
+echo "PROJECT_INSTALL_FLAGS: ${PROJECT_INSTALL_FLAGS}"
 echo "git revision: $(git rev-parse --short HEAD)"
 echo "git status:"
 git status -s
@@ -112,4 +113,4 @@ if test -f $REQUIREMENTS_TXT; then
   $PIP install -r $REQUIREMENTS_TXT
 fi
 
-$PIP install --editable .
+$PIP install $PROJECT_INSTALL_FLAGS .

@@ -15,4 +15,5 @@ if ! test -f .pylintrc; then
   curl -o .pylintrc https://gitlab.tiker.net/inducer/ci-support/raw/master/.pylintrc-default
 fi
 
-python -m pylint "$@"
+# The -I flag avoids potential issues with name shadowing.
+python -I -m pylint "$@"

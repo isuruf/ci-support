@@ -30,11 +30,11 @@ if [ -d test ]; then
     fi
   fi
 
+  rm -Rf 
   if ! test -z "$TESTABLES"; then
     echo "TESTABLES: $TESTABLES"
     ulimit -c unlimited
 
-    # Need to set both _TEST and _CTX because doctests do not use _TEST.
     ${PY_EXE} -m pytest -rw --durations=10 --tb=native  -rxs $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:

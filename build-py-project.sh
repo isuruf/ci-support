@@ -90,7 +90,8 @@ if test "$EXTRA_INSTALL" != ""; then
     if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
       $PIP install git+https://bitbucket.org/pypy/numpy.git
     elif [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
-      # Work around https://github.com/pybind/pybind11/issues/1491
+      # Work around https://github.com/pypa/virtualenv/issues/1198
+      # Running virtualenv --always-copy or -m venv --copies should also do the trick.
       L=$(readlink .env/include)
       rm .env/include
       cp -R $L .env/include

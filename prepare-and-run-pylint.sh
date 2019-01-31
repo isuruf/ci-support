@@ -2,6 +2,10 @@
 
 set -e
 
+if [ "$py_version" == "" ]; then
+  py_version=3
+fi
+
 if [ "$PY_EXE" == "" ]; then
   PY_EXE=python${py_version}
 fi

@@ -3,7 +3,13 @@
 set -e
 set -x
 
-PY_EXE=python3.6
+if [ "$py_version" == "" ]; then
+  py_version=3
+fi
+
+if [ "$PY_EXE" == "" ]; then
+  PY_EXE=python${py_version}
+fi
 
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"

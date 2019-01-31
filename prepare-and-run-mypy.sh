@@ -2,12 +2,18 @@
 
 set -e
 
-PY_EXE="$1"
-
-if test "$PY_EXE" = ""; then
-  PY_EXE="python3.6"
+if [[ $1 == python* ]]; then
+  PY_EXE="$1"
+  shift
 fi
-shift
+
+if [ "$py_version" == "" ]; then
+  py_version=3
+fi
+
+if [ "$PY_EXE" == "" ]; then
+  PY_EXE=python${py_version}
+fi
 
 
 VERSIONS="$@"

@@ -36,8 +36,8 @@ fi
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
 
-asv run $master_commit...$master_commit~ --skip-existing --verbose
-asv run $test_commit...$test_commit~ --skip-existing --verbose
+asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr
+asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr
 
 output=`asv compare $master_commit $test_commit --factor 1 -s`
 echo "$output"

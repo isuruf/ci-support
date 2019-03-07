@@ -13,10 +13,19 @@ fi
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project.sh
 source build-py-project.sh
 
-$PY_EXE -m pip install pylint
+curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/run-pylint.py
 
-if ! test -f .pylintrc; then
-  curl -o .pylintrc https://gitlab.tiker.net/inducer/ci-support/raw/master/.pylintrc-default
+$PY_EXE -m pip install pylint PyYAML
+
+PYLINT_RUNNER_ARGS=""
+
+if ! test -f .pylintrc.yml; then
+  curl -o .pylintrc.yml https://gitlab.tiker.net/inducer/ci-support/raw/master/.pylintrc-default.yml
+  PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc.yml"
 fi
 
-python -m pylint "$@"
+if ! test -f .pylintrc-local.yml; then
+  PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc-local.yml"
+fi
+
+python run-pylint.py $PYLINT_RUNNER_ARGS "$@"

@@ -21,7 +21,7 @@ if ! test -f .pylintrc.yml; then
   curl -o .pylintrc.yml https://gitlab.tiker.net/inducer/ci-support/raw/pylint-flexible-config/.pylintrc-default.yml
 fi
 
-PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintr.yml"
+PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintrc.yml"
 
 if test -f .pylintrc-local.yml; then
   PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc-local.yml"

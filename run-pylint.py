@@ -32,7 +32,7 @@ import yaml
 
 
 def generate_args_from_yaml(input_yaml):
-    """Return a list of strings suitable for use as Pylint args, from YAML.
+    """Generate a list of strings suitable for use as Pylint args, from YAML.
 
     Arguments:
         input_yaml: YAML data, as an input file or bytes
@@ -40,7 +40,6 @@ def generate_args_from_yaml(input_yaml):
     """
 
     parsed_data = yaml.safe_load(input_yaml)
-    args = []
 
     for entry in parsed_data:
         arg = entry["arg"]
@@ -50,11 +49,9 @@ def generate_args_from_yaml(input_yaml):
             if isinstance(val, list):
                 val = ",".join(str(item) for item in val)
 
-            args.append("--%s=%s" % (arg, val))
+            yield "--%s=%s" % (arg, val)
         else:
-            args.append("--%s" % arg)
-
-    return args
+            yield "--%s" % arg
 
 
 YAML_RCFILE_PREFIX = "--yaml-rcfile="

@@ -17,14 +17,13 @@ curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/pylint-flexible-co
 
 $PY_EXE -m pip install pylint PyYAML
 
-PYLINT_RUNNER_ARGS=""
-
 if ! test -f .pylintrc.yml; then
   curl -o .pylintrc.yml https://gitlab.tiker.net/inducer/ci-support/raw/pylint-flexible-config/.pylintrc-default.yml
-  PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc.yml"
 fi
 
-if ! test -f .pylintrc-local.yml; then
+PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintr.yml"
+
+if test -f .pylintrc-local.yml; then
   PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc-local.yml"
 fi
 

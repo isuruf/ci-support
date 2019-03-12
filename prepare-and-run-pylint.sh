@@ -10,16 +10,19 @@ if [ "$PY_EXE" == "" ]; then
   PY_EXE=python${py_version}
 fi
 
-curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/pylint-flexible-config/build-py-project.sh
-source build-py-project.sh
+ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
 
-curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/pylint-flexible-config/run-pylint.py
+curl -L -O -k "${ci_support}/build-py-project.sh"
 
-$PY_EXE -m pip install pylint PyYAML
+curl -L -O -k "${ci_support}/run-pylint.py"
 
 if ! test -f .pylintrc.yml; then
-  curl -o .pylintrc.yml https://gitlab.tiker.net/inducer/ci-support/raw/pylint-flexible-config/.pylintrc-default.yml
+  curl -o .pylintrc.yml "${ci_support}/.pylintrc-default.yml"
 fi
+
+source build-py-project.sh
+
+$PY_EXE -m pip install pylint PyYAML
 
 PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintrc.yml"
 

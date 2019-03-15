@@ -43,7 +43,7 @@ def generate_args_from_yaml(input_yaml):
 
     for entry in parsed_data:
         arg = entry["arg"]
-        val = entry.get("val", None)
+        val = entry.get("val")
 
         if val is not None:
             if isinstance(val, list):

@@ -1,8 +1,9 @@
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 
-# Use a stable release once https://github.com/airspeed-velocity/asv/pull/721 is released
-pip install git+https://github.com/airspeed-velocity/asv#egg=asv
+# Can't use v0.3 because https://github.com/airspeed-velocity/asv/pull/721 is needed
+# Can't use v0.4 because of https://github.com/airspeed-velocity/asv/issues/822
+pip install git+https://github.com/airspeed-velocity/asv@baeec6e096947f735ed3917ed0c2b9361366dd52#egg=asv
 
 conda list
 

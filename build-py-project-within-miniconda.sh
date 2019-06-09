@@ -59,6 +59,8 @@ source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 
 # https://github.com/conda-forge/ocl-icd-feedstock/issues/11#issuecomment-456270634
 rm -f .miniconda3/envs/testing/etc/OpenCL/vendors/system-*.icd
+# https://gitlab.tiker.net/inducer/pytential/issues/112
+rm -f .miniconda3/envs/testing/etc/OpenCL/vendors/apple.icd
 
 # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
 export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID

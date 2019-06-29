@@ -37,6 +37,8 @@ fi
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
 
+# cf. https://github.com/pandas-dev/pandas/pull/25237
+# for reasoning on --launch-method=spawn
 asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 

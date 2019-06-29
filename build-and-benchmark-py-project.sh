@@ -37,8 +37,10 @@ fi
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
 
-asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr
-asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr
+# cf. https://github.com/pandas-dev/pandas/pull/25237
+# for reasoning on --launch-method=spawn
+asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
+asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 
 output=`asv compare $master_commit $test_commit --factor 1 -s`
 echo "$output"

@@ -11,8 +11,8 @@ PY_EXE=python
 # Using pip instead of conda here avoids ridiculous uninstall chains
 # like these:https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
 
-PYTHON_VER=$($PY_EXE -c 'import sys; print(".".join(str(s) for s in sys.version_info[:2]))')
-if [[ "${PY_EXE}" == 2* ]]; then
+PY_VER=$($PY_EXE -c 'import sys; print(".".join(str(s) for s in sys.version_info[:2]))')
+if [[ "${PY_VER}" == 2* ]]; then
   ${PY_EXE} -mpip install "pytest<5"
 else
   ${PY_EXE} -mpip install pytest

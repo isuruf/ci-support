@@ -65,28 +65,28 @@ rm -f .miniconda3/envs/testing/etc/OpenCL/vendors/apple.icd
 # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
 export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
-if test -f "$REQUIREMENTS_TXT"; then
-  conda install --quiet --yes pip
-  pip install -r "$REQUIREMENTS_TXT"
-fi
-
 # }}}
+
+PY_EXE=python
 
 # {{{ install pytest
 
 # Using pip instead of conda here avoids ridiculous uninstall chains
-# like these:https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
+# like these: https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
 
 PY_VER=$($PY_EXE -c 'import sys; print(".".join(str(s) for s in sys.version_info[:2]))')
 if [[ "${PY_VER}" == 2* ]]; then
-  ${PY_EXE} -mpip install "pytest<5"
+  $PY_EXE -mpip install "pytest<5"
 else
-  ${PY_EXE} -mpip install pytest
+  $PY_EXE -mpip install pytest
 fi
 
 # }}}
 
-PY_EXE=python
+if test -f "$REQUIREMENTS_TXT"; then
+  conda install --quiet --yes pip
+  pip install -r "$REQUIREMENTS_TXT"
+fi
 
 ${PY_EXE} setup.py install
 

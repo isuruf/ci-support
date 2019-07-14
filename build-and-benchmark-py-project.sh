@@ -28,6 +28,8 @@ if [[ ! -z "$CI" ]]; then
     cp -r ~/.$PROJECT/asv/results .asv/results
   fi
   rm -rf .asv/env
+  # Fetch the master branch as git repository in gitlab ci env doesn't have it.
+  git fetch origin master
 fi
 
 if [[ ! -f ~/.asv-machine.json ]]; then

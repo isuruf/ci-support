@@ -30,7 +30,7 @@ if [[ ! -z "$CI" ]]; then
   rm -rf .asv/env
   # Fetch the master branch as git repository in gitlab ci env doesn't have it.
   git fetch origin master
-  git checkout -t origin/master
+  git branch master origin/master
 fi
 
 if [[ ! -f ~/.asv-machine.json ]]; then

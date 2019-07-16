@@ -1,8 +1,9 @@
 curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/build-py-project-within-miniconda.sh
 source build-py-project-within-miniconda.sh
 
-# Use a stable release once https://github.com/airspeed-velocity/asv/pull/721 is released
-pip install git+https://github.com/airspeed-velocity/asv#egg=asv
+# Can't use v0.3 because https://github.com/airspeed-velocity/asv/pull/721 is needed
+# Can't use v0.4 because of https://github.com/airspeed-velocity/asv/issues/822
+pip install git+https://github.com/airspeed-velocity/asv@baeec6e096947f735ed3917ed0c2b9361366dd52#egg=asv
 
 conda list
 
@@ -27,6 +28,9 @@ if [[ ! -z "$CI" ]]; then
     cp -r ~/.$PROJECT/asv/results .asv/results
   fi
   rm -rf .asv/env
+  # Fetch the master branch as git repository in gitlab ci env doesn't have it.
+  git fetch origin master
+  git branch master origin/master
 fi
 
 if [[ ! -f ~/.asv-machine.json ]]; then
@@ -36,8 +40,10 @@ fi
 master_commit=`git rev-parse master`
 test_commit=`git rev-parse HEAD`
 
-asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr
-asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr
+# cf. https://github.com/pandas-dev/pandas/pull/25237
+# for reasoning on --launch-method=spawn
+asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
+asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 
 output=`asv compare $master_commit $test_commit --factor 1 -s`
 echo "$output"

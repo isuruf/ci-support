@@ -8,10 +8,6 @@ source build-py-project-within-miniconda.sh
 
 PY_EXE=python
 
-# Using pip instead of conda here avoids ridiculous uninstall chains
-# like these:https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
-${PY_EXE} -mpip install pytest
-
 conda list
 
 TESTABLES=""

@@ -30,4 +30,4 @@ if test -f .pylintrc-local.yml; then
   PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc-local.yml"
 fi
 
-python run-pylint.py $PYLINT_RUNNER_ARGS "$@"
+$PY_EXE run-pylint.py $PYLINT_RUNNER_ARGS "$@"

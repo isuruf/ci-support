@@ -29,7 +29,12 @@ if [ -d test ]; then
   rm -Rf 
   if ! test -z "$TESTABLES"; then
     echo "TESTABLES: $TESTABLES"
+
+    # Core dumps? Sure, we'll take them.
     ulimit -c unlimited
+
+    # 10 GiB should be enough for just about anyone
+    ulimit -m $(python -c 'print(1024*1024*10)')
 
     ${PY_EXE} -m pytest -rw --durations=10 --tb=native  -rxs $TESTABLES
 

@@ -13,6 +13,8 @@ echo "-----------------------------------------------"
 
 # {{{ clean up
 
+# keep this consistent in build-py-project.sh and build-py-project-within-miniconda.sh
+
 rm -Rf .env
 rm -Rf build
 find . -name '*.pyc' -delete
@@ -21,12 +23,20 @@ rm -Rf env
 git clean -fdx \
   -e siteconf.py \
   -e boost-numeric-bindings \
+  -e '.pylintrc.yml' \
+  -e 'prepare-and-run-*.sh' \
+  -e 'run-*.py' \
   -e '.test-*.yml' \
   $GIT_CLEAN_EXCLUDE
+
 
 if test `find "siteconf.py" -mmin +1`; then
   echo "siteconf.py older than a minute, assumed stale, deleted"
   rm -f siteconf.py
+fi
+
+if [[ "$NO_SUBMODULES" = "" ]]; then
+  git submodule update --init --recursive
 fi
 
 # }}}

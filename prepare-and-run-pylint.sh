@@ -12,15 +12,19 @@ fi
 
 ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
 
-curl -L -O -k "${ci_support}/build-py-project.sh"
-
 curl -L -O -k "${ci_support}/run-pylint.py"
 
 if ! test -f .pylintrc.yml; then
   curl -o .pylintrc.yml "${ci_support}/.pylintrc-default.yml"
 fi
 
-source build-py-project.sh
+if test "$USE_CONDA_BUILD" == "1"; then
+  curl -L -O -k "${ci_support}/build-py-project-within-miniconda.sh"
+  source build-py-project-within-miniconda.sh
+else
+  curl -L -O -k "${ci_support}/build-py-project.sh"
+  source build-py-project.sh
+fi
 
 $PY_EXE -m pip install pylint PyYAML
 

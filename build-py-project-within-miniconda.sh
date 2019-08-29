@@ -53,7 +53,7 @@ PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update conda --yes --quiet
 
 PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update --all --yes --quiet
 
-PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --quiet --file "$CONDA_ENVIRONMENT" --name testing
+PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda create --quiet --file "$CONDA_ENVIRONMENT" --name testing
 
 source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 

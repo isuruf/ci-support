@@ -16,5 +16,5 @@ for i in $(find . -name '*.py' -exec grep -q __main__ '{}' \; -print ); do
   echo "-----------------------------------------------------------------------"
   dn=$(dirname "$i")
   bn=$(basename "$i")
-  (cd $dn; ${PY_EXE} "$bn")
+  (cd $dn; time ${PY_EXE} "$bn")
 done

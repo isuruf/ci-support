@@ -102,6 +102,6 @@ if test -f "$REQUIREMENTS_TXT"; then
   pip install -r "$REQUIREMENTS_TXT"
 fi
 
-$PIP install $PROJECT_INSTALL_FLAGS .
+pip install $PROJECT_INSTALL_FLAGS .
 
 conda list

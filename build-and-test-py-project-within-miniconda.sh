@@ -34,7 +34,7 @@ if [ -d test ]; then
     ulimit -c unlimited
 
     # 10 GiB should be enough for just about anyone
-    # ulimit -m $(python -c 'print(1024*1024*10)')
+    ulimit -m $(python -c 'print(1024*1024*10)')
 
     ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxs $TESTABLES
 

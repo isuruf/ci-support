@@ -36,7 +36,7 @@ if [ -d test ]; then
     # 10 GiB should be enough for just about anyone
     ulimit -m $(python -c 'print(1024*1024*10)')
 
-    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxs $TESTABLES
+    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxs $PYTEST_FLAGS $TESTABLES
 
     # Avoid https://github.com/pytest-dev/pytest/issues/754:
     # add --tb=native

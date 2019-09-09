@@ -35,6 +35,6 @@ if [ -d test ]; then
     ulimit -m $(python -c 'print(1024*1024*10)')
 
     # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $TESTABLES
+    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $PYTEST_FLAGS $TESTABLES
   fi
 fi

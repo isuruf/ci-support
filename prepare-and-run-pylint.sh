@@ -26,7 +26,11 @@ else
   source build-py-project.sh
 fi
 
-$PY_EXE -m pip install pylint PyYAML
+# Added 2019-09-25 by AK:
+# https://github.com/PyCQA/pylint/issues/3139
+# https://gitlab.tiker.net/inducer/pytential/merge_requests/182
+# https://gitlab.tiker.net/inducer/leap/pipelines/19503 (?)
+$PY_EXE -m pip install "pylint<2.4" PyYAML
 
 PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintrc.yml"
 

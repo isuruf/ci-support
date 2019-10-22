@@ -73,7 +73,7 @@ def main():
         else:
             args.append(arg)
 
-    logger.info("pylint %s", " ".join(shlex.quote(arg) for arg in args))
+    logger.info(" ".join(shlex.quote(arg) for arg in ["pylint"] + args))
     pylint.lint.Run(args)
 
 

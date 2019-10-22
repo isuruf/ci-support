@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """This script allows using Pylint with YAML-based config files.
 
 The usage of this script is identical to Pylint, except that this script accepts
@@ -26,9 +26,13 @@ This example is equivalent to invoking pylint with the options
 """
 
 import sys
+import logging
+import shlex
 
 import pylint.lint
 import yaml
+
+logger = logging.getLogger(__name__)
 
 
 def generate_args_from_yaml(input_yaml):
@@ -69,8 +73,10 @@ def main():
         else:
             args.append(arg)
 
+    logger.info("pylint %s", " ".join(shlex.quote(arg) for arg in args))
     pylint.lint.Run(args)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()

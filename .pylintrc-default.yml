@@ -4,3 +4,7 @@
   val: all
 - arg: enable
   val: E
+
+# https://github.com/PyCQA/pylint/issues/3381
+- arg: disable
+  val: E1136

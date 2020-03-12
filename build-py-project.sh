@@ -97,9 +97,11 @@ $PIP install pytest==3.0.4 pytest-warnings==0.2.0
 
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
-    if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
-      $PIP install git+https://bitbucket.org/pypy/numpy.git
-    elif [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
+    # numpypy no longer recommended: https://doc.pypy.org/en/latest/faq.html#should-i-install-numpy-or-numpypy
+    # 2020-03-12 AK
+    #if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
+    #  $PIP install git+https://bitbucket.org/pypy/numpy.git
+    if [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
       # Work around https://github.com/pypa/virtualenv/issues/1198
       # Running virtualenv --always-copy or -m venv --copies should also do the trick.
       L=$(readlink .env/include)

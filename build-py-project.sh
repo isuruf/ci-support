@@ -103,11 +103,11 @@ if test "$EXTRA_INSTALL" != ""; then
     #  $PIP install git+https://bitbucket.org/pypy/numpy.git
     if [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
       # Work around https://github.com/pypa/virtualenv/issues/1198
-      # (now fixed: commented out on Mar 28, 2020, OK to remove if no trouble in a few months)
+      # (nominally fixed, but not really it appears. --Mar 28, 2020 AK)
       # Running virtualenv --always-copy or -m venv --copies should also do the trick.
-      # L=$(readlink .env/include)
-      # rm .env/include
-      # cp -R $L .env/include
+      L=$(readlink .env/include)
+      rm .env/include
+      cp -R $L .env/include
 
       # context:
       # https://github.com/conda-forge/pyopencl-feedstock/pull/45

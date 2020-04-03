@@ -81,6 +81,8 @@ export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
 # }}}
 
+conda list
+
 PY_EXE=python
 
 # {{{ install pytest
@@ -102,6 +104,8 @@ if test -f "$REQUIREMENTS_TXT"; then
   pip install -r "$REQUIREMENTS_TXT"
 fi
 
-pip install $PROJECT_INSTALL_FLAGS .
+if test -f .conda-ci-build-configure.sh; then
+  source .conda-ci-build-configure.sh
+fi
 
-conda list
+pip install $PROJECT_INSTALL_FLAGS .

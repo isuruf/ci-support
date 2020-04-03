@@ -8,8 +8,6 @@ source build-py-project-within-miniconda.sh
 
 PY_EXE=python
 
-conda list
-
 TESTABLES=""
 if [ -d test ]; then
   cd test

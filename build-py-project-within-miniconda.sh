@@ -53,7 +53,7 @@ MINICONDA_VERSION=3
 MINICONDA_INSTALL_DIR=.miniconda${MINICONDA_VERSION}
 
 MINICONDA_INSTALL_SH=Miniconda${MINICONDA_VERSION}-latest-${PLATFORM}-x86_64.sh
-curl -O "https://repo.continuum.io/miniconda/$MINICONDA_INSTALL_SH"
+curl -O "https://repo.anaconda.com/miniconda/$MINICONDA_INSTALL_SH"
 
 rm -Rf "$MINICONDA_INSTALL_DIR"
 

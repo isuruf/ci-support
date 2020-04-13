@@ -60,7 +60,7 @@ MINICONDA_VERSION=3
 MINICONDA_INSTALL_DIR=.miniconda${MINICONDA_VERSION}
 
 MINICONDA_INSTALL_SH=Miniconda${MINICONDA_VERSION}-latest-${PLATFORM}-x86_64.sh
-curl -O "https://repo.continuum.io/miniconda/$MINICONDA_INSTALL_SH"
+curl -O "https://repo.anaconda.com/miniconda/$MINICONDA_INSTALL_SH"
 
 rm -Rf "$MINICONDA_INSTALL_DIR"
 
@@ -74,7 +74,7 @@ PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update conda --yes --quiet
 
 PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update --all --yes --quiet
 
-PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --quiet --file "$CONDA_ENVIRONMENT" --name testing
+PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --file "$CONDA_ENVIRONMENT" --name testing
 
 source "$MINICONDA_INSTALL_DIR/bin/activate" testing
 
@@ -87,6 +87,8 @@ rm -f .miniconda3/envs/testing/etc/OpenCL/vendors/apple.icd
 export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
 # }}}
+
+conda list
 
 PY_EXE=python
 
@@ -109,6 +111,8 @@ if test -f "$REQUIREMENTS_TXT"; then
   pip install -r "$REQUIREMENTS_TXT"
 fi
 
-pip install $PROJECT_INSTALL_FLAGS .
+if test -f .conda-ci-build-configure.sh; then
+  source .conda-ci-build-configure.sh
+fi
 
-conda list
+pip install $PROJECT_INSTALL_FLAGS .

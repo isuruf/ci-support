@@ -104,16 +104,23 @@ $PIP install pytest==3.0.4 pytest-warnings==0.2.0
 
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
-    if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
-      $PIP install git+https://bitbucket.org/pypy/numpy.git
-    elif [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
+    # numpypy no longer recommended: https://doc.pypy.org/en/latest/faq.html#should-i-install-numpy-or-numpypy
+    # 2020-03-12 AK
+    #if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
+    #  $PIP install git+https://bitbucket.org/pypy/numpy.git
+    if [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
       # Work around https://github.com/pypa/virtualenv/issues/1198
+      # (nominally fixed, but not really it appears. --Mar 28, 2020 AK)
       # Running virtualenv --always-copy or -m venv --copies should also do the trick.
       L=$(readlink .env/include)
       rm .env/include
       cp -R $L .env/include
 
-      $PIP install $i
+      # context:
+      # https://github.com/conda-forge/pyopencl-feedstock/pull/45
+      # https://github.com/pybind/pybind11/pull/2146
+      $PIP install git+https://github.com/isuruf/pybind11@pypy3
+
     elif [ "$i" = "numpy" ] && [[ "${PY_EXE}" == python2.6* ]]; then
       $PIP install 'numpy==1.10.4'
     else

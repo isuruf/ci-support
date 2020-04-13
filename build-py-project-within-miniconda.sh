@@ -18,7 +18,7 @@ echo "-----------------------------------------------"
 # Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
 # See: https://gitlab.tiker.net/inducer/ci-support/-/issues/3
 # Can be removed after pip 20.1 is released.
-if [[ ! $(printf "%s\n" "$PROJECT_INSTALL_FLAGS" | grep -w -- --editable) ]]; then
+if [[ ! $PROJECT_INSTALL_FLAGS =~ (--editable|-e)[[:space:]]*$ ]]; then
     PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
 fi
 

@@ -15,6 +15,13 @@ echo "-----------------------------------------------"
 
 # keep this consistent in build-py-project.sh and build-py-project-within-miniconda.sh
 
+# Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
+# See: https://gitlab.tiker.net/inducer/ci-support/-/issues/3
+# Can be removed after pip 20.1 is released.
+if [[ ! $PROJECT_INSTALL_FLAGS =~ (^|[[:space:]]*)(--editable|-e)[[:space:]]*$ ]]; then
+    PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
+fi
+
 rm -Rf .env
 rm -Rf build
 find . -name '*.pyc' -delete

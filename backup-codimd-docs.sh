@@ -23,8 +23,9 @@ if [[ `git status --porcelain --untracked-files=no ` ]]; then
   trap "kill $SSH_AGENT_PID" EXIT
   echo "${CODIMD_BACKUP_PUSH_KEY}" > id_codimd_backup_push
   chmod 600 id_codimd_backup_push
-  cat id_codimd_backup_push
   ssh-add id_codimd_backup_push
+  git config --global user.name "CodiMD backup service"
+  git config --global user.email "inform@tiker.net"
   git commit -m "Automatic update from CodiMD: $(date)"
   echo -e "Host gitlab.tiker.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git master

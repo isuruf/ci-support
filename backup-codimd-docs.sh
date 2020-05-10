@@ -27,6 +27,7 @@ if [[ `git status --porcelain --untracked-files=no ` ]]; then
   git config --global user.name "CodiMD backup service"
   git config --global user.email "inform@tiker.net"
   git commit -m "Automatic update from CodiMD: $(date)"
+  mkdir -p ~/.ssh
   echo -e "Host gitlab.tiker.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git master
 fi

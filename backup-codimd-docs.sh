@@ -11,9 +11,11 @@ export CODIMD_SERVER='https://codimd.tiker.net'
 $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"
 while read -r DOCID FILEPATH; do
     echo "Reading note $DOCID into $FILEPATH"
-    echo "<!-- DO NOT EDIT -->" > "$FILEPATH"
-    echo "<!-- THIS FILE WILL BE OVERWRITTEN AUTOMATICALLY -->" >> "$FILEPATH"
-    echo "<!-- INSTEAD, EDIT THE FILE AT ${CODIMD_SERVER}/${DOCID} -->" >> "$FILEPATH"
+    echo "**DO NOT EDIT**" > "$FILEPATH"
+    echo "This file will be automatically overwritten. " >> "$FILEPATH"
+    echo "Instead, edit the file at ${CODIMD_SERVER}/${DOCID} " >> "$FILEPATH"
+    echo "**DO NOT EDIT**" > "$FILEPATH"
+    echo "" > "$FILEPATH"
     $CODIMD export --md "$DOCID" "-" >> "$FILEPATH"
     git add "$FILEPATH"
 done < .codimd-backup.txt

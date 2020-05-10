@@ -2,7 +2,9 @@
 
 apt-get update
 apt-get install -y jq curl git
-git clone https://github.com/codimd/cli.git
+
+# pending https://github.com/codimd/cli/pull/36
+git clone https://github.com/inducer/codimd-cli.git
 
 CODIMD=$(pwd)/cli/bin/codimd
 export CODIMD_SERVER='https://codimd.tiker.net'

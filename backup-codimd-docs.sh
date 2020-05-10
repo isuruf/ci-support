@@ -18,9 +18,10 @@ if [[ `git status --porcelain --untracked-files=no ` ]]; then
   # There are changes in the index
   eval $(ssh-agent)
   trap "kill $SSH_AGENT_PID" EXIT
-  chmod 600 "${CODIMD_BACKUP_PUSH_KEY}"
-  cat "${CODIMD_BACKUP_PUSH_KEY}"
-  ssh-add "${CODIMD_BACKUP_PUSH_KEY}"
+  cp "${CODIMD_BACKUP_PUSH_KEY}" id_codimd_backup_push
+  chmod 600 id_codimd_backup_push
+  cat id_codimd_backup_push
+  ssh-add id_codimd_backup_push
   git commit -m "Automatic update from CodiMD: $(date)"
   git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git master
 fi

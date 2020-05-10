@@ -3,8 +3,7 @@
 apt-get update
 apt-get install -y jq curl git
 
-# pending https://github.com/codimd/cli/pull/36
-git clone https://github.com/inducer/codimd-cli.git codimd-cli
+git clone https://github.com/codimd/cli.git codimd-cli
 
 CODIMD=$(pwd)/codimd-cli/bin/codimd
 export CODIMD_SERVER='https://codimd.tiker.net'
@@ -18,7 +17,10 @@ while read -r DOCID FILEPATH; do
     git add "$FILEPATH"
 done < .codimd-backup.txt
 
-if [[ $(git status --porcelain --untracked-files=no | grep "^M " ) ]]; then
+git status
+git status --porcelain --untracked-files=no | grep "^M "
+
+if [[ `git status --porcelain --untracked-files=no | grep "^M " ` ]]; then
   # There are changes in the index
   eval $(ssh-agent)
   trap "kill $SSH_AGENT_PID" EXIT

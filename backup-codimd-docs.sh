@@ -3,7 +3,7 @@
 git clone https://github.com/codimd/cli.git codimd-cli
 CODIMD=$(pwd)/codimd-cli/bin/codimd
 
-git clone . codimd-backup-subrepo
+git clone "$CI_REPOSITORY_URL" codimd-backup-subrepo
 cd codimd-backup-subrepo
 git checkout master
 

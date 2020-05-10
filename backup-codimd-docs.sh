@@ -17,11 +17,7 @@ while read -r DOCID FILEPATH; do
     git add "$FILEPATH"
 done < .codimd-backup.txt
 
-git status
-git status --porcelain --untracked-files=no
-git status --porcelain --untracked-files=no | grep "^M "
-
-if [[ `git status --porcelain --untracked-files=no | grep "^M " ` ]]; then
+if [[ `git status --porcelain --untracked-files=no ` ]]; then
   # There are changes in the index
   eval $(ssh-agent)
   trap "kill $SSH_AGENT_PID" EXIT

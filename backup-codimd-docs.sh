@@ -11,5 +11,18 @@ export CODIMD_SERVER='https://codimd.tiker.net'
 $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"
 while read -r DOCID FILEPATH; do
     echo "Reading note $DOCID into $FILEPATH"
-    $CODIMD export --md "$DOCID" "$FILEPATH"
+    echo "<!-- DO NOT EDIT -->" > "$FILEPATH"
+    echo "<!-- THIS FILE WILL BE OVERWRITTEN AUTOMATICALLY -->" >> "$FILEPATH"
+    echo "<!-- INSTEAD, EDIT THE FILE AT ${CODIMD_SERVER}/${DOCID} -->" >> "$FILEPATH"
+    $CODIMD export --md "$DOCID" "-" >> "$FILEPATH"
+    git add "$FILEPATH"
 done < .codimd-backup.txt
+
+if [[ $(git status --porcelain --untracked-files=no | grep "^M " ) ]]; then
+  # There are changes in the index
+  eval $(ssh-agent)
+  trap "kill $SSH_AGENT_PID" EXIT
+  ssh-add ${CODIMD_BACKUP_PUSH_KEY}
+  git commit -m "Automatic update from CodiMD: $(date)"
+  git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git master
+fi

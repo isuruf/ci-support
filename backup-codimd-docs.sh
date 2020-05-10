@@ -1,7 +1,7 @@
 #! /bin/bash
 
-sudo apt update
-sudo apt install jq curl
+apt update
+apt install jq curl git
 git clone https://github.com/codimd/cli.git
 
 CODIMD=$(pwd)/cli/bin/codimd

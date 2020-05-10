@@ -11,5 +11,5 @@ export CODIMD_SERVER='https://codimd.tiker.net'
 $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"
 while read -r DOCID FILEPATH; do
     echo "Reading note $DOCID into $FILEPATH"
-    codimd export --md "$DOCID" "$FILEPATH"
+    $CODIMD export --md "$DOCID" "$FILEPATH"
 done < .codimd-backup.txt

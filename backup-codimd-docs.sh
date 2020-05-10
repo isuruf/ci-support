@@ -5,6 +5,7 @@ CODIMD=$(pwd)/codimd-cli/bin/codimd
 
 git clone . codimd-backup-subrepo
 cd codimd-backup-subrepo
+git checkout master
 
 export CODIMD_SERVER='https://codimd.tiker.net'
 $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"

@@ -1,11 +1,11 @@
 #! /bin/bash
 
-whoami
-ls -lah ~
-
 git clone https://github.com/codimd/cli.git codimd-cli
-
 CODIMD=$(pwd)/codimd-cli/bin/codimd
+
+git clone . codimd-backup-subrepo
+cd codimd-backup-subrepo
+
 export CODIMD_SERVER='https://codimd.tiker.net'
 $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"
 while read -r DOCID FILEPATH; do

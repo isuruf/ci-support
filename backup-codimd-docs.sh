@@ -1,8 +1,5 @@
 #! /bin/bash
 
-apt-get update
-apt-get install -y jq curl git
-
 git clone https://github.com/codimd/cli.git codimd-cli
 
 CODIMD=$(pwd)/codimd-cli/bin/codimd

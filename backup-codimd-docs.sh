@@ -12,4 +12,4 @@ $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"
 while read -r DOCID FILEPATH; do
     echo "Reading note $DOCID into $FILEPATH"
     codimd export --md "$DOCID" "$FILEPATH"
-done < .codi-backup.txt
+done < .codimd-backup.txt

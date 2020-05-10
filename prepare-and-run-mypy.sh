@@ -18,8 +18,7 @@ fi
 
 VERSIONS="$@"
 if test "$VERSIONS" = ""; then
-  # Pinned version pending https://github.com/python/mypy/issues/2978
-  VERSIONS="mypy==0.471 typed-ast==0.6.3"
+  VERSIONS="mypy typed-ast"
 fi
 
 echo "-----------------------------------------------"

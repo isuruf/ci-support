@@ -18,7 +18,7 @@ if [[ `git status --porcelain --untracked-files=no ` ]]; then
   # There are changes in the index
   eval $(ssh-agent)
   trap "kill $SSH_AGENT_PID" EXIT
-  cp "${CODIMD_BACKUP_PUSH_KEY}" id_codimd_backup_push
+  echo "${CODIMD_BACKUP_PUSH_KEY}" > id_codimd_backup_push
   chmod 600 id_codimd_backup_push
   cat id_codimd_backup_push
   ssh-add id_codimd_backup_push

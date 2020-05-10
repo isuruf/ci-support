@@ -2,7 +2,7 @@
 
 set -e
 
-PY_EXE=python3.7
+PY_EXE=python3
 
 echo "-----------------------------------------------"
 echo "Current directory: $(pwd)"

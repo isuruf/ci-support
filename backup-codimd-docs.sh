@@ -1,5 +1,8 @@
 #! /bin/bash
 
+whoami
+ls -lah ~
+
 git clone https://github.com/codimd/cli.git codimd-cli
 
 CODIMD=$(pwd)/codimd-cli/bin/codimd

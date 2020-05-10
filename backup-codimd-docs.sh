@@ -23,5 +23,6 @@ if [[ `git status --porcelain --untracked-files=no ` ]]; then
   cat id_codimd_backup_push
   ssh-add id_codimd_backup_push
   git commit -m "Automatic update from CodiMD: $(date)"
+  echo -e "Host gitlab.tiker.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git master
 fi

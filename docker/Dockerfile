@@ -15,6 +15,6 @@ RUN apt-get -y -o APT::Install-Suggests=0 install \
   curl \
   sudo
 
-RUN useradd -G sudo runner
+RUN useradd -G sudo -m runner
 RUN apt-get clean
 USER runner

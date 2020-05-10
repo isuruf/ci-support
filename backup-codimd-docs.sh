@@ -18,6 +18,7 @@ while read -r DOCID FILEPATH; do
 done < .codimd-backup.txt
 
 git status
+git status --porcelain --untracked-files=no
 git status --porcelain --untracked-files=no | grep "^M "
 
 if [[ `git status --porcelain --untracked-files=no | grep "^M " ` ]]; then

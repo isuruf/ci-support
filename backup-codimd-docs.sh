@@ -15,7 +15,7 @@ while read -r DOCID FILEPATH; do
     echo "This file will be automatically overwritten. " >> "$FILEPATH"
     echo "Instead, edit the file at ${CODIMD_SERVER}/${DOCID} " >> "$FILEPATH"
     echo "**DO NOT EDIT**" >> "$FILEPATH"
-    echo "" > "$FILEPATH"
+    echo "" >> "$FILEPATH"
     $CODIMD export --md "$DOCID" "-" >> "$FILEPATH"
     git add "$FILEPATH"
 done < .codimd-backup.txt

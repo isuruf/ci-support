@@ -7,6 +7,13 @@ git clone "$CI_REPOSITORY_URL" codimd-backup-subrepo
 cd codimd-backup-subrepo
 git checkout master
 
+SECONDS_SINCE_LAST_COMMIT=$((git show HEAD --format=%cI -s && date --iso-8601=seconds) | python3 -c 'import sys; import datetime as dt; fromiso=dt.datetime.fromisoformat; s=fromiso(sys.stdin.readline().strip()); e=fromiso(sys.stdin.readline().strip()); print(int((e-s).total_seconds()))')
+
+if (( SECONDS_SINCE_LAST_COMMIT < 10*60 )); then
+  echo "last commit is too recent, aborting."
+  exit
+fi
+
 export CODIMD_SERVER='https://codimd.tiker.net'
 $CODIMD login --email inform+codibackup@tiker.net "$CODIMD_PASSWORD"
 while read -r DOCID FILEPATH; do

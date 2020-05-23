@@ -56,32 +56,32 @@ fi
 
 # {{{ download and install
 
-MINICONDA_VERSION=3
-MINICONDA_INSTALL_DIR=.miniconda${MINICONDA_VERSION}
+MINIFORGE_VERSION=3
+MINIFORGE_INSTALL_DIR=.miniforge${MINIFORGE_VERSION}
 
-MINICONDA_INSTALL_SH=Miniconda${MINICONDA_VERSION}-latest-${PLATFORM}-x86_64.sh
-curl -O "https://repo.anaconda.com/miniconda/$MINICONDA_INSTALL_SH"
+MINIFORGE_INSTALL_SH=Miniforge3-$PLATFORM-x86_64.sh
+curl -O "https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE_INSTALL_SH"
 
-rm -Rf "$MINICONDA_INSTALL_DIR"
+rm -Rf "$MINIFORGE_INSTALL_DIR"
 
-bash "$MINICONDA_INSTALL_SH" -b -p "$MINICONDA_INSTALL_DIR"
+bash "$MINIFORGE_INSTALL_SH" -b -p "$MINIFORGE_INSTALL_DIR"
 
 # }}}
 
 # {{{ set up testing environment
 
-PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update conda --yes --quiet
+PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" conda update conda --yes --quiet
 
-PATH="$MINICONDA_INSTALL_DIR/bin/:$PATH" conda update --all --yes --quiet
+PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" conda update --all --yes --quiet
 
-PATH="$MINICONDA_INSTALL_DIR/bin:$PATH" conda env create --file "$CONDA_ENVIRONMENT" --name testing
+PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" conda env create --file "$CONDA_ENVIRONMENT" --name testing
 
-source "$MINICONDA_INSTALL_DIR/bin/activate" testing
+source "$MINIFORGE_INSTALL_DIR/bin/activate" testing
 
 # https://github.com/conda-forge/ocl-icd-feedstock/issues/11#issuecomment-456270634
-rm -f .miniconda3/envs/testing/etc/OpenCL/vendors/system-*.icd
+rm -f $MINIFORGE_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/system-*.icd
 # https://gitlab.tiker.net/inducer/pytential/issues/112
-rm -f .miniconda3/envs/testing/etc/OpenCL/vendors/apple.icd
+rm -f $MINIFORGE_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/apple.icd
 
 # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
 export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID

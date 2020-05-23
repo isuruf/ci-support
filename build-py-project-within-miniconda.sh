@@ -60,7 +60,7 @@ MINIFORGE_VERSION=3
 MINIFORGE_INSTALL_DIR=.miniforge${MINIFORGE_VERSION}
 
 MINIFORGE_INSTALL_SH=Miniforge3-$PLATFORM-x86_64.sh
-curl -O "https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE_INSTALL_SH"
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE_INSTALL_SH"
 
 rm -Rf "$MINIFORGE_INSTALL_DIR"
 

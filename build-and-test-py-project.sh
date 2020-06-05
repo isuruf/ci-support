@@ -2,6 +2,17 @@
 
 set -e
 
+function get_proj_name()
+{
+  if [ -n "$CI_PROJECT_NAME" ]; then
+    echo "$CI_PROJECT_NAME"
+  else
+    basename "$GITHUB_REPOSITORY"
+  fi
+}
+
+AK_PROJ_NAME="$(get_proj_name)"
+
 if [ "$PY_EXE" == "" ]; then
   PY_EXE=python${py_version}
 fi
@@ -23,9 +34,12 @@ if [ -d test ]; then
     if [ -e "${RST_FILES[0]}" ]; then
       TESTABLES="$TESTABLES ${RST_FILES[*]}"
     fi
+
+    mapfile -t DOCTEST_MODULES < <( git grep -l doctest -- ":(glob,top)$AK_PROJ_NAME/**/*.py" )
+    TESTABLES="$TESTABLES ${DOCTEST_MODULES[@]}"
   fi
 
-  if ! test -z "$TESTABLES"; then
+  if [[ -n "$TESTABLES" ]]; then
     echo "TESTABLES: $TESTABLES"
 
     # Core dumps? Sure, we'll take them.
@@ -34,7 +48,12 @@ if [ -d test ]; then
     # 10 GiB should be enough for just about anyone
     ulimit -m $(python -c 'print(1024*1024*10)')
 
-    # Need to set both _TEST and _CTX because doctests do not use _TEST.
-    ${PY_EXE} -m pytest -rw --durations=10 --tb=native  --junitxml=pytest.xml -rxsw $PYTEST_FLAGS $TESTABLES
+    ${PY_EXE} -m pytest \
+      --durations=10 \
+      --tb=native  \
+      --junitxml=pytest.xml \
+      --doctest-modules \
+      -rxsw \
+      $PYTEST_FLAGS $TESTABLES
   fi
 fi

@@ -35,8 +35,11 @@ if [ -d test ]; then
       TESTABLES="$TESTABLES ${RST_FILES[*]}"
     fi
 
-    mapfile -t DOCTEST_MODULES < <( git grep -l doctest -- ":(glob,top)$AK_PROJ_NAME/**/*.py" )
-    TESTABLES="$TESTABLES ${DOCTEST_MODULES[@]}"
+    # macOS bash is too old for mapfile: Oh well, no doctests on mac.
+    if [ "$(uname)" != "Darwin" ]; then
+      mapfile -t DOCTEST_MODULES < <( git grep -l doctest -- ":(glob,top)$AK_PROJ_NAME/**/*.py" )
+      TESTABLES="$TESTABLES ${DOCTEST_MODULES[@]}"
+    fi
   fi
 
   if [[ -n "$TESTABLES" ]]; then

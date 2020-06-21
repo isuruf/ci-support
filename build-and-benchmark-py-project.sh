@@ -57,5 +57,6 @@ if [[ "$output" = *"worse"* ]]; then
 fi
 
 if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
+  git branch -v
   asv publish --html-dir ~/.scicomp-benchmarks/asv/$PROJECT
 fi

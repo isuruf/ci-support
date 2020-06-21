@@ -48,7 +48,7 @@ test_commit=`git rev-parse HEAD`
 asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 
-output=`asv compare $master_commit $test_commit --factor 1 -s`
+output=`asv compare $master_commit $test_commit --factor ${ASV_FACTOR:-1} -s`
 echo "$output"
 
 if [[ "$output" = *"worse"* ]]; then

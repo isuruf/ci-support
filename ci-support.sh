@@ -148,6 +148,7 @@ clean_up_repo_and_working_env()
     -e boost-numeric-bindings \
     -e '.pylintrc.yml' \
     -e 'prepare-and-run-*.sh' \
+    -e 'ci-support.sh' \
     -e 'run-*.py' \
     -e '.test-*.yml' \
     $GIT_CLEAN_EXCLUDE

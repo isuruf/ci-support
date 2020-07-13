@@ -104,6 +104,14 @@ pip_install_project()
 {
   handle_extra_install
 
+  if test "$REQUIREMENTS_TXT" == ""; then
+    REQUIREMENTS_TXT="requirements.txt"
+  fi
+
+  if test -f "$REQUIREMENTS_TXT"; then
+    pip install -r "$REQUIREMENTS_TXT"
+  fi
+
   if test -f .conda-ci-build-configure.sh; then
     source .conda-ci-build-configure.sh
   fi
@@ -117,14 +125,6 @@ pip_install_project()
   # Can be removed after https://github.com/pypa/pip/issues/2195 is resolved.
   if [[ ! $PROJECT_INSTALL_FLAGS =~ (^|[[:space:]]*)(--editable|-e)[[:space:]]*$ ]]; then
       PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
-  fi
-
-  if test "$REQUIREMENTS_TXT" == ""; then
-    REQUIREMENTS_TXT="requirements.txt"
-  fi
-
-  if test -f "$REQUIREMENTS_TXT"; then
-    pip install -r "$REQUIREMENTS_TXT"
   fi
 
   $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .

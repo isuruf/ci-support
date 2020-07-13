@@ -174,8 +174,6 @@ build_py_project_in_venv()
   clean_up_repo_and_working_env
   create_and_set_up_virtualenv
 
-  $PY_EXE -m pip install pytest pytest-xdist
-
   pip_install_project
 }
 
@@ -209,9 +207,9 @@ build_py_project_in_conda_env()
   conda install --quiet --yes pip
   conda list
 
-  # Using pip instead of conda here avoids ridiculous uninstall chains
-  # like these: https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
-  $PY_EXE -m pip install pytest pytest-xdist
+  # Using pip instead of conda to install pytest (see test_py_project) avoids
+  # ridiculous uninstall chains like these:
+  # https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
 
   pip_install_project
 }
@@ -237,6 +235,8 @@ build_py_project()
 
 test_py_project()
 {
+  $PY_EXE -m pip install pytest pytest-xdist
+
   AK_PROJ_NAME="$(get_proj_name)"
 
   TESTABLES=""

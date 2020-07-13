@@ -1,5 +1,7 @@
 set -e
 
+ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
+
 if [ "$PY_EXE" == "" ]; then
   if [ "$py_version" == "" ]; then
     PY_EXE=python3

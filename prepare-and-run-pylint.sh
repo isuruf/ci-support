@@ -2,28 +2,15 @@
 
 set -e
 
-if [ "$py_version" == "" ]; then
-  py_version=3
-fi
+curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/ci-support.sh
+source ci-support.sh
 
-if [ "$PY_EXE" == "" ]; then
-  PY_EXE=python${py_version}
-fi
-
-ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
+build_py_project
 
 curl -L -O -k "${ci_support}/run-pylint.py"
 
 if ! test -f .pylintrc.yml; then
   curl -o .pylintrc.yml "${ci_support}/.pylintrc-default.yml"
-fi
-
-if test "$USE_CONDA_BUILD" == "1"; then
-  curl -L -O -k "${ci_support}/build-py-project-within-miniconda.sh"
-  source build-py-project-within-miniconda.sh
-else
-  curl -L -O -k "${ci_support}/build-py-project.sh"
-  source build-py-project.sh
 fi
 
 # <2.5 version bound put in place out of an abundance of cautiousness, no particular reason

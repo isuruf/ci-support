@@ -102,6 +102,8 @@ handle_extra_install()
 
 pip_install_project()
 {
+  handle_extra_install
+
   if test -f .conda-ci-build-configure.sh; then
     source .conda-ci-build-configure.sh
   fi

@@ -5,6 +5,8 @@ source ci-support.sh
 
 build_py_project_in_venv
 
+$PY_EXE -m pip install docutils sphinx
+
 cd doc
 
 cat > doc_upload_ssh_config <<END

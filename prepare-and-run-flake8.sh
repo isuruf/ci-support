@@ -1,42 +1,11 @@
 #! /bin/bash
 
-set -e
-set -x
+curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/ci-support.sh
+source ci-support.sh
 
-if [ "$py_version" == "" ]; then
-  py_version=3
-fi
-
-if [ "$PY_EXE" == "" ]; then
-  PY_EXE=python${py_version}
-fi
-
-echo "-----------------------------------------------"
-echo "Current directory: $(pwd)"
-echo "Python executable: ${PY_EXE}"
-echo "-----------------------------------------------"
-
-# {{{ clean up
-
-rm -Rf .env
-rm -Rf build
-find . -name '*.pyc' -delete
-
-rm -Rf env
-git clean -fdx -e siteconf.py -e local_settings.py
-
-# }}}
-
-git submodule update --init --recursive
-
-# {{{ virtualenv
-
-${PY_EXE} -m venv .env
-. .env/bin/activate
-
-${PY_EXE} -m ensurepip
-
-# }}}
+print_status_message
+clean_up_repo_and_working_env
+create_and_set_up_virtualenv
 
 $PY_EXE -m pip install flake8 pep8-naming
 

@@ -1,20 +1,7 @@
 #! /bin/bash
 
-set -e
+curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/ci-support.sh
+source ci-support.sh
 
-if [ "$PY_EXE" == "" ]; then
-  PY_EXE=python${py_version}
-fi
-
-ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
-
-if test "$USE_CONDA_BUILD" == "1"; then
-  curl -L -O -k "${ci_support}/build-py-project-within-miniconda.sh"
-  source build-py-project-within-miniconda.sh
-else
-  curl -L -O -k "${ci_support}/build-py-project.sh"
-  source build-py-project.sh
-fi
-
-curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/run-examples.sh
-source run-examples.sh
+build_py_project
+run_examples

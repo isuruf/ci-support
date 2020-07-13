@@ -270,13 +270,19 @@ test_py_project()
       # 10 GiB should be enough for just about anyone :)
       ulimit -m $(python -c 'print(1024*1024*10)')
 
+     # Not (Gitlab and GPU CI)?
+     PYTEST_PARALLEL_FLAGS=""
+     if [[ $CI_RUNNER_DESCRIPTION != *-gpu ]]; then
+       PYTEST_PARALLEL_FLAGS="-n 4"
+     fi
+
       ${PY_EXE} -m pytest \
         --durations=10 \
         --tb=native  \
         --junitxml=pytest.xml \
         --doctest-modules \
         -rxsw \
-        $PYTEST_FLAGS $TESTABLES
+        $PYTEST_FLAGS $PYTEST_PARALLEL_FLAGS $TESTABLES
     fi
   fi
 }

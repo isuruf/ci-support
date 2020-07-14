@@ -271,10 +271,16 @@ test_py_project()
       # 10 GiB should be enough for just about anyone :)
       ulimit -m $(python -c 'print(1024*1024*10)')
 
-     # Not (Gitlab and GPU CI)?
-     PYTEST_PARALLEL_FLAGS=""
-     if [[ $CI_RUNNER_DESCRIPTION != *-gpu ]]; then
-       PYTEST_PARALLEL_FLAGS="-n 4"
+     if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
+       # Default: parallel if Not (Gitlab and GPU CI)?
+       PYTEST_PARALLEL_FLAGS=""
+       if [[ $CI_RUNNER_DESCRIPTION != *-gpu ]]; then
+         PYTEST_PARALLEL_FLAGS="-n 4"
+       fi
+     elif [[ $CISUPPORT_PARALLEL_PYTEST == "no" ]]; then
+         PYTEST_PARALLEL_FLAGS=""
+     else
+       echo "unrecognized scheme in CISUPPORT_PARALLEL_PYTEST"
      fi
 
       ${PY_EXE} -m pytest \

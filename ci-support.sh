@@ -20,6 +20,12 @@ fi
 
 # {{{ utilities
 
+function with_echo()
+{
+  echo "$@"
+  "$@"
+}
+
 function get_proj_name()
 {
   if [ -n "$CI_PROJECT_NAME" ]; then
@@ -291,7 +297,7 @@ test_py_project()
        DOCTEST_MODULES_FLAG=""
      fi
 
-      ${PY_EXE} -m pytest \
+      with_echo ${PY_EXE} -m pytest \
         --durations=10 \
         --tb=native  \
         --junitxml=pytest.xml \

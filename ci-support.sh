@@ -283,11 +283,19 @@ test_py_project()
        echo "unrecognized scheme in CISUPPORT_PARALLEL_PYTEST"
      fi
 
+     # It... somehow... (?) seems to cause crashes for pytential.
+     # https://gitlab.tiker.net/inducer/pytential/-/issues/146
+     if [[ $CISUPPORT_PYTEST_NO_DOCTEST_MODULES == "" ]]; then
+       DOCTEST_MODULES_FLAG="--doctest-modules"
+     else
+       DOCTEST_MODULES_FLAG=""
+     fi
+
       ${PY_EXE} -m pytest \
         --durations=10 \
         --tb=native  \
         --junitxml=pytest.xml \
-        --doctest-modules \
+        $DOCTEST_MODULES_FLAG \
         -rxsw \
         $PYTEST_FLAGS $PYTEST_PARALLEL_FLAGS $TESTABLES
     fi

@@ -13,9 +13,9 @@ if ! test -f .pylintrc.yml; then
   curl -o .pylintrc.yml "${ci_support}/.pylintrc-default.yml"
 fi
 
-# <2.5 version bound put in place out of an abundance of cautiousness, no particular reason
-# 2020-02-02 AK
-$PY_EXE -m pip install "pylint<2.5" PyYAML
+# <2.6 version bound put in place out of an abundance of cautiousness, no particular reason
+# 2020-07-15 AK
+$PY_EXE -m pip install "pylint<2.6" PyYAML
 
 PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintrc.yml"
 

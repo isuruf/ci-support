@@ -269,8 +269,6 @@ test_py_project()
     fi
 
     if [[ -n "$TESTABLES" ]]; then
-      echo "TESTABLES: $TESTABLES"
-
       # Core dumps? Sure, take them.
       ulimit -c unlimited
 

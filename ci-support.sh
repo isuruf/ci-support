@@ -278,9 +278,16 @@ test_py_project()
      if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
        # Default: parallel if Not (Gitlab and GPU CI)?
        PYTEST_PARALLEL_FLAGS=""
+
+       # CI_RUNNER_DESCRIPTION is set by Gitlab
        if [[ $CI_RUNNER_DESCRIPTION != *-gpu ]]; then
-         PYTEST_PARALLEL_FLAGS="-n 4"
+         if [[ $CISUPPORT_PYTEST_NRUNNERS == "" ]]; then
+           PYTEST_PARALLEL_FLAGS="-n 4"
+         else
+           PYTEST_PARALLEL_FLAGS="-n $CISUPPORT_PYTEST_NRUNNERS"
+         fi
        fi
+
      elif [[ $CISUPPORT_PARALLEL_PYTEST == "no" ]]; then
          PYTEST_PARALLEL_FLAGS=""
      else

@@ -17,4 +17,7 @@ RUN apt-get -y -o APT::Install-Suggests=0 install \
 
 RUN useradd -G sudo -m runner
 RUN apt-get clean
+
+RUN echo "runner ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/allow-runner-sudo
+
 USER runner

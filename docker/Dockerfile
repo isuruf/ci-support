@@ -23,5 +23,6 @@ RUN useradd -G sudo -m runner
 RUN apt-get clean
 
 RUN echo "runner ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/allow-runner-sudo
+RUN echo 'APT::Get::Assume-Yes "1";' > /etc/apt/apt.conf.d/75assume-yes
 
 USER runner

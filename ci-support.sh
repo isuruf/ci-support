@@ -22,7 +22,7 @@ fi
 
 function with_echo()
 {
-  echo "+++ RUNNING: $@"
+  echo "+++ $@"
   "$@"
 }
 
@@ -195,11 +195,11 @@ build_py_project_in_conda_env()
   clean_up_repo_and_working_env
   install_miniforge
 
-  PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" conda update conda --yes --quiet
+  PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update conda --yes --quiet
 
-  PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" conda update --all --yes --quiet
+  PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update --all --yes --quiet
 
-  PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" conda env create --file "$CONDA_ENVIRONMENT" --name testing
+  PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" with_echo conda env create --file "$CONDA_ENVIRONMENT" --name testing
 
   source "$MINIFORGE_INSTALL_DIR/bin/activate" testing
 
@@ -211,8 +211,8 @@ build_py_project_in_conda_env()
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
-  conda install --quiet --yes pip
-  conda list
+  with_echo conda install --quiet --yes pip
+  with_echo conda list
 
   # Using pip instead of conda to install pytest (see test_py_project) avoids
   # ridiculous uninstall chains like these:

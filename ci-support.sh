@@ -22,7 +22,7 @@ fi
 
 function with_echo()
 {
-  echo "$@"
+  echo "+++ RUNNING: $@"
   "$@"
 }
 
@@ -97,9 +97,9 @@ handle_extra_install()
         # context:
         # https://github.com/conda-forge/pyopencl-feedstock/pull/45
         # https://github.com/pybind/pybind11/pull/2146
-        $PY_EXE -m pip install git+https://github.com/isuruf/pybind11@pypy3
+        with_echo $PY_EXE -m pip install git+https://github.com/isuruf/pybind11@pypy3
       else
-        $PY_EXE -m pip install $i
+        with_echo $PY_EXE -m pip install $i
       fi
     done
   fi
@@ -115,15 +115,15 @@ pip_install_project()
   fi
 
   if test -f "$REQUIREMENTS_TXT"; then
-    pip install -r "$REQUIREMENTS_TXT"
+    with_echo pip install -r "$REQUIREMENTS_TXT"
   fi
 
   if test -f .conda-ci-build-configure.sh; then
-    source .conda-ci-build-configure.sh
+    with_echo source .conda-ci-build-configure.sh
   fi
 
   if test -f .ci-build-configure.sh; then
-    source .ci-build-configure.sh
+    with_echo source .ci-build-configure.sh
   fi
 
   # Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
@@ -133,7 +133,7 @@ pip_install_project()
       PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
   fi
 
-  $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
+  with_echo $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
 }
 
 

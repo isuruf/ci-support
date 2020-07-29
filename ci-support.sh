@@ -126,14 +126,20 @@ pip_install_project()
     with_echo source .ci-build-configure.sh
   fi
 
-  # Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
-  # See: https://gitlab.tiker.net/inducer/ci-support/-/issues/3
-  # Can be removed after https://github.com/pypa/pip/issues/2195 is resolved.
-  if [[ ! $PROJECT_INSTALL_FLAGS =~ (^|[[:space:]]*)(--editable|-e)[[:space:]]*$ ]]; then
-      PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
-  fi
+  # # Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
+  # # See: https://gitlab.tiker.net/inducer/ci-support/-/issues/3
+  # # Can be removed after https://github.com/pypa/pip/issues/2195 is resolved.
+  # if [[ ! $PROJECT_INSTALL_FLAGS =~ (^|[[:space:]]*)(--editable|-e)[[:space:]]*$ ]]; then
+  #     PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
+  # fi
 
-  with_echo $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
+  # with_echo $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
+
+  # I think 'pip install .' would be nice to use, but it suffers from
+  # the 'copy-the-world' nonsense along with spurious reinstallation failures,
+  # cf. https://gitlab.tiker.net/inducer/meshmode/-/jobs/143776. Let's revert
+  # back for now and see what happens at some future point. -AK, 2020-07-29
+  with_echo python setup.py install
 }
 
 

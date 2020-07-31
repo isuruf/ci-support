@@ -139,6 +139,7 @@ pip_install_project()
   # the 'copy-the-world' nonsense along with spurious reinstallation failures,
   # cf. https://gitlab.tiker.net/inducer/meshmode/-/jobs/143776. Let's revert
   # back for now and see what happens at some future point. -AK, 2020-07-29
+  # https://github.com/pypa/pip/issues/8667 -AK, 2020-07-30
   with_echo python setup.py install
 }
 

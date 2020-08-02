@@ -59,7 +59,8 @@ create_and_set_up_virtualenv()
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
-  $PY_EXE -m pip install --upgrade pip
+  # https://github.com/pypa/pip/issues/8667 -AK, 2020-08-02
+  $PY_EXE -m pip install --upgrade "pip<20.2"
   $PY_EXE -m pip install setuptools
 }
 
@@ -126,21 +127,14 @@ pip_install_project()
     with_echo source .ci-build-configure.sh
   fi
 
-  # # Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
-  # # See: https://gitlab.tiker.net/inducer/ci-support/-/issues/3
-  # # Can be removed after https://github.com/pypa/pip/issues/2195 is resolved.
-  # if [[ ! $PROJECT_INSTALL_FLAGS =~ (^|[[:space:]]*)(--editable|-e)[[:space:]]*$ ]]; then
-  #     PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
-  # fi
+  # Append --editable to PROJECT_INSTALL_FLAGS, if not there already.
+  # See: https://gitlab.tiker.net/inducer/ci-support/-/issues/3
+  # Can be removed after https://github.com/pypa/pip/issues/2195 is resolved.
+  if [[ ! $PROJECT_INSTALL_FLAGS =~ (^|[[:space:]]*)(--editable|-e)[[:space:]]*$ ]]; then
+      PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
+  fi
 
-  # with_echo $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
-
-  # I think 'pip install .' would be nice to use, but it suffers from
-  # the 'copy-the-world' nonsense along with spurious reinstallation failures,
-  # cf. https://gitlab.tiker.net/inducer/meshmode/-/jobs/143776. Let's revert
-  # back for now and see what happens at some future point. -AK, 2020-07-29
-  # https://github.com/pypa/pip/issues/8667 -AK, 2020-07-30
-  with_echo python setup.py install
+  with_echo $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
 }
 
 
@@ -218,7 +212,8 @@ build_py_project_in_conda_env()
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
-  with_echo conda install --quiet --yes pip
+  # https://github.com/pypa/pip/issues/8667 -AK, 2020-08-02
+  with_echo conda install --quiet --yes "pip<20.2"
   with_echo conda list
 
   # Using pip instead of conda to install pytest (see test_py_project) avoids

@@ -5,7 +5,8 @@ source ci-support.sh
 
 build_py_project_in_venv
 
-$PY_EXE -m pip install docutils sphinx
+# https://github.com/sphinx-doc/sphinx/issues/8084
+$PY_EXE -m pip install docutils "sphinx<3.2"
 
 cd doc
 

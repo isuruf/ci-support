@@ -1,3 +1,6 @@
+#! /bin/bash
+# ^^ (not a script: only here for shellcheck's benefit)
+
 set -e
 
 ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
@@ -22,7 +25,7 @@ fi
 
 function with_echo()
 {
-  echo "+++ $@"
+  echo "+++" "$@"
   "$@"
 }
 
@@ -93,14 +96,14 @@ handle_extra_install()
         # Running virtualenv --always-copy or -m venv --copies should also do the trick.
         L=$(readlink .env/include)
         rm .env/include
-        cp -R $L .env/include
+        cp -R "$L" .env/include
 
         # context:
         # https://github.com/conda-forge/pyopencl-feedstock/pull/45
         # https://github.com/pybind/pybind11/pull/2146
-        with_echo $PY_EXE -m pip install git+https://github.com/isuruf/pybind11@pypy3
+        with_echo "$PY_EXE" -m pip install git+https://github.com/isuruf/pybind11@pypy3
       else
-        with_echo $PY_EXE -m pip install $i
+        with_echo "$PY_EXE" -m pip install "$i"
       fi
     done
   fi
@@ -134,7 +137,7 @@ pip_install_project()
       PROJECT_INSTALL_FLAGS="$PROJECT_INSTALL_FLAGS --editable"
   fi
 
-  with_echo $PY_EXE -m pip install $PROJECT_INSTALL_FLAGS .
+  with_echo "$PY_EXE" -m pip install $PROJECT_INSTALL_FLAGS .
 }
 
 
@@ -266,7 +269,7 @@ test_py_project()
       # macOS bash is too old for mapfile: Oh well, no doctests on mac.
       if [ "$(uname)" != "Darwin" ]; then
         mapfile -t DOCTEST_MODULES < <( git grep -l doctest -- ":(glob,top)$AK_PROJ_NAME/**/*.py" )
-        TESTABLES="$TESTABLES ${DOCTEST_MODULES[@]}"
+        TESTABLES="$TESTABLES ${DOCTEST_MODULES[*]}"
       fi
     fi
 
@@ -275,7 +278,7 @@ test_py_project()
       ulimit -c unlimited
 
       # 10 GiB should be enough for just about anyone :)
-      ulimit -m $(python -c 'print(1024*1024*10)')
+      ulimit -m "$(python -c 'print(1024*1024*10)')"
 
      if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
        # Default: parallel if Not (Gitlab and GPU CI)?
@@ -304,7 +307,7 @@ test_py_project()
        DOCTEST_MODULES_FLAG=""
      fi
 
-      with_echo ${PY_EXE} -m pytest \
+      with_echo "${PY_EXE}" -m pytest \
         --durations=10 \
         --tb=native  \
         --junitxml=pytest.xml \
@@ -329,7 +332,7 @@ run_examples()
     echo "-----------------------------------------------------------------------"
     dn=$(dirname "$i")
     bn=$(basename "$i")
-    (cd $dn; time ${PY_EXE} "$bn")
+    (cd "$dn"; time ${PY_EXE} "$bn")
   done
 }
 

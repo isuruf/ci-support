@@ -57,7 +57,6 @@ create_and_set_up_virtualenv()
 {
   ${PY_EXE} -m venv .env
   . .env/bin/activate
-  ${PY_EXE} -m ensurepip
 
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID

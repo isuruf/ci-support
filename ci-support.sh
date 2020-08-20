@@ -249,7 +249,15 @@ build_py_project()
 
 test_py_project()
 {
-  $PY_EXE -m pip install pytest pytest-xdist
+  $PY_EXE -m pip install pytest
+
+  # pytest-xdist fails on pypy with: ImportError: cannot import name '_psutil_linux'
+  # AK, 2020-08-20
+  if [[ "${PY_EXE}" == pypy* ]]; then
+    CISUPPORT_PARALLEL_PYTEST=no
+  else
+    $PY_EXE -m pip install pytest-xdist
+  fi
 
   AK_PROJ_NAME="$(get_proj_name)"
 

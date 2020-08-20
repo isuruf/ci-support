@@ -61,6 +61,20 @@ create_and_set_up_virtualenv()
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
+  if [[ "${PY_EXE}" == pypy3* ]]; then
+    PY_EXE=pypy3-c
+  fi
+
+  RESOLVED_PY_EXE=$(which ${PY_EXE})
+  case "$RESOLVED_PY_EXE" in
+    $PWD/.env/*) ;;
+    *)
+      echo "Python executable $PY_EXE not in virtualenv"
+      exit 1
+      ;;
+  esac
+
+
   # https://github.com/pypa/pip/issues/8667 -AK, 2020-08-02
   $PY_EXE -m pip install --upgrade "pip<20.2"
   $PY_EXE -m pip install setuptools

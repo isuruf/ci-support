@@ -99,22 +99,11 @@ handle_extra_install()
 {
   if test "$EXTRA_INSTALL" != ""; then
     for i in $EXTRA_INSTALL ; do
-      # numpypy no longer recommended: https://doc.pypy.org/en/latest/faq.html#should-i-install-numpy-or-numpypy
-      # 2020-03-12 AK
-      #if [ "$i" = "numpy" ] && [[ "${PY_EXE}" == pypy* ]]; then
-      #  $PY_EXE -m pip install git+https://bitbucket.org/pypy/numpy.git
       if [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
-        # Work around https://github.com/pypa/virtualenv/issues/1198
-        # (nominally fixed, but not really it appears. --Mar 28, 2020 AK)
-        # Running virtualenv --always-copy or -m venv --copies should also do the trick.
-        L=$(readlink .env/include)
-        rm .env/include
-        cp -R "$L" .env/include
-
-        # context:
-        # https://github.com/conda-forge/pyopencl-feedstock/pull/45
-        # https://github.com/pybind/pybind11/pull/2146
-        with_echo "$PY_EXE" -m pip install git+https://github.com/isuruf/pybind11@pypy3
+         # context:
+         # https://github.com/conda-forge/pyopencl-feedstock/pull/45
+         # https://github.com/pybind/pybind11/pull/2146
+         with_echo "$PY_EXE" -m pip install git+https://github.com/isuruf/pybind11@pypy3
       else
         with_echo "$PY_EXE" -m pip install "$i"
       fi

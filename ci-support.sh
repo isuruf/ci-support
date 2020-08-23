@@ -20,6 +20,11 @@ else
   PLATFORM=Linux
 fi
 
+if test -d ~/.local; then
+  echo "ERROR: $HOME/.local exists. It really shouldn't."
+  exit 1
+fi
+
 
 # {{{ utilities
 

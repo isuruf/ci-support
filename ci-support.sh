@@ -21,7 +21,8 @@ else
 fi
 
 if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local; then
-  echo "ERROR: $HOME/.local exists. It really shouldn't."
+  echo "ERROR: $HOME/.local exists. It really shouldn't. Here's what it contains:"
+  find ~/.local
   exit 1
 fi
 

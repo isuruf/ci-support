@@ -20,9 +20,9 @@ else
   PLATFORM=Linux
 fi
 
-if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local; then
-  echo "ERROR: $HOME/.local exists. It really shouldn't. Here's what it contains:"
-  find ~/.local
+if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then
+  echo "ERROR: $HOME/.local/lib exists. It really shouldn't. Here's what it contains:"
+  find ~/.local/lib
   exit 1
 fi
 

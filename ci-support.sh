@@ -384,7 +384,7 @@ END
     RSYNC_RSH="ssh -F doc_upload_ssh_config" ./upload-docs.sh || { rm doc_upload_key; exit 1; }
     rm doc_upload_key
   else
-    echo "Skipping upload. DOC_UPLOAD_KEY was not provided."
+    echo "Not uploading docs. No DOC_UPLOAD_KEY or not on master on Gitlab."
   fi
 }
 

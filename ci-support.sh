@@ -359,8 +359,8 @@ run_examples()
 
 build_docs()
 {
-  # https://github.com/sphinx-doc/sphinx/issues/8084
-  with_echo $PY_EXE -m pip install "sphinx<3.2"
+  # >=3.2.1 for https://github.com/sphinx-doc/sphinx/issues/8084
+  with_echo $PY_EXE -m pip install "sphinx>=3.2.1"
 
   cd doc
 

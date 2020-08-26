@@ -360,11 +360,11 @@ run_examples()
 build_docs()
 {
   # https://github.com/sphinx-doc/sphinx/issues/8084
-  $PY_EXE -m pip install "sphinx<3.2"
+  with_echo $PY_EXE -m pip install "sphinx<3.2"
 
   cd doc
 
-  make html SPHINXOPTS="-W --keep-going -n"
+  with_echo make html SPHINXOPTS="-W --keep-going -n"
 }
 
 maybe_upload_docs()

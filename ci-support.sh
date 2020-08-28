@@ -364,7 +364,11 @@ build_docs()
 
   cd doc
 
-  with_echo make html SPHINXOPTS="-W --keep-going -n"
+  if test "$1" = "--no-check"; then
+    with_echo make html
+  else
+    with_echo make html SPHINXOPTS="-W --keep-going -n"
+  fi
 }
 
 maybe_upload_docs()

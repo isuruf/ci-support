@@ -15,7 +15,7 @@ RUN apt-get -y -o APT::Install-Suggests=0 install \
   jq \
   curl \
   sudo \
-  libtool automake autoconf \
+  libtool automake autoconf gettext \
   gfortran \
   libhwloc-dev
 

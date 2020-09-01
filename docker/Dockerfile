@@ -18,7 +18,8 @@ RUN apt-get -y -o APT::Install-Suggests=0 install \
   libtool automake autoconf gettext \
   gfortran \
   libhwloc-dev \
-  locales-all
+  locales-all \
+  rsync
 
 RUN useradd -G sudo -m runner
 RUN apt-get clean

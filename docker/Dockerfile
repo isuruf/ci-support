@@ -17,7 +17,8 @@ RUN apt-get -y -o APT::Install-Suggests=0 install \
   sudo \
   libtool automake autoconf gettext \
   gfortran \
-  libhwloc-dev
+  libhwloc-dev \
+  locales-all
 
 RUN useradd -G sudo -m runner
 RUN apt-get clean

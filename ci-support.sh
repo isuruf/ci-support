@@ -278,9 +278,13 @@ test_py_project()
     if [ -z "$NO_DOCTESTS" ]; then
       RST_FILES=(../doc/*.rst)
 
-      if [ -e "${RST_FILES[0]}" ]; then
-        TESTABLES="$TESTABLES ${RST_FILES[*]}"
-      fi
+      for f in "${RST_FILES[@]}"; do
+        if [ -e "$f}" ]; then
+          if ! grep -q no-doctest "$f"; then
+            TESTABLES="$TESTABLES $f"
+          fi
+        fi
+      done
 
       # macOS bash is too old for mapfile: Oh well, no doctests on mac.
       if [ "$(uname)" != "Darwin" ]; then

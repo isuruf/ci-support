@@ -411,7 +411,8 @@ install_and_run_flake8()
     echo "-----------------------------------------------------------------"
     echo "Consider enabling quote checking for this package by configuring"
     echo "https://github.com/zheller/flake8-quotes"
-    echo "in setup.cfg"
+    echo "in setup.cfg. Follow this example:"
+    echo "https://github.com/illinois-ceesd/mirgecom/blob/45457596cac2eeb4a0e38bf6845fe4b7c323f6f5/setup.cfg#L5-L7"
     echo "-----------------------------------------------------------------"
   fi
 

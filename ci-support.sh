@@ -2,6 +2,7 @@
 # ^^ (not a script: only here for shellcheck's benefit)
 
 set -e
+set -o pipefail
 
 ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
 

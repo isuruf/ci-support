@@ -346,15 +346,19 @@ test_py_project()
 
 run_examples()
 {
-  cd examples
-  for i in $(find . -name '*.py' -exec grep -q __main__ '{}' \; -print ); do
-    echo "-----------------------------------------------------------------------"
-    echo "RUNNING $i"
-    echo "-----------------------------------------------------------------------"
-    dn=$(dirname "$i")
-    bn=$(basename "$i")
-    (cd "$dn"; time ${PY_EXE} "$bn")
-  done
+  if ! test -d examples; then
+    echo "!!! No 'examples' directory found"
+  else
+    cd examples
+    for i in $(find . -name '*.py' -exec grep -q __main__ '{}' \; -print ); do
+      echo "-----------------------------------------------------------------------"
+      echo "RUNNING $i"
+      echo "-----------------------------------------------------------------------"
+      dn=$(dirname "$i")
+      bn=$(basename "$i")
+      (cd "$dn"; time ${PY_EXE} "$bn")
+    done
+  fi
 }
 
 # }}}

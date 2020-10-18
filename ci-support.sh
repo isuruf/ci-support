@@ -84,7 +84,7 @@ create_and_set_up_virtualenv()
 
   # https://github.com/pypa/pip/issues/8667 -AK, 2020-08-02
   $PY_EXE -m pip install --upgrade "pip<20.2"
-  $PY_EXE -m pip install setuptools
+  $PY_EXE -m pip install setuptools wheel
 }
 
 

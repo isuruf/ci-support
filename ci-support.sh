@@ -106,14 +106,7 @@ handle_extra_install()
 {
   if test "$EXTRA_INSTALL" != ""; then
     for i in $EXTRA_INSTALL ; do
-      if [[ "$i" = *pybind11* ]] && [[ "${PY_EXE}" == pypy* ]]; then
-         # context:
-         # https://github.com/conda-forge/pyopencl-feedstock/pull/45
-         # https://github.com/pybind/pybind11/pull/2146
-         with_echo "$PY_EXE" -m pip install git+https://github.com/isuruf/pybind11@pypy3
-      else
-        with_echo "$PY_EXE" -m pip install "$i"
-      fi
+      with_echo "$PY_EXE" -m pip install "$i"
     done
   fi
 }

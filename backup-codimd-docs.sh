@@ -1,6 +1,6 @@
 #! /bin/bash
 
-git clone https://github.com/codimd/cli.git codimd-cli
+git clone https://gitlab.tiker.net/inducer/codimd-cli.git codimd-cli
 CODIMD=$(pwd)/codimd-cli/bin/codimd
 
 git clone "$CI_REPOSITORY_URL" codimd-backup-subrepo

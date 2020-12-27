@@ -437,7 +437,7 @@ run_pylint()
   # pylint may inspect.
   $PY_EXE -m pip install "pylint<2.6" PyYAML pytest
 
-  PYLINT_RUNNER_ARGS="--yaml-rcfile=.pylintrc.yml"
+  PYLINT_RUNNER_ARGS="--jobs=4 --yaml-rcfile=.pylintrc.yml"
 
   if test -f .pylintrc-local.yml; then
     PYLINT_RUNNER_ARGS="$PYLINT_RUNNER_ARGS --yaml-rcfile=.pylintrc-local.yml"

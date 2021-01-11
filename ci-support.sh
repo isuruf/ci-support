@@ -341,6 +341,7 @@ run_examples()
 {
   if ! test -d examples; then
     echo "!!! No 'examples' directory found"
+    exit 1
   else
     cd examples
     for i in $(find . -name '*.py' -exec grep -q __main__ '{}' \; -print ); do

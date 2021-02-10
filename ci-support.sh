@@ -321,13 +321,21 @@ test_py_project()
         DOCTEST_MODULES_FLAG=""
       fi
 
-      with_echo "${PY_EXE}" -m pytest \
+      CONDA_JEMALLOC="$CONDA_PREFIX/lib/libjemalloc.so.2"
+      if test -f "$CONDA_JEMALLOC"; then
+        echo "*** running with $CONDA_JEMALLOC in LD_PRELOAD"
+        export CI_SUPPORT_LD_PRELOAD="$CONDA_JEMALLOC"
+      else
+        export CI_SUPPORT_LD_PRELOAD="$LD_PRELOAD"
+      fi
+
+      ( LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" with_echo "${PY_EXE}" -m pytest \
           --durations=10 \
           --tb=native  \
           --junitxml=pytest.xml \
           $DOCTEST_MODULES_FLAG \
           -rxsw \
-          $PYTEST_FLAGS $PYTEST_PARALLEL_FLAGS $TESTABLES
+          $PYTEST_FLAGS $PYTEST_PARALLEL_FLAGS $TESTABLES )
     fi
   fi
 }

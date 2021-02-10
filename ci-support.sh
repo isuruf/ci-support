@@ -294,40 +294,40 @@ test_py_project()
       # 10 GiB should be enough for just about anyone :)
       ulimit -m "$(python -c 'print(1024*1024*10)')"
 
-     if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
-       # Default: parallel if Not (Gitlab and GPU CI)?
-       PYTEST_PARALLEL_FLAGS=""
+      if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
+        # Default: parallel if Not (Gitlab and GPU CI)?
+        PYTEST_PARALLEL_FLAGS=""
 
-       # CI_RUNNER_DESCRIPTION is set by Gitlab
-       if [[ $CI_RUNNER_DESCRIPTION != *-gpu ]]; then
-         if [[ $CISUPPORT_PYTEST_NRUNNERS == "" ]]; then
-           PYTEST_PARALLEL_FLAGS="-n 4"
-         else
-           PYTEST_PARALLEL_FLAGS="-n $CISUPPORT_PYTEST_NRUNNERS"
-         fi
-       fi
+        # CI_RUNNER_DESCRIPTION is set by Gitlab
+        if [[ $CI_RUNNER_DESCRIPTION != *-gpu ]]; then
+          if [[ $CISUPPORT_PYTEST_NRUNNERS == "" ]]; then
+            PYTEST_PARALLEL_FLAGS="-n 4"
+          else
+            PYTEST_PARALLEL_FLAGS="-n $CISUPPORT_PYTEST_NRUNNERS"
+          fi
+        fi
 
-     elif [[ $CISUPPORT_PARALLEL_PYTEST == "no" ]]; then
-         PYTEST_PARALLEL_FLAGS=""
-     else
-       echo "unrecognized scheme in CISUPPORT_PARALLEL_PYTEST"
-     fi
+      elif [[ $CISUPPORT_PARALLEL_PYTEST == "no" ]]; then
+          PYTEST_PARALLEL_FLAGS=""
+      else
+        echo "unrecognized scheme in CISUPPORT_PARALLEL_PYTEST"
+      fi
 
-     # It... somehow... (?) seems to cause crashes for pytential.
-     # https://gitlab.tiker.net/inducer/pytential/-/issues/146
-     if [[ $CISUPPORT_PYTEST_NO_DOCTEST_MODULES == "" ]]; then
-       DOCTEST_MODULES_FLAG="--doctest-modules"
-     else
-       DOCTEST_MODULES_FLAG=""
-     fi
+      # It... somehow... (?) seems to cause crashes for pytential.
+      # https://gitlab.tiker.net/inducer/pytential/-/issues/146
+      if [[ $CISUPPORT_PYTEST_NO_DOCTEST_MODULES == "" ]]; then
+        DOCTEST_MODULES_FLAG="--doctest-modules"
+      else
+        DOCTEST_MODULES_FLAG=""
+      fi
 
       with_echo "${PY_EXE}" -m pytest \
-        --durations=10 \
-        --tb=native  \
-        --junitxml=pytest.xml \
-        $DOCTEST_MODULES_FLAG \
-        -rxsw \
-        $PYTEST_FLAGS $PYTEST_PARALLEL_FLAGS $TESTABLES
+          --durations=10 \
+          --tb=native  \
+          --junitxml=pytest.xml \
+          $DOCTEST_MODULES_FLAG \
+          -rxsw \
+          $PYTEST_FLAGS $PYTEST_PARALLEL_FLAGS $TESTABLES
     fi
   fi
 }

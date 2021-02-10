@@ -205,7 +205,7 @@ build_py_project_in_conda_env()
 
   PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update --all --yes --quiet
 
-  PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" with_echo conda env create --file "$CONDA_ENVIRONMENT" --name testing
+  PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" with_echo conda env create --file "$CONDA_ENVIRONMENT" --name testing --quiet
 
   source "$MINIFORGE_INSTALL_DIR/bin/activate" testing
 

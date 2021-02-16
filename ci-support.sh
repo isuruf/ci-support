@@ -449,11 +449,11 @@ run_pylint()
     curl -o .pylintrc.yml "${ci_support}/.pylintrc-default.yml"
   fi
 
-  # <2.6 version bound put in place out of an abundance of cautiousness, no particular reason
-  # 2020-07-15 AK
+  # <2.7 version bound put in place out of an abundance of cautiousness, no particular reason
+  # 2021-02-16 AK
   # pytest is being installed since test_*.py modules may import pytest, which
   # pylint may inspect.
-  $PY_EXE -m pip install "pylint<2.6" PyYAML pytest
+  $PY_EXE -m pip install "pylint<2.7" PyYAML pytest
 
   PYLINT_RUNNER_ARGS="--jobs=4 --yaml-rcfile=.pylintrc.yml"
 

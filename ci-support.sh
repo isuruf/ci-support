@@ -347,12 +347,19 @@ test_py_project()
 
 run_examples()
 {
+  if test "$1" == "--no-require-main"; then
+    MAIN_FILTER=()
+  else
+    MAIN_FILTER=(-exec grep -q __main__ '{}' \;)
+  fi
+
   if ! test -d examples; then
     echo "!!! No 'examples' directory found"
     exit 1
   else
     cd examples
-    for i in $(find . -name '*.py' -exec grep -q __main__ '{}' \; -print ); do
+
+    for i in $(find . -name '*.py' "${MAIN_FILTER[@]}" -print ); do
       echo "-----------------------------------------------------------------------"
       echo "RUNNING $i"
       echo "-----------------------------------------------------------------------"
@@ -465,4 +472,5 @@ run_pylint()
 }
 
 # }}}
+
 # vim: foldmethod=marker:sw=2

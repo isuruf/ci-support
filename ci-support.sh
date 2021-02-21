@@ -56,7 +56,7 @@ print_status_message()
   echo "git revision: $(git rev-parse --short HEAD)"
   echo "git status:"
   git status -s
-  cat /proc/cpuinfo | grep 'model name' | head -n 1
+  test -f /proc/cpuinfo && ( grep 'model name' /proc/cpuinfo | head -n 1)
   echo "-----------------------------------------------"
 }
 

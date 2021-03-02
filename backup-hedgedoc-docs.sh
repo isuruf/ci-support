@@ -5,7 +5,7 @@ CLICMD=$(pwd)/hedgedoc-cli/bin/codimd
 
 git clone "$CI_REPOSITORY_URL" hedgedoc-backup-subrepo
 cd hedgedoc-backup-subrepo
-git checkout master
+git checkout "$CI_DEFAULT_BRANCH"
 
 SECONDS_SINCE_LAST_COMMIT=$((git show HEAD --format=%cI -s && date --iso-8601=seconds) | python3 -c 'import sys; import datetime as dt; fromiso=dt.datetime.fromisoformat; s=fromiso(sys.stdin.readline().strip()); e=fromiso(sys.stdin.readline().strip()); print(int((e-s).total_seconds()))')
 
@@ -54,7 +54,7 @@ if [[ `git status --porcelain --untracked-files=no ` ]]; then
     git commit -m "Automatic update from HedgeDoc: $(date)"
     mkdir -p ~/.ssh
     echo -e "Host gitlab.tiker.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git master
+    git push git@gitlab.tiker.net:${CI_PROJECT_PATH}.git "$CI_DEFAULT_BRANCH"
 fi
 
 # vim: sw=4

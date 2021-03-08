@@ -4,7 +4,7 @@
 set -e
 set -o pipefail
 
-ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/master"
+ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/main"
 
 if [ "$PY_EXE" == "" ]; then
   if [ "$py_version" == "" ]; then
@@ -401,7 +401,7 @@ build_docs()
 
 maybe_upload_docs()
 {
-  if test -n "${DOC_UPLOAD_KEY}" && test "$CI_COMMIT_REF_NAME" = "master"; then
+  if test -n "${DOC_UPLOAD_KEY}" && test "$CI_DEFAULT_BRANCH" && test "$CI_COMMIT_REF_NAME" = "$CI_DEFAULT_BRANCH"; then
     cat > doc_upload_ssh_config <<END
 Host doc-upload
    User doc
@@ -416,7 +416,7 @@ END
     RSYNC_RSH="ssh -F doc_upload_ssh_config" ./upload-docs.sh || { rm doc_upload_key; exit 1; }
     rm doc_upload_key
   else
-    echo "Not uploading docs. No DOC_UPLOAD_KEY or not on master on Gitlab."
+    echo "Not uploading docs. No DOC_UPLOAD_KEY or not on $CI_DEFAULT_BRANCH on Gitlab."
   fi
 }
 

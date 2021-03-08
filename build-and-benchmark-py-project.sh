@@ -1,6 +1,6 @@
 #! /bin/bash
 
-curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/master/ci-support.sh
+curl -L -O -k https://gitlab.tiker.net/inducer/ci-support/raw/main/ci-support.sh
 source ci-support.sh
 
 build_py_project_in_conda_env
@@ -33,10 +33,10 @@ if [[ ! -z "$CI" ]]; then
   fi
   rm -rf .asv/env
 
-  # Fetch the master branch if the git repository in the gitlab CI env does not have it.
-  if ! git rev-parse --verify master > /dev/null 2>&1; then
-    git fetch origin master || true
-    git branch master origin/master
+  # Fetch the main branch if the git repository in the gitlab CI env does not have it.
+  if ! git rev-parse --verify main > /dev/null 2>&1; then
+    git fetch origin main || true
+    git branch main origin/main
   fi
 fi
 
@@ -44,15 +44,15 @@ if [[ ! -f ~/.asv-machine.json ]]; then
   asv machine --yes
 fi
 
-master_commit=`git rev-parse master`
+main_commit=`git rev-parse main`
 test_commit=`git rev-parse HEAD`
 
 # cf. https://github.com/pandas-dev/pandas/pull/25237
 # for reasoning on --launch-method=spawn
-asv run $master_commit...$master_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
+asv run $main_commit...$main_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 asv run $test_commit...$test_commit~ --skip-existing --verbose --show-stderr --launch-method=spawn
 
-output=`asv compare $master_commit $test_commit --factor ${ASV_FACTOR:-1} -s`
+output=`asv compare $main_commit $test_commit --factor ${ASV_FACTOR:-1} -s`
 echo "$output"
 
 if [[ "$output" = *"worse"* ]]; then

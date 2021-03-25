@@ -6,7 +6,7 @@ source ci-support.sh
 build_py_project_in_conda_env
 
 # See https://github.com/airspeed-velocity/asv/pull/965
-pip install git+https://github.com/isuruf/asv@e87267acd2bc302097cb56286464dafc1983db54#egg=asv
+pip install git+https://github.com/airspeed-velocity/asv@ef016e233cb9a0b19d517135104f49e0a3c380e9#egg=asv
 
 conda list
 

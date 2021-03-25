@@ -5,9 +5,8 @@ source ci-support.sh
 
 build_py_project_in_conda_env
 
-# Can't use v0.3 because https://github.com/airspeed-velocity/asv/pull/721 is needed
-# Can't use v0.4 because of https://github.com/airspeed-velocity/asv/issues/822
-pip install git+https://github.com/airspeed-velocity/asv@baeec6e096947f735ed3917ed0c2b9361366dd52#egg=asv
+# See https://github.com/airspeed-velocity/asv/pull/965
+pip install git+https://github.com/isuruf/asv@e87267acd2bc302097cb56286464dafc1983db54#egg=asv
 
 conda list
 

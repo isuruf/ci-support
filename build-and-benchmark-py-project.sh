@@ -32,11 +32,9 @@ if [[ ! -z "$CI" ]]; then
   fi
   rm -rf .asv/env
 
-  # Fetch the main branch if the git repository in the gitlab CI env does not have it.
-  if ! git rev-parse --verify main > /dev/null 2>&1; then
-    git fetch origin main || true
-    git branch main origin/main
-  fi
+  # Fetch the origin/main branch and setup main to track origin/main
+  git fetch origin main || true
+  git branch main origin/main -f
 fi
 
 if [[ ! -f ~/.asv-machine.json ]]; then

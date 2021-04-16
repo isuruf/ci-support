@@ -20,17 +20,18 @@ if [[ -z "$PYOPENCL_TEST" ]]; then
     exit 1
 fi
 
-mkdir -p ~/.$PROJECT/asv/results
-
 if [[ ! -z "$CI" ]]; then
-  mkdir -p .asv/env
+  mkdir -p .asv
   if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
-    ln -s ~/.$PROJECT/asv/results .asv/results
+    echo "$BENCHMARK_DATA_DEPLOY_KEY" > .deploy_key
+    chmod 700 .deploy_key
+    ssh-keyscan gitlab.tiker.net >> ~/.ssh/known_hosts
+    chmod 644 ~/.ssh/known_hosts
+    ssh-agent bash -c "ssh-add $PWD/.deploy_key; git clone git@gitlab.tiker.net:isuruf/benchmark-data"
   else
-    # Copy, so that the original folder is not changed.
-    cp -r ~/.$PROJECT/asv/results .asv/results
+    git clone https://gitlab.tiker.net/isuruf/benchmark-data
   fi
-  rm -rf .asv/env
+  ln -s $PWD/benchmark-data/$PROJECT .asv/results
 
   # Fetch the origin/main branch and setup main to track origin/main
   git fetch origin main || true
@@ -57,7 +58,17 @@ if [[ "$output" = *"worse"* ]]; then
   exit 1
 fi
 
-if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
+if [[ "$CI_PROJECT_NAMESPACE" == "isuruf" ]]; then
+  cd benchmark-data
+  git add $PROJECT
+  export GIT_AUTHOR_NAME="Automated Benchmark Bot"
+  export GIT_AUTHOR_EMAIL="bot@gitlab.tiker.net"
+  export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
+  export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
+  git commit -m "Update benchmark data for $main_commit" --allow-empty
+  ssh-agent bash -c "ssh-add $PWD/../.deploy_key; git push"
+  cd ..
   git branch -v
+  mkdir -p ~/.scicomp-benchmarks/asv
   asv publish --html-dir ~/.scicomp-benchmarks/asv/$PROJECT
 fi

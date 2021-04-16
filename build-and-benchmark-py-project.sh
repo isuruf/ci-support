@@ -58,7 +58,7 @@ if [[ "$output" = *"worse"* ]]; then
   exit 1
 fi
 
-if [[ "$CI_PROJECT_NAMESPACE" == "isuruf" ]]; then
+if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
   cd benchmark-data
   git add $PROJECT
   export GIT_AUTHOR_NAME="Automated Benchmark Bot"

@@ -397,6 +397,11 @@ build_docs()
   else
     with_echo make html SPHINXOPTS="-W --keep-going -n"
   fi
+  cd ..
+  if [[ -f "asv.conf.json" ]]; then
+    build_asv_html
+  fi
+  cd doc
 }
 
 maybe_upload_docs()
@@ -546,6 +551,18 @@ function run_asv {
   fi
 }
 
+function build_asv_html {
+  setup_asv
+  clone_results_repo
+  asv publish --html-dir docs/_build/html/benchmarks
+}
+
+function build_and_run_benchmarks {
+  setup_asv
+  clone_results_repo
+  run_asv
+  upload_benchmark_results
+}
 
 # }}}
 

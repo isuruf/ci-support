@@ -497,7 +497,7 @@ function clone_results_repo {
   fi
   if [[ ! -z "$CI" ]]; then
     mkdir -p .asv
-    if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
+    if [[ "$CI_PROJECT_NAMESPACE" == "inducer" && ! -z "${BENCHMARK_DATA_DEPLOY_KEY}" ]]; then
       echo "$BENCHMARK_DATA_DEPLOY_KEY" > .deploy_key
       chmod 700 .deploy_key
       ssh-keyscan gitlab.tiker.net >> ~/.ssh/known_hosts

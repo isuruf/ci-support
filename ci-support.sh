@@ -508,9 +508,11 @@ function clone_results_repo {
     fi
     ln -s $PWD/benchmark-data/$PROJECT .asv/results
 
-    # Fetch the origin/main branch and setup main to track origin/main
-    git fetch origin main || true
-    git branch main origin/main -f
+    if [[ ! -z "${GITLAB_CI}" ]]; then
+      # Fetch the origin/main branch and setup main to track origin/main
+      git fetch origin main || true
+      git branch main origin/main -f
+    fi
   fi
 }
 

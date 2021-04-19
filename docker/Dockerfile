@@ -1,4 +1,4 @@
-FROM inducer/debian-amd64-minbase
+FROM debian:testing-slim
 MAINTAINER Andreas Kloeckner <inform@tiker.net>
 
 RUN echo 'APT::Default-Release "testing";' >> /etc/apt/apt.conf

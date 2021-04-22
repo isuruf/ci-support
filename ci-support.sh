@@ -513,6 +513,10 @@ function clone_results_repo {
       git fetch origin main || true
       git branch main origin/main -f
     fi
+    if [[ ! -f $PWD/.asv/results/benchmarks.json ]]; then
+      # this is a brand new project. Run benchmark discovery process
+      asv run --bench just-discover
+    fi
   fi
 }
 

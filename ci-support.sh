@@ -560,7 +560,7 @@ function run_asv {
 function build_asv_html {
   setup_asv
   clone_results_repo
-  asv publish --html-dir docs/_build/html/benchmarks
+  asv publish --html-dir doc/_build/html/benchmarks
 }
 
 function build_and_run_benchmarks {

@@ -529,6 +529,7 @@ function upload_benchmark_results {
     export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
     export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
     git commit -m "Update benchmark data for $main_commit" --allow-empty
+    ssh-agent bash -c "ssh-add $PWD/../.deploy_key; git pull -r origin main"
     ssh-agent bash -c "ssh-add $PWD/../.deploy_key; git push"
     cd ..
   fi

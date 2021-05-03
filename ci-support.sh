@@ -463,10 +463,10 @@ run_pylint()
   fi
 
   # version bound put in place out of an abundance of cautiousness, no particular reason
-  # 2021-04-22 AK
+  # 2021-05-03 AK
   # pytest is being installed since test_*.py modules may import pytest, which
   # pylint may inspect.
-  $PY_EXE -m pip install "pylint<2.8" PyYAML pytest
+  $PY_EXE -m pip install "pylint<2.9" PyYAML pytest
 
   PYLINT_RUNNER_ARGS="--jobs=4 --yaml-rcfile=.pylintrc.yml"
 

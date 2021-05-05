@@ -445,6 +445,17 @@ install_and_run_flake8()
     echo "-----------------------------------------------------------------"
   fi
 
+  if grep -q enable-flake8-bugbear setup.cfg; then
+    FLAKE8_PACKAGES+=(flake8-bugbear)
+  else
+    echo "-----------------------------------------------------------------"
+    echo "Consider enabling quote checking for this package by configuring"
+    echo "https://github.com/PyCQA/flake8-bugbear"
+    echo "in setup.cfg. Simply add a line"
+    echo "# enable-flake8-bugbear"
+    echo "-----------------------------------------------------------------"
+  fi
+
   ${PY_EXE} -m pip install "${FLAKE8_PACKAGES[@]}"
   ${PY_EXE} -m flake8 "$@"
 }

@@ -387,8 +387,12 @@ run_examples()
 
 build_docs()
 {
-  # >=3.2.1 for https://github.com/sphinx-doc/sphinx/issues/8084
-  with_echo $PY_EXE -m pip install "sphinx>=3.2.1" furo sphinx-copybutton
+  if test "$CI_SUPPORT_SPHINX_VERSION_SPECIFIER" = ""; then
+    # >=3.2.1 for https://github.com/sphinx-doc/sphinx/issues/8084
+    CI_SUPPORT_SPHINX_VERSION_SPECIFIER=">=3.2.1"
+  fi
+  with_echo $PY_EXE -m pip install "sphinx$CI_SUPPORT_SPHINX_VERSION_SPECIFIER" \
+    furo sphinx-copybutton
 
   cd doc
 

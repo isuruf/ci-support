@@ -220,6 +220,16 @@ build_py_project_in_conda_env()
   with_echo conda install --quiet --yes pip
   with_echo conda list
 
+  # If a job decides it wants to build PyOpenCL from source, e.g. this situation:
+  # https://github.com/conda-forge/pyopencl-feedstock/pull/64#issuecomment-842831669
+  # give it a fighting chance if running on Github:
+  if test "$GITHUB_RUN_ID" != ""; then
+    cat >> ~/.aksetup-defaults.py <<EOF
+CL_INC_DIR = ["$CONDA_PREFIX/include"]
+CL_LIB_DIR = ["$CONDA_PREFIX/lib"]
+EOF
+  fi
+
   # Using pip instead of conda to install pytest (see test_py_project) avoids
   # ridiculous uninstall chains like these:
   # https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
@@ -491,6 +501,7 @@ run_pylint()
 }
 
 # }}}
+
 
 # {{{ benchmarks
 

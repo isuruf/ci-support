@@ -83,8 +83,7 @@ create_and_set_up_virtualenv()
   esac
 
 
-  # https://github.com/pypa/pip/issues/8667 -AK, 2020-08-02
-  $PY_EXE -m pip install --upgrade "pip<20.2"
+  $PY_EXE -m pip install --upgrade pip
   $PY_EXE -m pip install setuptools wheel
 }
 
@@ -218,8 +217,7 @@ build_py_project_in_conda_env()
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
-  # https://github.com/pypa/pip/issues/8667 -AK, 2020-08-02
-  with_echo conda install --quiet --yes "pip<20.2"
+  with_echo conda install --quiet --yes pip
   with_echo conda list
 
   # Using pip instead of conda to install pytest (see test_py_project) avoids

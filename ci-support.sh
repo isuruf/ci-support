@@ -400,7 +400,11 @@ build_docs()
     CI_SUPPORT_SPHINX_VERSION_SPECIFIER=">=3.2.1"
   fi
   with_echo $PY_EXE -m pip install "sphinx$CI_SUPPORT_SPHINX_VERSION_SPECIFIER" \
-    furo sphinx-copybutton
+
+  # Two separate installs to trick sphinx into not precisely enforcing dependencies.
+  # At the time of this writing, furo says it only works with sphinx 3.x.
+  # (but it seems 4.x is OK!) -AK, 2021-05-20
+  with_echo $PY_EXE -m pip install furo sphinx-copybutton
 
   cd doc
 

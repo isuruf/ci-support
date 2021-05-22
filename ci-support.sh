@@ -401,7 +401,8 @@ build_docs()
 {
   if test "$CI_SUPPORT_SPHINX_VERSION_SPECIFIER" = ""; then
     # >=3.2.1 for https://github.com/sphinx-doc/sphinx/issues/8084
-    CI_SUPPORT_SPHINX_VERSION_SPECIFIER=">=3.2.1"
+    # >=4.0.2 because sphinx 4 is nice :D
+    CI_SUPPORT_SPHINX_VERSION_SPECIFIER=">=4.0.2"
   fi
 
   # Two separate installs to trick sphinx into not precisely enforcing dependencies.

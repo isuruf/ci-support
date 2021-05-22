@@ -227,6 +227,10 @@ build_py_project_in_conda_env()
     cat >> ~/.aksetup-defaults.py <<EOF
 CL_INC_DIR = ["$CONDA_PREFIX/include"]
 CL_LIB_DIR = ["$CONDA_PREFIX/lib"]
+
+# This matches the default on Linux and forces the use of the conda-installed
+# ICD loader on macOS.
+CL_LIBNAME = ["OpenCL"]
 EOF
   fi
 

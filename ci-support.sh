@@ -201,10 +201,16 @@ build_py_project_in_conda_env()
   clean_up_repo_and_working_env
   install_miniforge
 
+  if test "$CONDA_ENVIRONMENT" = ""; then
+    if test -f ".test-conda-env-py3.yml"; then
+      CONDA_ENVIRONMENT=.test-conda-env-py3.yml
+    elif test -f ".test-conda-env-py3.yml"; then
+      CONDA_ENVIRONMENT=.test-conda-env.yml
+    fi
+  fi
+
   PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update conda --yes --quiet
-
   PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update --all --yes --quiet
-
   PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" with_echo conda env create --file "$CONDA_ENVIRONMENT" --name testing --quiet
 
   source "$MINIFORGE_INSTALL_DIR/bin/activate" testing

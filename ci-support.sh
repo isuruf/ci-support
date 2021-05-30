@@ -505,7 +505,9 @@ run_pylint()
   # 2021-05-03 AK
   # pytest is being installed since test_*.py modules may import pytest, which
   # pylint may inspect.
-  $PY_EXE -m pip install "pylint<2.9" PyYAML pytest
+
+  # astroid 2.5.7 seems to produce spurious pylint failures
+  $PY_EXE -m pip install "pylint<2.9" "astroid!=2.5.7" PyYAML pytest
 
   PYLINT_RUNNER_ARGS="--jobs=4 --yaml-rcfile=.pylintrc.yml"
 

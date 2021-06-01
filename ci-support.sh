@@ -523,7 +523,8 @@ run_pylint()
 
 # {{{ benchmarks
 
-function setup_asv {
+function setup_asv
+{
   # See https://github.com/airspeed-velocity/asv/pull/965
   pip install git+https://github.com/airspeed-velocity/asv@ef016e233cb9a0b19d517135104f49e0a3c380e9#egg=asv
 
@@ -532,7 +533,8 @@ function setup_asv {
   fi
 }
 
-function clone_results_repo {
+function clone_results_repo
+{
   if [[ -z "$PROJECT" ]]; then
       echo "PROJECT env var not set"
       exit 1
@@ -562,7 +564,8 @@ function clone_results_repo {
   fi
 }
 
-function upload_benchmark_results {
+function upload_benchmark_results
+{
   if [[ "$CI_PROJECT_NAMESPACE" == "inducer" ]]; then
     cd benchmark-data
     git add $PROJECT
@@ -577,7 +580,8 @@ function upload_benchmark_results {
   fi
 }
 
-function run_asv {
+function run_asv
+{
   if [[ -z "$PYOPENCL_TEST" ]]; then
       echo "PYOPENCL_TEST env var not set"
       exit 1
@@ -600,7 +604,8 @@ function run_asv {
   fi
 }
 
-function build_asv_html {
+function build_asv_html
+{
   setup_asv
   clone_results_repo
   asv publish --html-dir doc/_build/html/benchmarks

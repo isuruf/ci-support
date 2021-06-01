@@ -1,0 +1,73 @@
+#! /usr/bin/env python3
+
+import sys
+import pathlib
+import re
+
+
+vcs_url_re = re.compile(
+        r"(git\+[a-z]+://[-a-zA-Z0-9./]+)"
+        "((?:@[-_a-zA-Z0-9]+)?)"
+        r"\#egg=([-a-zA-Z0-9_.]+)"
+        )
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("from_file", metavar="FROM_REQ.TXT")
+    parser.add_argument("to_file", metavar="TO_REQ.TXT")
+    args = parser.parse_args()
+
+    pkg_to_url_branch = {}
+    with pathlib.Path(args.from_file).open() as req_txt:
+        for ln in req_txt:
+            ln = ln.strip()
+            if not ln:
+                continue
+            if ln.startswith("#"):
+                continue
+
+            match = vcs_url_re.search(ln)
+            if not match:
+                continue
+
+            branch = match.group(2)
+            if branch:
+                assert branch.startswith("@")
+                branch = branch[1:]
+
+            pkg_to_url_branch[match.group(3)] = (
+                    match.group(1),
+                    branch,
+                    )
+
+    with pathlib.Path(args.to_file).open() as req_txt:
+        result = []
+        for ln in req_txt:
+            lnread = ln.strip()
+            if not lnread:
+                result.append(ln)
+            if lnread.startswith("#"):
+                result.append(ln)
+
+            match = vcs_url_re.search(lnread)
+            if match and match.group(3) in pkg_to_url_branch:
+                projname = match.group(3)
+                base_url, branch = pkg_to_url_branch[projname]
+                pkgspec = f"{base_url}"
+                if branch:
+                    pkgspec += f"@{branch}"
+                pkgspec += f"#egg={projname}"
+
+                result.append(vcs_url_re.sub(pkgspec, ln))
+            else:
+                result.append(ln)
+
+    with pathlib.Path(args.to_file).open("w") as req_txt:
+        req_txt.write("".join(result))
+
+
+if __name__ == "__main__":
+    main()

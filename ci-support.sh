@@ -611,11 +611,22 @@ function build_asv_html
   asv publish --html-dir doc/_build/html/benchmarks
 }
 
-function build_and_run_benchmarks {
+function build_and_run_benchmarks
+{
   setup_asv
   clone_results_repo
   run_asv
   upload_benchmark_results
+}
+
+# }}}
+
+# {{{ transfer_requirements_git_urls
+
+function transfer_requirements_git_urls()
+{
+  curl -L -O "${ci_support}transfer-requirements-git-urls"
+  ./transfer-requirements-git-urls "$@"
 }
 
 # }}}

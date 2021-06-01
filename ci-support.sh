@@ -625,7 +625,7 @@ function build_and_run_benchmarks
 
 function transfer_requirements_git_urls()
 {
-  curl -L -O "${ci_support}transfer-requirements-git-urls"
+  curl -L -O "${ci_support}/transfer-requirements-git-urls"
   ./transfer-requirements-git-urls "$@"
 }
 

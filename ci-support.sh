@@ -292,7 +292,7 @@ test_py_project()
       RST_FILES=(../doc/*.rst)
 
       for f in "${RST_FILES[@]}"; do
-        if [ -e "$f}" ]; then
+        if [ -e "$f" ]; then
           if ! grep -q no-doctest "$f"; then
             TESTABLES="$TESTABLES $f"
           fi

@@ -460,7 +460,9 @@ END
 
 install_and_run_flake8()
 {
-  FLAKE8_PACKAGES=(flake8 pep8-naming)
+  # <4.0 version restriction for https://github.com/PyCQA/flake8/issues/1425
+  FLAKE8_PACKAGES=("flake8<4.0" pep8-naming)
+
   if grep -q quotes setup.cfg; then
     true
     FLAKE8_PACKAGES+=(flake8-quotes)

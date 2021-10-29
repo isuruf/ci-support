@@ -621,12 +621,33 @@ function build_and_run_benchmarks
 
 # }}}
 
+
 # {{{ transfer_requirements_git_urls
 
 function transfer_requirements_git_urls()
 {
   curl -L -O "${ci_support}/transfer-requirements-git-urls"
   python3 ./transfer-requirements-git-urls "$@"
+}
+
+# }}}
+
+
+# {{{ edit_requirements_txt_for_downstream_in_subdir
+
+function edit_requirements_txt_for_downstream_in_subdir()
+{
+  # Assumed to be run in directory of downstream project checked out in
+  # subdirectory of upstream.
+
+  # Unshallow the upstream repo. Without that, a bunch of the commands that
+  # pip (as of 21.3) uses cause copious error spew, along the lines of
+  # "warning: rejected (SHA) because shallow roots are not allowed to be updated"
+  # "warning: filtering not recognized by server, ignoring"
+  (cd ..; git fetch --unshallow)
+
+  PRJ_NAME="$(basename "$GITHUB_REPOSITORY")"
+  sed -i "/egg=$PRJ_NAME/ c git+file://$(readlink -f ..)#egg=$PRJ_NAME" requirements.txt
 }
 
 # }}}

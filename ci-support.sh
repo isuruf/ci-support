@@ -226,6 +226,11 @@ build_py_project_in_conda_env()
   with_echo conda install --quiet --yes pip
   with_echo conda list
 
+  # Placeholder until github.com/conda-forge/qt-feedstock/issues/208 is fixed
+  if [ "$(uname)" = "Linux" ]; then
+  with_echo rm -rf $MINIFORGE_INSTALL_DIR/envs/testing/x86_64-conda-linux-gnu/sysroot
+  fi
+
   # If a job decides it wants to build PyOpenCL from source, e.g. this situation:
   # https://github.com/conda-forge/pyopencl-feedstock/pull/64#issuecomment-842831669
   # give it a fighting chance if running on Github:

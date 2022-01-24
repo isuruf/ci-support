@@ -683,11 +683,12 @@ function edit_requirements_txt_for_downstream_in_subdir()
 
 function install_ispc()
 {
-    # https://github.com/ispc/ispc/issues/2240
-    # curl -L "https://ci.appveyor.com/api/projects/ispc/ispc/artifacts/build%2Fispc-trunk-linux.tar.gz?job=Environment%3A%20APPVEYOR_BUILD_WORKER_IMAGE%3DUbuntu1604%2C%20LLVM_VERSION%3Dlatest" | tar xfz -
-    # export PATH="$(pwd)/ispc-trunk-linux/bin:$PATH"
-    curl -L https://github.com/ispc/ispc/releases/download/v1.17.0/ispc-v1.17.0-linux.tar.gz  | tar xfz -
-    PATH="$(pwd)/ispc-v1.17.0-linux/bin:$PATH"
+    curl -L "https://ci.appveyor.com/api/projects/ispc/ispc/artifacts/build%2Fispc-trunk-linux.tar.gz?job=Environment%3A%20APPVEYOR_BUILD_WORKER_IMAGE%3DUbuntu1804%2C%20LLVM_VERSION%3Dlatest" | tar xfz -
+    PATH="$(pwd)/ispc-trunk-linux/bin:$PATH"
+
+    # curl -L https://github.com/ispc/ispc/releases/download/v1.17.0/ispc-v1.17.0-linux.tar.gz  | tar xfz -
+    # PATH="$(pwd)/ispc-v1.17.0-linux/bin:$PATH"
+
     export PATH
 }
 

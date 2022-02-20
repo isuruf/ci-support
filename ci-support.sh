@@ -509,7 +509,7 @@ install_and_run_flake8()
 
 run_pylint()
 {
-  curl -L -O -k "${ci_support}/run-pylint.py"
+  curl -L -O "${ci_support}/run-pylint.py"
 
   if ! test -f .pylintrc.yml; then
     curl -o .pylintrc.yml "${ci_support}/.pylintrc-default.yml"

@@ -17,11 +17,6 @@ fi
 
 if [ "$(uname)" = "Darwin" ]; then
   PLATFORM=MacOSX
-  if test -d /usr/local/opt/curl/bin; then
-    # That's where homebrew lives, and it has the curl that doesn't cause
-    # cert errors from the OS being too old.
-    export PATH="/usr/local/opt/curl/bin:$PATH"
-  fi
 else
   PLATFORM=Linux
 fi

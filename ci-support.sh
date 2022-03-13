@@ -213,7 +213,7 @@ build_py_project_in_conda_env()
   if test "$CONDA_ENVIRONMENT" = ""; then
     if test -f ".test-conda-env-py3.yml"; then
       CONDA_ENVIRONMENT=.test-conda-env-py3.yml
-    elif test -f ".test-conda-env-py3.yml"; then
+    elif test -f ".test-conda-env.yml"; then
       CONDA_ENVIRONMENT=.test-conda-env.yml
     fi
   fi

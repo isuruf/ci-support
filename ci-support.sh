@@ -698,4 +698,54 @@ function install_ispc()
 # }}}
 
 
+# {{{ test_downstream
+
+function test_downstream()
+{
+  local downstream_proj="$1"
+  local proj_name="$downstream_proj"
+  local test_examples=0
+
+  if [[ "$downstream_proj" = *_examples ]]; then
+    proj_name="${downstream_proj%_examples}"
+    test_examples=1
+  fi
+
+  if [[ "$proj_name" = "mirgecom" ]]; then
+      git clone "https://github.com/illinois-ceesd/$proj_name.git"
+  else
+      git clone "https://github.com/inducer/$proj_name.git"
+  fi
+
+  cd "$PROJ_DIR"
+  echo "*** $proj_name version: $(git rev-parse --short HEAD)"
+
+  transfer_requirements_git_urls ../requirements.txt ./requirements.txt
+  edit_requirements_txt_for_downstream_in_subdir
+
+  # Avoid slow or complicated tests in downstream projects
+  export PYTEST_ADDOPTS="-k 'not (slowtest or octave or mpi)'"
+
+  if [[ "$proj_name" = "mirgecom" ]]; then
+      # can't turn off MPI in mirgecom
+      export CONDA_ENVIRONMENT=conda-env.yml
+      export CISUPPORT_PARALLEL_PYTEST=no
+      echo "- mpi4py" >> "$CONDA_ENVIRONMENT"
+  else
+      sed -i "/mpi4py/ d" requirements.txt
+  fi
+  build_py_project_in_conda_env
+
+  if [[ "$test_examples" == "0" ]]; then
+    test_py_project
+  else
+    if [[ "$proj_name" = "mirgecom" ]]; then
+      examples/run_examples.sh ./examples
+    else
+      run_examples
+    fi
+  fi
+}
+
+
 # vim: foldmethod=marker:sw=2

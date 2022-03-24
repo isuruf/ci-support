@@ -664,10 +664,7 @@ function edit_requirements_txt_for_downstream_in_subdir()
   local TMP_FOR_COMPARISON="zzztmp-ci-support-req.txt"
 
   PRJ_NAME="$(basename "$GITHUB_REPOSITORY")"
-  REQ_TXT_TO_EDIT="$1"
-  if test "$REQ_TXT_TO_EDIT" = ""; then
-    REQ_TXT_TO_EDIT=requirements.txt
-  fi
+  REQ_TXT_TO_EDIT="${1:-requirements.txt}"
   cp "$REQ_TXT_TO_EDIT" "$TMP_FOR_COMPARISON"
   sed -i "/egg=$PRJ_NAME/ c git+file://$(readlink -f ..)#egg=$PRJ_NAME" "$REQ_TXT_TO_EDIT"
   if cmp "$REQ_TXT_TO_EDIT" "$TMP_FOR_COMPARISON" > /dev/null ; then

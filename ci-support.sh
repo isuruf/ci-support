@@ -663,7 +663,7 @@ function edit_requirements_txt_for_downstream_in_subdir()
   local REQ_TXT_TO_EDIT
   local TMP_FOR_COMPARISON="zzztmp-ci-support-req.txt"
 
-  PRJ_NAME="$(basename "$GITHUB_REPOSITORY")"
+  PRJ_NAME="$(get_proj_name)"
   REQ_TXT_TO_EDIT="${1:-requirements.txt}"
   cp "$REQ_TXT_TO_EDIT" "$TMP_FOR_COMPARISON"
   sed -i "/egg=$PRJ_NAME/ c git+file://$(readlink -f ..)#egg=$PRJ_NAME" "$REQ_TXT_TO_EDIT"

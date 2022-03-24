@@ -19,7 +19,8 @@ RUN apt-get -y -o APT::Install-Suggests=0 install \
   gfortran \
   libhwloc-dev \
   locales-all \
-  rsync
+  rsync \
+  libgl1
 
 RUN useradd -G sudo -m runner
 RUN apt-get clean

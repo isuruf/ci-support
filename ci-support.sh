@@ -546,7 +546,7 @@ function setup_asv
   fi
 }
 
-function clone_results_repo
+function clone_asv_results_repo
 {
   if [[ -z "$PROJECT" ]]; then
       echo "PROJECT env var not set"
@@ -620,14 +620,14 @@ function run_asv
 function build_asv_html
 {
   setup_asv
-  clone_results_repo
+  clone_asv_results_repo
   asv publish --html-dir doc/_build/html/benchmarks
 }
 
 function build_and_run_benchmarks
 {
   setup_asv
-  clone_results_repo
+  clone_asv_results_repo
   run_asv
   upload_benchmark_results
 }

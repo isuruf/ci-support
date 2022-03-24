@@ -548,10 +548,9 @@ function setup_asv
 
 function clone_asv_results_repo
 {
-  if [[ -z "$PROJECT" ]]; then
-      echo "PROJECT env var not set"
-      exit 1
-  fi
+  local PROJECT
+  PROJECT="$(get_proj_name)"
+
   if [[ -n "$CI" ]]; then
     mkdir -p .asv
     if [[ "$CI_PROJECT_NAMESPACE" == "inducer" && -n "${BENCHMARK_DATA_DEPLOY_KEY}" ]]; then

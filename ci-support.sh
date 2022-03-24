@@ -717,7 +717,7 @@ function test_downstream()
       git clone "https://github.com/inducer/$proj_name.git"
   fi
 
-  cd "$PROJ_DIR"
+  cd "$proj_name"
   echo "*** $proj_name version: $(git rev-parse --short HEAD)"
 
   transfer_requirements_git_urls ../requirements.txt ./requirements.txt
@@ -746,6 +746,8 @@ function test_downstream()
     fi
   fi
 }
+
+# }}}
 
 
 # vim: foldmethod=marker:sw=2

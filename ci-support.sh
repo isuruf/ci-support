@@ -657,8 +657,8 @@ function edit_requirements_txt_for_downstream_in_subdir()
   # pip (as of 21.3) uses cause copious error spew, along the lines of
   # "warning: rejected (SHA) because shallow roots are not allowed to be updated"
   # "warning: filtering not recognized by server, ignoring"
-  (cd ..; git fetch --unshallow)
-
+  (cd ..; if $(git rev-parse --is-shallow-repository); then git fetch --unshallow; fi)
+  
   local PRJ_NAME
   local REQ_TXT_TO_EDIT
   local TMP_FOR_COMPARISON="zzztmp-ci-support-req.txt"

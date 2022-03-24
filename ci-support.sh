@@ -432,22 +432,22 @@ build_docs()
 
   with_echo $PY_EXE -m pip install "sphinx$CI_SUPPORT_SPHINX_VERSION_SPECIFIER" \
 
-  cd doc
-
   if test "$1" = "--no-check"; then
-    with_echo make html
+    (cd doc; with_echo make html)
   else
-    with_echo make html SPHINXOPTS="-W --keep-going -n"
+    (cd doc; with_echo make html SPHINXOPTS="-W --keep-going -n")
   fi
-  cd ..
-  if [[ -f "asv.conf.json" ]]; then
-    build_asv_html
-  fi
-  cd doc
 }
 
 maybe_upload_docs()
 {
+  if [[ "$(basename "$(pwd)")" != "doc" ]]; then
+    cd doc
+    maybe_upload_docs
+    cd ..
+    return
+  fi
+  
   if test -n "${DOC_UPLOAD_KEY}" && test "$CI_DEFAULT_BRANCH" && test "$CI_COMMIT_REF_NAME" = "$CI_DEFAULT_BRANCH"; then
     cat > doc_upload_ssh_config <<END
 Host doc-upload

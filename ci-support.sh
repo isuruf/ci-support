@@ -447,7 +447,7 @@ maybe_upload_docs()
     cd ..
     return
   fi
-  
+
   if test -n "${DOC_UPLOAD_KEY}" && test "$CI_DEFAULT_BRANCH" && test "$CI_COMMIT_REF_NAME" = "$CI_DEFAULT_BRANCH"; then
     cat > doc_upload_ssh_config <<END
 Host doc-upload
@@ -657,7 +657,7 @@ function edit_requirements_txt_for_downstream_in_subdir()
   # "warning: rejected (SHA) because shallow roots are not allowed to be updated"
   # "warning: filtering not recognized by server, ignoring"
   (cd ..; if $(git rev-parse --is-shallow-repository); then git fetch --unshallow; fi)
-  
+
   local PRJ_NAME
   local REQ_TXT_TO_EDIT
   local TMP_FOR_COMPARISON="zzztmp-ci-support-req.txt"
@@ -728,7 +728,12 @@ function test_downstream()
   if [[ "$proj_name" = "mirgecom" ]]; then
       # can't turn off MPI in mirgecom
       export CONDA_ENVIRONMENT=conda-env.yml
-      export CISUPPORT_PARALLEL_PYTEST=no
+
+      if [[ "$GITHUB_ACTIONS" != "" ]]; then
+        # Github runners don't have a lot of RAM and tend to run out.
+        export CISUPPORT_PARALLEL_PYTEST=no
+      fi
+
       echo "- mpi4py" >> "$CONDA_ENVIRONMENT"
   else
       sed -i "/mpi4py/ d" requirements.txt

@@ -716,7 +716,10 @@ function test_downstream()
   cd "$proj_name"
   echo "*** $proj_name version: $(git rev-parse --short HEAD)"
 
-  transfer_requirements_git_urls ../requirements.txt ./requirements.txt
+  if test -f ../requirements.txt; then
+    transfer_requirements_git_urls ../requirements.txt ./requirements.txt
+  fi
+
   edit_requirements_txt_for_downstream_in_subdir
 
   # Avoid slow or complicated tests in downstream projects

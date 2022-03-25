@@ -539,7 +539,7 @@ run_pylint()
 
 function setup_asv
 {
-  pip install "git+https://github.com/airspeed-velocity/asv.git#egg=asv"
+  pip install asv
 
   if [[ ! -f ~/.asv-machine.json ]]; then
     asv machine --yes

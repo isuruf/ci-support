@@ -69,10 +69,6 @@ create_and_set_up_virtualenv()
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
 
-  if [[ "${PY_EXE}" == pypy3* ]]; then
-    PY_EXE=pypy3-c
-  fi
-
   RESOLVED_PY_EXE=$(which ${PY_EXE})
   case "$RESOLVED_PY_EXE" in
     $PWD/.env/*) ;;

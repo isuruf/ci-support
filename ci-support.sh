@@ -696,16 +696,9 @@ function install_ispc()
 
 # {{{ test_downstream
 
-function test_downstream()
+function prepare_downstream_build()
 {
-  local downstream_proj="$1"
-  local proj_name="$downstream_proj"
-  local test_examples=0
-
-  if [[ "$downstream_proj" = *_examples ]]; then
-    proj_name="${downstream_proj%_examples}"
-    test_examples=1
-  fi
+  local proj_name="$1"
 
   if [[ "$proj_name" = "mirgecom" ]]; then
       git clone "https://github.com/illinois-ceesd/$proj_name.git"
@@ -738,6 +731,21 @@ function test_downstream()
   else
       sed -i "/mpi4py/ d" requirements.txt
   fi
+}
+
+
+function test_downstream()
+{
+  local downstream_proj="$1"
+  local proj_name="$downstream_proj"
+  local test_examples=0
+
+  if [[ "$downstream_proj" = *_examples ]]; then
+    proj_name="${downstream_proj%_examples}"
+    test_examples=1
+  fi
+
+  prepare_downstream_build "$proj_name"
   build_py_project_in_conda_env
 
   if [[ "$test_examples" == "0" ]]; then

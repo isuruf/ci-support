@@ -690,11 +690,19 @@ function install_ispc()
 # }}}
 
 
-# {{{ test_downstream
+# {{{ prepare_downstream_build
 
 function prepare_downstream_build()
 {
   local proj_name="$1"
+
+  # This is here because PyOpenCL needs to record a config change so
+  # CL headers are found. It git adds siteconf.py.
+  if git diff --quiet HEAD; then
+    git config --global user.email "inform@tiker.net"
+    git config --global user.name "CI runner"
+    git commit -a -m "Fake commit to record local changes"
+  fi
 
   if [[ "$proj_name" = "mirgecom" ]]; then
       git clone "https://github.com/illinois-ceesd/$proj_name.git"
@@ -729,6 +737,10 @@ function prepare_downstream_build()
   fi
 }
 
+# }}}
+
+
+# {{{ test_downstream
 
 function test_downstream()
 {

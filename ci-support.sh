@@ -698,7 +698,7 @@ function prepare_downstream_build()
 
   # This is here because PyOpenCL needs to record a config change so
   # CL headers are found. It git adds siteconf.py.
-  if git diff --quiet HEAD; then
+  if ! git diff --quiet HEAD; then
     git config --global user.email "inform@tiker.net"
     git config --global user.name "CI runner"
     git commit -a -m "Fake commit to record local changes"

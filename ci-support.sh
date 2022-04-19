@@ -238,8 +238,8 @@ build_py_project_in_conda_env()
 
   # If a job decides it wants to build PyOpenCL from source, e.g. this situation:
   # https://github.com/conda-forge/pyopencl-feedstock/pull/64#issuecomment-842831669
-  # give it a fighting chance if running on Github:
-  if test "$GITHUB_RUN_ID" != ""; then
+  # give it a fighting chance if running with Conda:
+  if test "$CONDA_PREFIX" != ""; then
     cat >> ~/.aksetup-defaults.py <<EOF
 CL_INC_DIR = ["$CONDA_PREFIX/include"]
 CL_LIB_DIR = ["$CONDA_PREFIX/lib"]

@@ -278,7 +278,10 @@ build_py_project()
 
 test_py_project()
 {
-  $PY_EXE -m pip install pytest
+  $PY_EXE -m pip install pytest pytest-github-actions-annotate-failures
+
+  # Needed for https://github.com/utgwkk/pytest-github-actions-annotate-failures
+  export PYTEST_RUN_PATH=test
 
   # pytest-xdist fails on pypy with: ImportError: cannot import name '_psutil_linux'
   # AK, 2020-08-20

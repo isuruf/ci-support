@@ -520,7 +520,7 @@ run_pylint()
   # pylint may inspect.
 
   # astroid 2.5.7 seems to produce spurious pylint failures
-  $PY_EXE -m pip install "pylint<2.14" "astroid!=2.5.7" PyYAML pytest
+  $PY_EXE -m pip install "pylint<2.15" "astroid!=2.5.7" PyYAML pytest
 
   PYLINT_RUNNER_ARGS="--jobs=4 --yaml-rcfile=.pylintrc.yml"
 

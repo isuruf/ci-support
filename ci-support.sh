@@ -200,7 +200,7 @@ build_py_project_in_venv()
 
 # {{{ miniconda build
 
-build_py_project_in_conda_env()
+install_conda_deps()
 {
   print_status_message
   clean_up_repo_and_working_env
@@ -233,7 +233,7 @@ build_py_project_in_conda_env()
 
   # Placeholder until github.com/conda-forge/qt-feedstock/issues/208 is fixed
   if [ "$(uname)" = "Linux" ]; then
-  with_echo rm -rf $MINIFORGE_INSTALL_DIR/envs/testing/x86_64-conda-linux-gnu/sysroot
+    with_echo rm -rf $MINIFORGE_INSTALL_DIR/envs/testing/x86_64-conda-linux-gnu/sysroot
   fi
 
   # If a job decides it wants to build PyOpenCL from source, e.g. this situation:
@@ -249,11 +249,11 @@ CL_LIB_DIR = ["$CONDA_PREFIX/lib"]
 CL_LIBNAME = ["OpenCL"]
 EOF
   fi
+}
 
-  # Using pip instead of conda to install pytest (see test_py_project) avoids
-  # ridiculous uninstall chains like these:
-  # https://gitlab.tiker.net/inducer/pyopencl/-/jobs/61543
-
+build_py_project_in_conda_env()
+{
+  install_conda_deps
   pip_install_project
 }
 
@@ -770,7 +770,14 @@ function test_downstream()
   fi
 
   prepare_downstream_build "$proj_url"
-  build_py_project_in_conda_env
+  install_conda_deps
+
+  # Downstream CI for pytools must override pytools that's installed via conda
+  # (because it comes in as a dependency of, e.g., pyopencl). Try harder to
+  # get rid of it.
+  pip uninstall -y "$(get_proj_name)"
+
+  pip_install_project
 
   if [[ "$test_examples" == "0" ]]; then
     test_py_project

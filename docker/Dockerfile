@@ -6,11 +6,14 @@ RUN echo 'APT::Default-Release "testing";' >> /etc/apt/apt.conf
 RUN apt-get update
 RUN apt-get -y upgrade
 
+# gcc-10 for https://github.com/inducer/loopy/issues/686
+
 # -o APT::Install-Recommends=0
 RUN apt-get -y -o APT::Install-Suggests=0 install \
   python3-dev python3-venv \
   libblas-dev liblapack-dev libopenblas-dev \
   build-essential \
+  gcc-10 \
   git \
   jq \
   curl \

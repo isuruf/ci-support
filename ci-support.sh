@@ -6,19 +6,24 @@ set -o pipefail
 
 ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/main"
 
+if [ "$(uname)" = "Darwin" ]; then
+  PLATFORM=MacOSX
+elif [ "$(uname)" = "Linux" ]; then
+  PLATFORM=Linux
+else
+  PLATFORM=Windows
+fi
+
 if [ "$PY_EXE" == "" ]; then
   if [ "$py_version" == "" ]; then
-    PY_EXE=python3
+    if [ "$PLATFORM" = "Windows" ]; then
+      PY_EXE=python
+    else
+      PY_EXE=python3
+    fi
   else
     PY_EXE=python${py_version}
   fi
-fi
-
-
-if [ "$(uname)" = "Darwin" ]; then
-  PLATFORM=MacOSX
-else
-  PLATFORM=Linux
 fi
 
 if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then
@@ -89,12 +94,22 @@ install_miniforge()
   MINIFORGE_VERSION=3
   MINIFORGE_INSTALL_DIR=.miniforge${MINIFORGE_VERSION}
 
-  MINIFORGE_INSTALL_SH=Miniforge3-$PLATFORM-x86_64.sh
-  curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE_INSTALL_SH"
+  if [ "$PLATFORM" == "Windows" ]; then
+    MINIFORGE_EXT="exe"
+  else
+    MINIFORGE_EXT="sh"
+  fi
+  MINIFORGE_INSTALLER=Miniforge3-$PLATFORM-x86_64.$MINIFORGE_EXT
+  curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE_INSTALLER"
 
   rm -Rf "$MINIFORGE_INSTALL_DIR"
 
-  bash "$MINIFORGE_INSTALL_SH" -b -p "$MINIFORGE_INSTALL_DIR"
+  if [ "$PLATFORM" == "Windows" ]; then
+    echo "start /wait \"\" ${MINIFORGE_INSTALLER} /InstallationType=JustMe /RegisterPython=0 /S /D=$(cygpath -w "${PWD}/${MINIFORGE_INSTALL_DIR}")" > install.bat
+    cmd.exe /c install.bat
+  else
+    bash "$MINIFORGE_INSTALLER" -b -p "$MINIFORGE_INSTALL_DIR"
+  fi
 }
 
 
@@ -214,11 +229,18 @@ install_conda_deps()
     fi
   fi
 
-  PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update conda --yes --quiet
-  PATH="$MINIFORGE_INSTALL_DIR/bin/:$PATH" with_echo conda update --all --yes --quiet
-  PATH="$MINIFORGE_INSTALL_DIR/bin:$PATH" with_echo conda env create --file "$CONDA_ENVIRONMENT" --name testing --quiet
+  local CONDA_EXE_DIR
+  if [ $PLATFORM = "Windows" ]; then
+    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/Scripts
+  else
+    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/bin
+  fi
 
-  source "$MINIFORGE_INSTALL_DIR/bin/activate" testing
+  PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update conda --yes --quiet
+  PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update --all --yes --quiet
+  PATH="$CONDA_EXE_DIR:$PATH" with_echo conda env create --file "$CONDA_ENVIRONMENT" --name testing --quiet
+
+  source "$CONDA_EXE_DIR/activate" testing
 
   # https://github.com/conda-forge/ocl-icd-feedstock/issues/11#issuecomment-456270634
   rm -f $MINIFORGE_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/system-*.icd
@@ -236,13 +258,19 @@ install_conda_deps()
     with_echo rm -rf $MINIFORGE_INSTALL_DIR/envs/testing/x86_64-conda-linux-gnu/sysroot
   fi
 
+  local LIBRARY_PREFIX
   # If a job decides it wants to build PyOpenCL from source, e.g. this situation:
   # https://github.com/conda-forge/pyopencl-feedstock/pull/64#issuecomment-842831669
   # give it a fighting chance if running with Conda:
   if test "$CONDA_PREFIX" != ""; then
+    if [ "$PLATFORM" = "Windows" ]; then
+      LIBRARY_PREFIX="$CONDA_PREFIX/Library"
+    else
+      LIBRARY_PREFIX="$CONDA_PREFIX"
+    fi
     cat >> ~/.aksetup-defaults.py <<EOF
-CL_INC_DIR = ["$CONDA_PREFIX/include"]
-CL_LIB_DIR = ["$CONDA_PREFIX/lib"]
+CL_INC_DIR = ["$LIBRARY_PREFIX/include"]
+CL_LIB_DIR = ["$LIBRARY_PREFIX/lib"]
 
 # This matches the default on Linux and forces the use of the conda-installed
 # ICD loader on macOS.
@@ -323,8 +351,10 @@ test_py_project()
       # Core dumps? Sure, take them.
       ulimit -c unlimited
 
-      # 10 GiB should be enough for just about anyone :)
-      ulimit -m "$(python -c 'print(1024*1024*10)')"
+      if test "$PLATFORM" != "Windows"; then
+        # 10 GiB should be enough for just about anyone :)
+        ulimit -m "$(python -c 'print(1024*1024*10)')"
+      fi
 
       if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
         # Default: parallel if Not (Gitlab and GPU CI)?

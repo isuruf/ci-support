@@ -6,21 +6,24 @@ set -o pipefail
 
 ci_support="https://gitlab.tiker.net/inducer/ci-support/raw/main"
 
-if [ "$PY_EXE" == "" ]; then
-  if [ "$py_version" == "" ]; then
-    PY_EXE=python3
-  else
-    PY_EXE=python${py_version}
-  fi
-fi
-
-
 if [ "$(uname)" = "Darwin" ]; then
   PLATFORM=MacOSX
 elif [ "$(uname)" = "Linux" ]; then
   PLATFORM=Linux
 else
   PLATFORM=Windows
+fi
+
+if [ "$PY_EXE" == "" ]; then
+  if [ "$py_version" == "" ]; then
+    if [ "$PLATFORM" = "Windows" ]; then
+      PY_EXE=python
+    else
+      PY_EXE=python3
+    fi
+  else
+    PY_EXE=python${py_version}
+  fi
 fi
 
 if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then

@@ -351,8 +351,10 @@ test_py_project()
       # Core dumps? Sure, take them.
       ulimit -c unlimited
 
-      # 10 GiB should be enough for just about anyone :)
-      ulimit -m "$(python -c 'print(1024*1024*10)')"
+      if test "$PLATFORM" != "Windows"; then
+        # 10 GiB should be enough for just about anyone :)
+        ulimit -m "$(python -c 'print(1024*1024*10)')"
+      fi
 
       if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then
         # Default: parallel if Not (Gitlab and GPU CI)?

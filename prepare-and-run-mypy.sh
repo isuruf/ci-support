@@ -53,6 +53,9 @@ ${PY_EXE} -m ensurepip
 
 # }}}
 
+# as of 0.990, mypy has started complaining about missing pytest on occasion
+pip install pytest
+
 if test "$EXTRA_INSTALL" != ""; then
   for i in $EXTRA_INSTALL ; do
     $PY_EXE -m pip install "$i"

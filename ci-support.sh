@@ -349,11 +349,11 @@ test_py_project()
 
     if [[ -n "$TESTABLES" ]]; then
       # Core dumps? Sure, take them.
-      ulimit -c unlimited
+      ulimit -c unlimited || true
 
       if test "$PLATFORM" != "Windows"; then
         # 10 GiB should be enough for just about anyone :)
-        ulimit -m "$(python -c 'print(1024*1024*10)')"
+        ulimit -m "$(python -c 'print(1024*1024*10)')" || true
       fi
 
       if [[ $CISUPPORT_PARALLEL_PYTEST == "" || $CISUPPORT_PARALLEL_PYTEST == "xdist" ]]; then

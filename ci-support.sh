@@ -503,7 +503,8 @@ END
 
 install_and_run_flake8()
 {
-  FLAKE8_PACKAGES=(flake8 pep8-naming)
+  # flake8<6 for https://github.com/zheller/flake8-quotes/issues/110
+  FLAKE8_PACKAGES=("flake8<6" pep8-naming)
   if grep -q quotes setup.cfg; then
     true
     FLAKE8_PACKAGES+=(flake8-quotes)

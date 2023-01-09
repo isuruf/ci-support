@@ -521,7 +521,7 @@ install_and_run_flake8()
   else
     echo "-----------------------------------------------------------------"
     echo "Consider enabling import order for this package by configuring"
-    echo "https://github.com/gforcada/flake8-isort
+    echo "https://github.com/gforcada/flake8-isort"
     echo "in setup.cfg. Simply add a line"
     echo "# enable-isort"
     echo "-----------------------------------------------------------------"

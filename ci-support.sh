@@ -515,6 +515,17 @@ install_and_run_flake8()
     echo "https://github.com/illinois-ceesd/mirgecom/blob/45457596cac2eeb4a0e38bf6845fe4b7c323f6f5/setup.cfg#L5-L7"
     echo "-----------------------------------------------------------------"
   fi
+  if grep -q isort setup.cfg; then
+    true
+    FLAKE8_PACKAGES+=(flake8-isort)
+  else
+    echo "-----------------------------------------------------------------"
+    echo "Consider enabling import order for this package by configuring"
+    echo "https://github.com/gforcada/flake8-isort
+    echo "in setup.cfg. Simply add a line"
+    echo "# enable-isort"
+    echo "-----------------------------------------------------------------"
+  fi
 
   if grep -q enable-flake8-bugbear setup.cfg; then
     FLAKE8_PACKAGES+=(flake8-bugbear)

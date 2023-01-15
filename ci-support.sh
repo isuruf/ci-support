@@ -539,7 +539,8 @@ install_and_run_flake8()
   fi
 
   ${PY_EXE} -m pip install "${FLAKE8_PACKAGES[@]}"
-  ${PY_EXE} -m flake8 "$@"
+  # See https://github.com/inducer/pytools/pull/171 for discussion on B028
+  ${PY_EXE} -m flake8 "$@" --extend-ignore B028
 }
 
 # }}}

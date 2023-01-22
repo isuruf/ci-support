@@ -32,9 +32,6 @@ if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then
   exit 1
 fi
 
-# https://github.com/vincefn/pyvkfft/issues/23
-export VKFFT_BACKEND=opencl
-
 
 # {{{ utilities
 

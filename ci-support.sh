@@ -236,8 +236,10 @@ install_conda_deps()
     CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/bin
   fi
 
-  # https://github.com/conda-forge/gmsh-feedstock/issues/74
-  sed -i '/gmsh/i- cairo' "$CONDA_ENVIRONMENT"
+  if [ $PLATFORM = "Linux" ]; then
+    # https://github.com/conda-forge/gmsh-feedstock/issues/74
+    sed -i '/gmsh/i- cairo' "$CONDA_ENVIRONMENT"
+  fi
 
   PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update conda --yes --quiet
   PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update --all --yes --quiet

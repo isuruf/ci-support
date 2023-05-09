@@ -441,7 +441,13 @@ run_examples()
         CI_SUPPORT_LD_PRELOAD="$LD_PRELOAD"
       fi
 
-      (cd "$dn"; time LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" ${PY_EXE} "$bn")
+      if [[ $bn == *mpi* ]]; then
+        (cd "$dn"; time LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" \
+          mpiexec -x LD_PRELOAD -x PYOPENCL_TEST -np ${CI_SUPPORT_MPI_RANK_COUNT:-3} \
+          ${PY_EXE} -m mpi4py "$bn")
+      else
+        (cd "$dn"; time LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" ${PY_EXE} "$bn")
+      fi
     done
   fi
 }

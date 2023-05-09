@@ -391,9 +391,9 @@ test_py_project()
       CONDA_JEMALLOC="$CONDA_PREFIX/lib/libjemalloc.so.2"
       if test "$CONDA_PREFIX" != "" && test -f "$CONDA_JEMALLOC"; then
         echo "*** running with $CONDA_JEMALLOC in LD_PRELOAD"
-        export CI_SUPPORT_LD_PRELOAD="$CONDA_JEMALLOC"
+        CI_SUPPORT_LD_PRELOAD="$CONDA_JEMALLOC"
       else
-        export CI_SUPPORT_LD_PRELOAD="$LD_PRELOAD"
+        CI_SUPPORT_LD_PRELOAD="$LD_PRELOAD"
       fi
 
       ( LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" with_echo "${PY_EXE}" -m pytest \
@@ -436,9 +436,9 @@ run_examples()
       CONDA_JEMALLOC="$CONDA_PREFIX/lib/libjemalloc.so.2"
       if test "$CONDA_PREFIX" != "" && test -f "$CONDA_JEMALLOC"; then
         echo "*** running with $CONDA_JEMALLOC in LD_PRELOAD"
-        export CI_SUPPORT_LD_PRELOAD="$CONDA_JEMALLOC"
+        CI_SUPPORT_LD_PRELOAD="$CONDA_JEMALLOC"
       else
-        export CI_SUPPORT_LD_PRELOAD="$LD_PRELOAD"
+        CI_SUPPORT_LD_PRELOAD="$LD_PRELOAD"
       fi
 
       (cd "$dn"; time LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" ${PY_EXE} "$bn")

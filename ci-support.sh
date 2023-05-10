@@ -442,8 +442,10 @@ run_examples()
       fi
 
       if [[ $bn == *mpi* ]]; then
+        # FIXME: This command line is OpenMPI-specific.)
         (cd "$dn"; time LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" \
-          mpiexec -x LD_PRELOAD -x PYOPENCL_TEST -np ${CI_SUPPORT_MPI_RANK_COUNT:-3} \
+          mpiexec -np ${CI_SUPPORT_MPI_RANK_COUNT:-3} --oversubscribe \
+          -x LD_PRELOAD -x PYOPENCL_TEST \
           ${PY_EXE} -m mpi4py "$bn")
       else
         (cd "$dn"; time LD_PRELOAD="$CI_SUPPORT_LD_PRELOAD" ${PY_EXE} "$bn")

@@ -314,7 +314,7 @@ build_py_project()
 
 test_py_project()
 {
-  rewrite_pyopencl_test()
+  rewrite_pyopencl_test
 
   $PY_EXE -m pip install pytest pytest-github-actions-annotate-failures
 
@@ -419,7 +419,7 @@ test_py_project()
 
 run_examples()
 {
-  rewrite_pyopencl_test()
+  rewrite_pyopencl_test
 
   if test "$1" == "--no-require-main"; then
     MAIN_FILTER=()

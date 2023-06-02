@@ -32,6 +32,14 @@ if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then
   exit 1
 fi
 
+rewrite_pyopencl_test()
+{
+  if python -c 'import pyopencl as cl; import pyopencl.characterize as c; v = [c.get_pocl_version(p) for p in cl.get_platforms()]; v, = [i for i in v if i];  import sys; sys.exit(not v >= (4,0))'; then
+    export PYOPENCL_TEST
+    PYOPENCL_TEST="$(echo "${PYOPENCL_TEST}" | sed s/pthread/cpu/ )"
+  fi
+}
+
 
 # {{{ utilities
 
@@ -306,6 +314,8 @@ build_py_project()
 
 test_py_project()
 {
+  rewrite_pyopencl_test()
+
   $PY_EXE -m pip install pytest pytest-github-actions-annotate-failures
 
   # Needed for https://github.com/utgwkk/pytest-github-actions-annotate-failures
@@ -409,6 +419,8 @@ test_py_project()
 
 run_examples()
 {
+  rewrite_pyopencl_test()
+
   if test "$1" == "--no-require-main"; then
     MAIN_FILTER=()
   else

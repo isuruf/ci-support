@@ -759,6 +759,9 @@ function install_ispc()
 
 function prepare_downstream_build()
 {
+  # Repo ownership is adventurous in gitlab runner, we don't care.
+  git config --global --add 'safe.directory' '*'
+
   # NOTE: parses https://github.com/user/repo.git@branch_name
   local proj_url="${1%%@*}"
   local proj_branch=${1#"${proj_url}@"}

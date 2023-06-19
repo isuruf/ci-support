@@ -33,7 +33,7 @@ if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then
 fi
 #
 
-if [[ "$GILTAB_CI" = "true" ]] &&  [[ "$CI_DISPOSABLE_ENVIRONMENT" = "true" ]]; then
+if [[ "$GITLAB_CI" = "true" ]] &&  [[ "$CI_DISPOSABLE_ENVIRONMENT" = "true" ]]; then
   # Repo ownership is adventurous in Docker-based gitlab runner, we don't care.
   git config --global --add 'safe.directory' '*'
 fi

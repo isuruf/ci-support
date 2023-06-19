@@ -31,6 +31,13 @@ if test "$CI_SERVER_NAME" = "GitLab" && test -d ~/.local/lib; then
   find ~/.local/lib
   exit 1
 fi
+#
+
+if [[ "$GILTAB_CI" = "true" ]] &&  [[ "$CI_DISPOSABLE_ENVIRONMENT" = "true" ]]; then
+  # Repo ownership is adventurous in Docker-based gitlab runner, we don't care.
+  git config --global --add 'safe.directory' '*'
+fi
+
 
 rewrite_pyopencl_test()
 {
@@ -759,9 +766,6 @@ function install_ispc()
 
 function prepare_downstream_build()
 {
-  # Repo ownership is adventurous in gitlab runner, we don't care.
-  git config --global --add 'safe.directory' '*'
-
   # NOTE: parses https://github.com/user/repo.git@branch_name
   local proj_url="${1%%@*}"
   local proj_branch=${1#"${proj_url}@"}

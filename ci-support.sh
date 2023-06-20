@@ -771,6 +771,12 @@ function prepare_downstream_build()
   local proj_branch=${1#"${proj_url}@"}
   local proj_name=$(basename "$proj_url" .git)
 
+  if [[ "$proj_name" =~ mirgecom* ]]; then
+    echo "*** No point in testing mirgecom at the moment, see"
+    echo "*** https://github.com/illinois-ceesd/mirgecom/pull/898"
+    exit 0
+  fi
+
   # This is here because PyOpenCL needs to record a config change so
   # CL headers are found. It git adds siteconf.py.
   if ! git diff --quiet HEAD; then
@@ -783,12 +789,6 @@ function prepare_downstream_build()
     git clone "$proj_url" --branch "$proj_branch"
   else
     git clone "$proj_url"
-  fi
-
-  if [[ "$proj_name" =~ mirgecom* ]]; then
-    echo "*** No point in testing mirgecom at the moment, see"
-    echo "*** https://github.com/illinois-ceesd/mirgecom/pull/898"
-    exit 0
   fi
 
   cd "$proj_name"

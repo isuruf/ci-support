@@ -785,6 +785,12 @@ function prepare_downstream_build()
     git clone "$proj_url"
   fi
 
+  if [[ "$proj_name" =~ mirgecom* ]]; then
+    echo "*** No point in testing mirgecom at the moment, see"
+    echo "*** https://github.com/illinois-ceesd/mirgecom/pull/898"
+    exit 0
+  fi
+
   cd "$proj_name"
   echo "*** $proj_name version: $(git rev-parse --short HEAD)"
 

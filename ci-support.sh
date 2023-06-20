@@ -772,8 +772,7 @@ function prepare_downstream_build()
   local proj_name=$(basename "$proj_url" .git)
 
   if [[ "$proj_name" =~ mirgecom* ]]; then
-    echo "*** No point in testing mirgecom at the moment, see"
-    echo "*** https://github.com/illinois-ceesd/mirgecom/pull/898"
+    echo "::warning::No point in testing mirgecom at the moment, see https://github.com/illinois-ceesd/mirgecom/pull/898. Test not performed."
     exit 0
   fi
 

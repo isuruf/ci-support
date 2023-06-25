@@ -250,10 +250,6 @@ install_conda_deps()
   else
     CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/bin
   fi
-  echo "MINIFORGE_INSTALL_DIR ${MINIFORGE_INSTALL_DIR}"
-  ls "${MINIFORGE_INSTALL_DIR}"
-  echo "CONDA EXE DIR ${CONDA_EXE_DIR}"
-  ls "${CONDA_EXE_DIR}"
 
   PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update conda --yes --quiet
   PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update --all --yes --quiet

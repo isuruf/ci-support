@@ -107,7 +107,7 @@ create_and_set_up_virtualenv()
 install_miniforge()
 {
   MINIFORGE_VERSION=3
-  MINIFORGE_INSTALL_DIR=.miniforge${MINIFORGE_VERSION}
+  MINIFORGE_INSTALL_DIR="${PWD}/.miniforge${MINIFORGE_VERSION}"
 
   if [ "$PLATFORM" == "Windows" ]; then
     MINIFORGE_EXT="exe"
@@ -120,7 +120,7 @@ install_miniforge()
   rm -Rf "$MINIFORGE_INSTALL_DIR"
 
   if [ "$PLATFORM" == "Windows" ]; then
-    echo "start /wait \"\" ${MINIFORGE_INSTALLER} /InstallationType=JustMe /RegisterPython=0 /S /D=$(cygpath -w "${PWD}/${MINIFORGE_INSTALL_DIR}")" > install.bat
+    echo "start /wait \"\" ${MINIFORGE_INSTALLER} /InstallationType=JustMe /RegisterPython=0 /S /D=$(cygpath -w "${MINIFORGE_INSTALL_DIR}")" > install.bat
     cmd.exe /c install.bat
   else
     bash "$MINIFORGE_INSTALLER" -b -p "$MINIFORGE_INSTALL_DIR"
@@ -246,7 +246,7 @@ install_conda_deps()
 
   local CONDA_EXE_DIR
   if [ $PLATFORM = "Windows" ]; then
-    CONDA_EXE_DIR=${PWD}/$MINIFORGE_INSTALL_DIR/Scripts
+    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/Scripts
   else
     CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/bin
   fi

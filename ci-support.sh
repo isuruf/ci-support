@@ -246,7 +246,7 @@ install_conda_deps()
 
   local CONDA_EXE_DIR
   if [ $PLATFORM = "Windows" ]; then
-    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/condabin
+    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/Scripts
   else
     CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/bin
   fi

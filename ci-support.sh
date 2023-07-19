@@ -824,6 +824,13 @@ function prepare_downstream_build()
 
 function test_downstream()
 {
+  local prep_only=0
+
+  if [[ "$1" == "--prep-only" ]]; then
+    prep_only=1
+    shift
+  fi
+
   local downstream_url="$1"
   local proj_url=""
   local test_examples=0
@@ -853,13 +860,15 @@ function test_downstream()
 
   pip_install_project
 
-  if [[ "$test_examples" == "0" ]]; then
-    test_py_project
-  else
-    if [[ "$proj_url" =~ .*mirgecom.* ]]; then
-      examples/run_examples.sh ./examples
+  if [[ "$prep_only" == "0" ]]; then
+    if [[ "$test_examples" == "0" ]]; then
+      test_py_project
     else
-      run_examples
+      if [[ "$proj_url" =~ .*mirgecom.* ]]; then
+        examples/run_examples.sh ./examples
+      else
+        run_examples
+      fi
     fi
   fi
 }

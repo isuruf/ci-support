@@ -106,24 +106,23 @@ create_and_set_up_virtualenv()
 
 install_miniforge()
 {
-  MINIFORGE_VERSION=3
-  MINIFORGE_INSTALL_DIR="${PWD}/.miniforge${MINIFORGE_VERSION}"
+  CONDA_INSTALL_DIR="${PWD}/.conda-root"
 
   if [ "$PLATFORM" == "Windows" ]; then
-    MINIFORGE_EXT="exe"
+    FORGE_INSTALLER_EXT="exe"
   else
-    MINIFORGE_EXT="sh"
+    FORGE_INSTALLER_EXT="sh"
   fi
-  MINIFORGE_INSTALLER=Miniforge3-$PLATFORM-x86_64.$MINIFORGE_EXT
-  curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE_INSTALLER"
+  FORGE_INSTALLER="Mambaforge3-$PLATFORM-x86_64.$FORGE_INSTALLER_EXT"
+  curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/$FORGE_INSTALLER"
 
-  rm -Rf "$MINIFORGE_INSTALL_DIR"
+  rm -Rf "$CONDA_INSTALL_DIR"
 
   if [ "$PLATFORM" == "Windows" ]; then
-    echo "start /wait \"\" ${MINIFORGE_INSTALLER} /InstallationType=JustMe /RegisterPython=0 /S /D=$(cygpath -w "${MINIFORGE_INSTALL_DIR}")" > install.bat
+    echo "start /wait \"\" ${FORGE_INSTALLER} /InstallationType=JustMe /RegisterPython=0 /S /D=$(cygpath -w "${CONDA_INSTALL_DIR}")" > install.bat
     cmd.exe //c install.bat
   else
-    bash "$MINIFORGE_INSTALLER" -b -p "$MINIFORGE_INSTALL_DIR"
+    bash "$FORGE_INSTALLER" -b -p "$CONDA_INSTALL_DIR"
   fi
 }
 
@@ -246,9 +245,9 @@ install_conda_deps()
 
   local CONDA_EXE_DIR
   if [ $PLATFORM = "Windows" ]; then
-    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/Scripts
+    CONDA_EXE_DIR=$CONDA_INSTALL_DIR/Scripts
   else
-    CONDA_EXE_DIR=$MINIFORGE_INSTALL_DIR/bin
+    CONDA_EXE_DIR=$CONDA_INSTALL_DIR/bin
   fi
 
   PATH="$CONDA_EXE_DIR:$PATH" with_echo conda update conda --yes --quiet
@@ -258,9 +257,9 @@ install_conda_deps()
   source "$CONDA_EXE_DIR/activate" testing
 
   # https://github.com/conda-forge/ocl-icd-feedstock/issues/11#issuecomment-456270634
-  rm -f $MINIFORGE_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/system-*.icd
+  rm -f $CONDA_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/system-*.icd
   # https://gitlab.tiker.net/inducer/pytential/issues/112
-  rm -f $MINIFORGE_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/apple.icd
+  rm -f $CONDA_INSTALL_DIR/envs/testing/etc/OpenCL/vendors/apple.icd
 
   # https://github.com/pypa/pip/issues/5345#issuecomment-386443351
   export XDG_CACHE_HOME=$HOME/.cache/$CI_RUNNER_ID
@@ -270,7 +269,7 @@ install_conda_deps()
 
   # Placeholder until github.com/conda-forge/qt-feedstock/issues/208 is fixed
   if [ "$(uname)" = "Linux" ]; then
-    with_echo rm -rf $MINIFORGE_INSTALL_DIR/envs/testing/x86_64-conda-linux-gnu/sysroot
+    with_echo rm -rf $CONDA_INSTALL_DIR/envs/testing/x86_64-conda-linux-gnu/sysroot
   fi
 
   local LIBRARY_PREFIX

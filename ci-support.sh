@@ -113,7 +113,7 @@ install_miniforge()
   else
     FORGE_INSTALLER_EXT="sh"
   fi
-  FORGE_INSTALLER="Mambaforge3-$PLATFORM-x86_64.$FORGE_INSTALLER_EXT"
+  FORGE_INSTALLER="Mambaforge-$PLATFORM-x86_64.$FORGE_INSTALLER_EXT"
   curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/$FORGE_INSTALLER"
 
   rm -Rf "$CONDA_INSTALL_DIR"
